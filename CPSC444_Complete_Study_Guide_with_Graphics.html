@@ -1,0 +1,5967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPSC 444 Complete Study Guide with Graphics</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background: #f5f5f5; }
+        .container { display: flex; height: 100vh; overflow: hidden; }
+        .sidebar { width: 300px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; overflow-y: auto; box-shadow: 2px 0 10px rgba(0,0,0,0.1); }
+        .sidebar-header { padding: 20px; background: rgba(0,0,0,0.2); border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-header h1 { font-size: 1.4em; margin-bottom: 5px; }
+        .sidebar-header p { font-size: 0.85em; opacity: 0.9; }
+        .nav-menu { list-style: none; padding: 10px 0; }
+        .nav-item { margin: 2px 10px; }
+        .nav-link { display: block; padding: 12px 15px; color: white; text-decoration: none; border-radius: 8px; transition: all 0.3s ease; cursor: pointer; font-size: 0.95em; }
+        .nav-link:hover { background: rgba(255,255,255,0.15); transform: translateX(5px); }
+        .nav-link.active { background: rgba(255,255,255,0.25); font-weight: 600; }
+        .nav-link .difficulty { display: block; font-size: 0.8em; opacity: 0.8; margin-top: 3px; }
+        .main-content { flex: 1; overflow-y: auto; background: white; }
+        .content-section { display: none; padding: 40px 60px; max-width: 1000px; margin: 0 auto; animation: fadeIn 0.3s ease-in; }
+        .content-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        h1 { color: #667eea; font-size: 2.5em; margin-bottom: 10px; border-bottom: 3px solid #667eea; padding-bottom: 10px; }
+        h2 { color: #764ba2; font-size: 2em; margin-top: 30px; margin-bottom: 15px; }
+        h3 { color: #555; font-size: 1.5em; margin-top: 25px; margin-bottom: 12px; }
+        h4 { color: #666; font-size: 1.2em; margin-top: 20px; margin-bottom: 10px; }
+        p { margin-bottom: 15px; text-align: justify; }
+        hr { margin: 30px 0; border: none; border-top: 2px solid #eee; }
+        ul, ol { margin: 15px 0 15px 30px; }
+        li { margin-bottom: 8px; }
+        pre { background: #2d2d2d; color: #f8f8f2; padding: 20px; border-radius: 8px; overflow-x: auto; margin: 20px 0; font-family: 'Courier New', monospace; font-size: 0.9em; line-height: 1.5; }
+        code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-family: 'Courier New', monospace; color: #d63384; font-size: 0.9em; }
+        pre code { background: transparent; padding: 0; color: #f8f8f2; }
+        .checkbox-list { list-style: none; margin-left: 0; }
+        .checkbox-list li:before { content: "☐ "; color: #667eea; font-weight: bold; margin-right: 8px; }
+        .nav-buttons { display: flex; justify-content: space-between; margin-top: 40px; padding-top: 20px; border-top: 2px solid #eee; }
+        .btn { padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-size: 1em; transition: all 0.3s ease; text-decoration: none; display: inline-block; }
+        .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+        .btn-secondary { background: #6c757d; color: white; }
+        .btn-secondary:hover { background: #5a6268; transform: translateY(-2px); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #667eea; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #764ba2; }
+        .progress-bar { position: fixed; top: 0; left: 300px; right: 0; height: 4px; background: #e0e0e0; z-index: 1000; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); width: 0%; transition: width 0.3s ease; }
+        a { color: #667eea; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        strong { color: #764ba2; font-weight: 600; }
+        em { font-style: italic; color: #555; }
+        
+        /* Plot styling */
+        .plot-container { margin: 30px 0; text-align: center; background: #f9f9f9; padding: 20px; border-radius: 10px; border: 2px solid #e0e0e0; }
+        .module-plot { max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .plot-caption { margin-top: 15px; font-style: italic; color: #555; font-size: 0.95em; text-align: center; }
+        
+        @media (max-width: 768px) {
+            .container { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; max-height: 200px; }
+            .content-section { padding: 20px; }
+            .nav-buttons { flex-direction: column; gap: 10px; }
+            .progress-bar { left: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h1>CPSC 444</h1>
+                <p>Spatial Statistics & Data Science</p>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a class="nav-link active" onclick="showSection('home')">
+                        🏠 Home & Overview
+                        
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showSection('paths')">
+                        🗺️ Study Paths
+                        
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showSection('module1')">
+                        📚 Module 01: Foundations
+                        <span class="difficulty">Difficulty: ⭐ Beginner</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showSection('module2')">
+                        📊 Module 02: Statistical Foundations
+                        <span class="difficulty">Difficulty: ⭐⭐ Intermediate</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showSection('module3')">
+                        🗺️ Module 03: Geospatial Fundamentals
+                        <span class="difficulty">Difficulty: ⭐⭐⭐ Intermediate</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showSection('module4')">
+                        📈 Module 04: Spatial Statistics
+                        <span class="difficulty">Difficulty: ⭐⭐⭐⭐ Advanced</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showSection('module5')">
+                        🔬 Module 05: Advanced Regression
+                        <span class="difficulty">Difficulty: ⭐⭐⭐⭐ Advanced</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showSection('module6')">
+                        🏗️ Module 06: Mixed Models
+                        <span class="difficulty">Difficulty: ⭐⭐⭐⭐⭐ Advanced</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showSection('module7')">
+                        🤖 Module 07: Machine Learning
+                        <span class="difficulty">Difficulty: ⭐⭐⭐⭐⭐ Advanced</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showSection('module8')">
+                        🌾 Module 08: Specialized Applications
+                        <span class="difficulty">Difficulty: ⭐⭐⭐⭐⭐ Expert</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showSection('reference')">
+                        📖 Quick Reference
+                        
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <main class="main-content">
+
+            <section id="home" class="content-section active">
+                <h1>CPSC 444 Study Guide</h1>
+<h2>Spatial Statistics, Geospatial Analysis & Agricultural Data Science</h2>
+
+<p>Welcome to your organized study guide for CPSC 444! This guide reorganizes all course materials into 8 clear learning modules, progressing from basic Python and statistics to advanced machine learning techniques for spatial data.</p>
+
+<hr>
+
+<h2>Quick Start</h2>
+
+<strong>New to programming?</strong> Start with <a href="Module_01_Foundations.md">Module 01: Foundations</a>
+
+<strong>Know Python already?</strong> Jump to <a href="Module_02_Statistical_Foundations.md">Module 02: Statistical Foundations</a>
+
+<strong>Want a custom path?</strong> Check out the <a href="Study_Paths.md">Study Paths Guide</a>
+
+<hr>
+
+<h2>What You'll Learn</h2>
+
+<p>This course teaches you how to work with spatial data, from understanding basic statistics and Python programming to applying advanced machine learning techniques. You'll learn:</p>
+
+<ul>
+<li>How to analyze data that has a location component (like farm fields, weather stations, or GPS points)</li>
+<li>Statistical methods specifically designed for spatial data</li>
+<li>Machine learning techniques for predicting outcomes across geographic areas</li>
+<li>Practical applications in agriculture, environmental science, and beyond</li>
+</ul>
+
+<hr>
+
+<h2>Course Modules</h2>
+
+<h3>[Module 01: Foundations](Module_01_Foundations.md) ⭐ **Beginner**</h3>
+<strong>Time</strong>: 3-5 hours | <strong>Prerequisites</strong>: None
+
+<p>Learn Python basics, data types, visualization, and simple statistics. This is your starting point if you're new to Python.</p>
+
+<strong>Key Topics</strong>: Lists, functions, plots, distributions, simple regression
+
+<hr>
+
+<h3>[Module 02: Statistical Foundations](Module_02_Statistical_Foundations.md) ⭐⭐ **Intermediate**</h3>
+<strong>Time</strong>: 5-7 hours | <strong>Prerequisites</strong>: Module 01
+
+<p>Master regression analysis with multiple predictors and learn how to build models that classify and predict outcomes.</p>
+
+<strong>Key Topics</strong>: Multiple regression, logistic regression, model evaluation, correlation
+
+<hr>
+
+<h3>[Module 03: Geospatial Fundamentals](Module_03_Geospatial_Fundamentals.md) ⭐⭐⭐ **Intermediate**</h3>
+<strong>Time</strong>: 8-10 hours | <strong>Prerequisites</strong>: Modules 01, 02
+
+<p>Understand spatial data, coordinate systems, and how to fill gaps in spatial measurements using interpolation.</p>
+
+<strong>Key Topics</strong>: Rasters, vectors, coordinate systems, Kriging, spatial sampling
+
+<hr>
+
+<h3>[Module 04: Spatial Statistics](Module_04_Spatial_Statistics.md) ⭐⭐⭐⭐ **Advanced**</h3>
+<strong>Time</strong>: 10-12 hours | <strong>Prerequisites</strong>: Module 03
+
+<p>Learn how nearby locations influence each other and how to measure spatial patterns in your data.</p>
+
+<strong>Key Topics</strong>: Semivariograms, spatial autocorrelation, nugget/sill/range, contiguity
+
+<hr>
+
+<h3>[Module 05: Advanced Regression](Module_05_Advanced_Regression.md) ⭐⭐⭐⭐ **Advanced**</h3>
+<strong>Time</strong>: 8-10 hours | <strong>Prerequisites</strong>: Modules 02, 03, 04
+
+<p>Build sophisticated models that prevent overfitting and account for geographic variations in relationships.</p>
+
+<strong>Key Topics</strong>: Lasso, Ridge, Geographically Weighted Regression, hyperparameter tuning
+
+<hr>
+
+<h3>[Module 06: Mixed Models](Module_06_Mixed_Models.md) ⭐⭐⭐⭐⭐ **Advanced**</h3>
+<strong>Time</strong>: 10-12 hours | <strong>Prerequisites</strong>: Modules 02, 04
+
+<p>Handle complex hierarchical data where observations are grouped (like plots within fields within farms).</p>
+
+<strong>Key Topics</strong>: Fixed vs random effects, hierarchical modeling, BLUP, EM algorithm
+
+<hr>
+
+<h3>[Module 07: Machine Learning](Module_07_Machine_Learning.md) ⭐⭐⭐⭐⭐ **Advanced**</h3>
+<strong>Time</strong>: 12-15 hours | <strong>Prerequisites</strong>: Modules 02, 05
+
+<p>Apply modern machine learning methods including ensemble models and neural networks to spatial problems.</p>
+
+<strong>Key Topics</strong>: Random Forest, XGBoost, CNNs for spatial data, pattern removal
+
+<hr>
+
+<h3>[Module 08: Specialized Applications](Module_08_Specialized_Applications.md) ⭐⭐⭐⭐⭐ **Expert**</h3>
+<strong>Time</strong>: 10-15 hours | <strong>Prerequisites</strong>: Multiple modules
+
+<p>See how all these techniques come together in real-world applications like crop modeling and multi-source data analysis.</p>
+
+<strong>Key Topics</strong>: Crop growth models, data fusion, genomics applications
+
+<hr>
+
+<h2>Study Paths</h2>
+
+<p>Choose a path based on your background and goals. See <a href="Study_Paths.md">Study_Paths.md</a> for detailed schedules.</p>
+
+<h3>Path 1: Complete Beginner → Expert</h3>
+<strong>Time</strong>: 70-90 hours
+<strong>Route</strong>: Modules 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
+<strong>Best for</strong>: New to programming or statistics
+
+<h3>Path 2: Python-Proficient Student</h3>
+<strong>Time</strong>: 50-70 hours
+<strong>Route</strong>: Skim Module 1 → Modules 2 → 3 → 4 → 5 → 6 → 7 → 8
+<strong>Best for</strong>: Know Python, need stats and spatial skills
+
+<h3>Path 3: GIS/Spatial Focus</h3>
+<strong>Time</strong>: 40-50 hours
+<strong>Route</strong>: Modules 1 → 3 → 4 → 5 (GWR only) → 7 (CNNs only)
+<strong>Best for</strong>: Focused on mapping and spatial analysis
+
+<h3>Path 4: Machine Learning Focus</h3>
+<strong>Time</strong>: 35-45 hours
+<strong>Route</strong>: Modules 1 → 2 → 5 → 6 → 7 → 8
+<strong>Best for</strong>: Want to apply ML to complex data
+
+<hr>
+
+<h2>Prerequisites & Setup</h2>
+
+<h3>Before You Start</h3>
+
+<p>You'll need:</p>
+<ul>
+<li>Python 3.8 or higher</li>
+<li>Jupyter Notebook or JupyterLab</li>
+<li>Basic computer literacy (can navigate folders, install software)</li>
+</ul>
+
+<h3>Python Libraries</h3>
+
+<p>The course uses these main libraries:</p>
+<ul>
+<li><strong>Core</strong>: <code>numpy</code>, <code>pandas</code>, <code>matplotlib</code>, <code>scipy</code></li>
+<li><strong>Geospatial</strong>: <code>geopandas</code>, <code>rasterio</code>, <code>shapely</code>, <code>pyproj</code></li>
+<li><strong>Kriging</strong>: <code>pykrige</code></li>
+<li><strong>Machine Learning</strong>: <code>scikit-learn</code>, <code>xgboost</code></li>
+<li><strong>Deep Learning</strong>: <code>torch</code> (PyTorch)</li>
+<li><strong>Visualization</strong>: <code>plotly</code>, <code>seaborn</code></li>
+</ul>
+
+<p>Installation tip: Consider using conda to manage these packages:</p>
+<pre><code>
+conda create -n cpsc444 python=3.10
+conda activate cpsc444
+conda install -c conda-forge geopandas rasterio scikit-learn xgboost pytorch plotly
+</code></pre>
+
+<hr>
+
+<h2>How to Use This Guide</h2>
+
+<h3>1. Start with Your Module</h3>
+<p>Each module file includes:</p>
+<ul>
+<li>Clear learning objectives</li>
+<li>Simple explanations with real-world examples</li>
+<li>Links to all relevant notebook files</li>
+<li>Key formulas explained in plain language</li>
+</ul>
+
+<h3>2. Follow the Examples</h3>
+<p>Read through the concept explanations first, then work through the linked notebooks to see the concepts in action.</p>
+
+<h3>3. Check Your Understanding</h3>
+<p>Every module ends with <strong>Study Checkpoints</strong> - questions to verify you've grasped the key ideas before moving on.</p>
+
+<h3>4. Practice on Real Data</h3>
+<p>The repository includes datasets in the <code>datasets/</code> folder. Try applying what you've learned to this data.</p>
+
+<h3>5. Build Projects</h3>
+<p>As you progress, try combining techniques from multiple modules to solve more complex problems.</p>
+
+<hr>
+
+<h2>Additional Resources</h2>
+
+<h3>Quick Reference</h3>
+<p>See <a href="Quick_Reference.md">Quick_Reference.md</a> for:</p>
+<ul>
+<li>Formulas at a glance</li>
+<li>Common code patterns</li>
+<li>Library usage guide</li>
+<li>Troubleshooting tips</li>
+</ul>
+
+<h3>Course Repository</h3>
+<p>Original materials: <a href="git@github.com:acesillinois/cpsc444-F2025.git">cpsc444-F2025 repository</a></p>
+
+<p>All notebook paths in this guide reference files in <code>/tmp/cpsc444-study/</code></p>
+
+<hr>
+
+<h2>Learning Tips</h2>
+
+<p>1. <strong>Don't rush</strong>: Spatial statistics is complex. It's okay if concepts take time to click.</p>
+
+<p>2. <strong>Run the code yourself</strong>: Reading isn't enough - type it out and see what happens when you change things.</p>
+
+<p>3. <strong>Use the checkpoints</strong>: They're there to help you know when you're ready to move on.</p>
+
+<p>4. <strong>Draw it out</strong>: Spatial concepts often make more sense when sketched on paper.</p>
+
+<p>5. <strong>Connect to reality</strong>: Think about where you see these patterns in the real world (weather, crops, disease spread, etc.).</p>
+
+<p>6. <strong>Ask questions</strong>: Note what confuses you and research it. Understanding the "why" matters.</p>
+
+<p>7. <strong>Review earlier modules</strong>: As you advance, you'll understand earlier concepts more deeply. It's worth revisiting.</p>
+
+<hr>
+
+<h2>Summary Statistics</h2>
+
+<ul>
+<li><strong>Total Notebooks</strong>: 43</li>
+<li><strong>Total Modules</strong>: 8</li>
+<li><strong>Beginner Materials</strong>: 8 files</li>
+<li><strong>Intermediate Materials</strong>: 12 files</li>
+<li><strong>Advanced Materials</strong>: 23 files</li>
+<li><strong>Total Learning Time</strong>: 70-95 hours (complete path)</li>
+</ul>
+
+<hr>
+
+<h2>Getting Help</h2>
+
+<p>If something isn't clear:</p>
+<p>1. Check the <a href="Quick_Reference.md">Quick_Reference.md</a></p>
+<p>2. Review prerequisite modules</p>
+<p>3. Look for examples in the notebooks</p>
+<p>4. Search for the concept online (add "Python" or "spatial statistics" to your search)</p>
+<p>5. Try working through a simpler example first</p>
+
+<hr>
+
+<h2>Ready to Start?</h2>
+
+<p>Choose your starting point:</p>
+
+<ul>
+<li><strong>Never programmed before?</strong> → <a href="Module_01_Foundations.md">Module 01: Foundations</a></li>
+<li><strong>Know Python basics?</strong> → <a href="Module_02_Statistical_Foundations.md">Module 02: Statistical Foundations</a></li>
+<li><strong>Want to plan your route?</strong> → <a href="Study_Paths.md">Study Paths Guide</a></li>
+<li><strong>Need quick reference?</strong> → <a href="Quick_Reference.md">Quick Reference</a></li>
+</ul>
+
+<p>Good luck with your studies!</p>
+
+<hr>
+
+<em>Study guide created for CPSC 444 - Fall 2025</em>
+<em>Organized to support self-paced learning from foundations to expert-level applications</em>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" disabled>← Previous</button>
+                    <button class="btn btn-primary" onclick="showSection('paths')">Next →</button>
+                </div>
+            </section>
+
+            <section id="paths" class="content-section">
+                <h1>Study Paths Guide</h1>
+<h2>Customized Learning Routes for Different Goals</h2>
+
+<p>This guide helps you choose the right path through the course materials based on your background and objectives.</p>
+
+<hr>
+
+<h2>Assessing Your Starting Point</h2>
+
+<h3>Quick Self-Assessment</h3>
+
+<p>Answer these questions to find your starting module:</p>
+
+<p>1. <strong>Can you write Python functions and use loops?</strong></p>
+<ul>
+<li>No → Start at Module 01</li>
+<li>Yes → Continue to Q2</li>
+</ul>
+
+<p>2. <strong>Can you fit a multiple regression model and interpret coefficients?</strong></p>
+<ul>
+<li>No → Start at Module 02</li>
+<li>Yes → Continue to Q3</li>
+</ul>
+
+<p>3. <strong>Do you know what a CRS is and how to use Kriging?</strong></p>
+<ul>
+<li>No → Start at Module 03</li>
+<li>Yes → Continue to Q4</li>
+</ul>
+
+<p>4. <strong>Can you explain spatial autocorrelation and build semivariograms?</strong></p>
+<ul>
+<li>No → Start at Module 04</li>
+<li>Yes → You can skip to Module 05 or beyond!</li>
+</ul>
+
+<hr>
+
+<h2>Path 1: Complete Beginner → Expert</h2>
+
+<strong>Who</strong>: New to programming and statistics
+<strong>Time</strong>: 70-90 hours
+<strong>Goal</strong>: Master everything from basics to advanced applications
+
+<h3>Week-by-Week Schedule</h3>
+
+<h4>Weeks 1-2: Foundation Building</h4>
+<ul>
+<li><strong>Module 01: Foundations</strong> (3-5 hours)</li>
+<li>Focus: Python basics, don't rush</li>
+<li>Practice: Type out every example</li>
+<li>Checkpoint: Can you write functions and create plots?</li>
+</ul>
+
+<strong>Daily routine</strong> (1-1.5 hours/day):
+<ul>
+<li>Day 1-2: Python data types, control flow</li>
+<li>Day 3-4: Functions, list comprehension</li>
+<li>Day 5-6: Visualization, summary statistics</li>
+<li>Day 7: Distributions, simple regression</li>
+<li>Days 8-9: Review, work through checkpoints</li>
+<li>Day 10: Practice exercises, verify readiness</li>
+</ul>
+
+<h4>Weeks 3-4: Statistical Foundations</h4>
+<ul>
+<li><strong>Module 02: Statistical Foundations</strong> (5-7 hours)</li>
+<li>Focus: Understand regression deeply</li>
+<li>Practice: Work through multiple examples</li>
+<li>Checkpoint: Can you interpret model coefficients?</li>
+</ul>
+
+<strong>Daily routine</strong>:
+<ul>
+<li>Days 11-12: Multiple regression theory</li>
+<li>Days 13-14: Logistic regression</li>
+<li>Days 15-16: Model evaluation metrics</li>
+<li>Days 17-18: Practice with real datasets</li>
+<li>Days 19-20: Review, checkpoints</li>
+</ul>
+
+<h4>Weeks 5-7: Geospatial Fundamentals</h4>
+<ul>
+<li><strong>Module 03: Geospatial Fundamentals</strong> (8-10 hours)</li>
+<li>Focus: Understand spatial data concepts</li>
+<li>Practice: Work with actual shapefiles/rasters</li>
+<li>Checkpoint: Can you perform Kriging interpolation?</li>
+</ul>
+
+<strong>Daily routine</strong>:
+<ul>
+<li>Days 21-23: Raster vs vector, CRS</li>
+<li>Days 24-26: Spatial sampling, visualization</li>
+<li>Days 27-30: Kriging theory and practice</li>
+<li>Days 31-33: Spatial overlay operations</li>
+<li>Days 34-35: Review, checkpoints</li>
+</ul>
+
+<h4>Weeks 8-10: Spatial Statistics</h4>
+<ul>
+<li><strong>Module 04: Spatial Statistics</strong> (10-12 hours)</li>
+<li>Focus: Deep understanding of spatial structure</li>
+<li>Practice: Build variograms from scratch</li>
+<li>Checkpoint: Can you interpret spatial autocorrelation?</li>
+</ul>
+
+<strong>Daily routine</strong>:
+<ul>
+<li>Days 36-39: Semivariogram construction</li>
+<li>Days 40-43: Variogram models, fitting</li>
+<li>Days 44-46: Contiguity, correlograms</li>
+<li>Days 47-49: Distance measures, applications</li>
+<li>Days 50-52: Review, checkpoints</li>
+</ul>
+
+<h4>Weeks 11-13: Advanced Techniques</h4>
+<ul>
+<li><strong>Module 05: Advanced Regression</strong> (8-10 hours)</li>
+<li>Focus: Regularization and GWR</li>
+<li>Practice: Compare different approaches</li>
+<li>Checkpoint: Can you tune hyperparameters?</li>
+</ul>
+
+<strong>Daily routine</strong>:
+<ul>
+<li>Days 53-55: Ridge and Lasso regression</li>
+<li>Days 56-58: Geographically Weighted Regression</li>
+<li>Days 59-61: Hyperparameter tuning</li>
+<li>Days 62-64: Cross-validation strategies</li>
+<li>Days 65-67: Review, checkpoints</li>
+</ul>
+
+<h4>Week 14: Mixed Models (if needed)</h4>
+<ul>
+<li><strong>Module 06: Mixed Models</strong> (10-12 hours)</li>
+<li>Focus: Hierarchical data</li>
+<li>Practice: Random intercept/slope models</li>
+<li>Optional: Skip if not working with hierarchical data</li>
+</ul>
+
+<h4>Weeks 15-17: Machine Learning</h4>
+<ul>
+<li><strong>Module 07: Machine Learning</strong> (12-15 hours)</li>
+<li>Focus: Ensemble methods and CNNs</li>
+<li>Practice: Apply to spatial data</li>
+<li>Checkpoint: Can you use RF and XGBoost?</li>
+</ul>
+
+<h4>Weeks 18-20: Applications</h4>
+<ul>
+<li><strong>Module 08: Specialized Applications</strong> (10-15 hours)</li>
+<li>Focus: Integration of all concepts</li>
+<li>Practice: Complete mini-project</li>
+<li>Final: Apply to your own data</li>
+</ul>
+
+<hr>
+
+<h2>Path 2: Python-Proficient Student</h2>
+
+<strong>Who</strong>: Know Python, need stats and spatial skills
+<strong>Time</strong>: 50-70 hours
+<strong>Goal</strong>: Focus on statistics and spatial analysis
+
+<h3>Accelerated Schedule</h3>
+
+<h4>Week 1: Quick Review + Statistics</h4>
+<ul>
+<li><strong>Module 01</strong>: Skim (1 hour)</li>
+<li>Review statistical functions</li>
+<li>Skip Python basics</li>
+<li><strong>Module 02</strong>: Deep dive (5-7 hours)</li>
+<li>Focus on regression theory</li>
+<li>Practice model evaluation</li>
+</ul>
+
+<h4>Weeks 2-3: Spatial Fundamentals</h4>
+<ul>
+<li><strong>Module 03</strong>: (8-10 hours)</li>
+<li>Full attention to spatial concepts</li>
+<li>Practice CRS transformations</li>
+<li>Master Kriging</li>
+</ul>
+
+<h4>Weeks 4-5: Spatial Statistics</h4>
+<ul>
+<li><strong>Module 04</strong>: (10-12 hours)</li>
+<li>Semivariogram theory</li>
+<li>Spatial autocorrelation</li>
+<li>All checkpoints</li>
+</ul>
+
+<h4>Week 6: Advanced Regression</h4>
+<ul>
+<li><strong>Module 05</strong>: (8-10 hours)</li>
+<li>Regularization techniques</li>
+<li>GWR applications</li>
+<li>Hyperparameter tuning</li>
+</ul>
+
+<h4>Week 7: Mixed Models (Optional)</h4>
+<ul>
+<li><strong>Module 06</strong>: If needed (10-12 hours)</li>
+<li>For hierarchical data</li>
+</ul>
+
+<h4>Weeks 8-9: Machine Learning</h4>
+<ul>
+<li><strong>Module 07</strong>: (12-15 hours)</li>
+<li>Random Forest, XGBoost</li>
+<li>CNNs for spatial data</li>
+</ul>
+
+<h4>Weeks 10-11: Applications</h4>
+<ul>
+<li><strong>Module 08</strong>: (10-15 hours)</li>
+<li>Integration project</li>
+<li>Apply to real problems</li>
+</ul>
+
+<strong>Total</strong>: ~11 weeks at 5-7 hours/week
+
+<hr>
+
+<h2>Path 3: GIS/Spatial Focus</h2>
+
+<strong>Who</strong>: Want to specialize in spatial analysis
+<strong>Time</strong>: 40-50 hours
+<strong>Goal</strong>: Master spatial methods, skip non-spatial topics
+
+<h3>Spatial Specialist Route</h3>
+
+<strong>Core modules</strong> (in order):
+<p>1. <strong>Module 01</strong> (skim): Python basics (2 hours)</p>
+<ul>
+<li>Just enough to understand code</li>
+</ul>
+
+<p>2. <strong>Module 03</strong>: Geospatial Fundamentals (8-10 hours)</p>
+<ul>
+<li><strong>Focus</strong>: Master this completely</li>
+<li>CRS, Kriging, spatial data types</li>
+</ul>
+
+<p>3. <strong>Module 04</strong>: Spatial Statistics (10-12 hours)</p>
+<ul>
+<li><strong>Focus</strong>: This is your core</li>
+<li>Semivariograms, autocorrelation</li>
+<li>All theory and applications</li>
+</ul>
+
+<p>4. <strong>Module 02</strong>: Statistical Foundations (5-7 hours)</p>
+<ul>
+<li>Regression basics (needed for GWR)</li>
+<li>Model evaluation</li>
+</ul>
+
+<p>5. <strong>Module 05</strong>: Advanced Regression (5-7 hours)</p>
+<ul>
+<li><strong>Focus on</strong>: Geographically Weighted Regression only</li>
+<li>Skip regularization if not interested</li>
+</ul>
+
+<p>6. <strong>Module 07</strong>: Machine Learning (8-10 hours)</p>
+<ul>
+<li><strong>Focus on</strong>: CNNs for spatial pattern removal</li>
+<li>Skip ensemble methods if not interested</li>
+</ul>
+
+<p>7. <strong>Module 08</strong>: Specialized Applications (8-10 hours)</p>
+<ul>
+<li>Multi-source spatial data fusion</li>
+<li>Complete spatial prediction framework</li>
+</ul>
+
+<strong>Total</strong>: ~46-60 hours
+
+<strong>Skip</strong>: Module 06 (Mixed Models) unless working with hierarchical spatial data
+
+<hr>
+
+<h2>Path 4: Machine Learning Focus</h2>
+
+<strong>Who</strong>: Want to apply ML to complex data
+<strong>Time</strong>: 35-45 hours
+<strong>Goal</strong>: Master ML techniques, minimal spatial focus
+
+<h3>ML-Focused Route</h3>
+
+<strong>Core modules</strong>:
+<p>1. <strong>Module 01</strong>: Foundations (3-5 hours)</p>
+<ul>
+<li>Python basics, statistics review</li>
+</ul>
+
+<p>2. <strong>Module 02</strong>: Statistical Foundations (5-7 hours)</p>
+<ul>
+<li>Regression, model evaluation</li>
+<li>Solid foundation for ML</li>
+</ul>
+
+<p>3. <strong>Module 05</strong>: Advanced Regression (8-10 hours)</p>
+<ul>
+<li><strong>Focus</strong>: Regularization, hyperparameter tuning</li>
+<li>Cross-validation strategies</li>
+</ul>
+
+<p>4. <strong>Module 06</strong>: Mixed Models (10-12 hours)</p>
+<ul>
+<li>Hierarchical data (common in real world)</li>
+<li>Random effects</li>
+</ul>
+
+<p>5. <strong>Module 07</strong>: Machine Learning (12-15 hours)</p>
+<ul>
+<li><strong>This is your core</strong></li>
+<li>Random Forest, XGBoost, CNNs</li>
+<li>All techniques and applications</li>
+</ul>
+
+<p>6. <strong>Module 08</strong>: Specialized Applications (8-10 hours)</p>
+<ul>
+<li>Multi-source data fusion</li>
+<li>Integration frameworks</li>
+</ul>
+
+<strong>Optional additions</strong>:
+<ul>
+<li>Module 03 (Geospatial Fundamentals) if working with spatial data</li>
+<li>Module 04 (Spatial Statistics) for spatial ML applications</li>
+</ul>
+
+<strong>Total</strong>: ~46-59 hours (+ optional modules)
+
+<hr>
+
+<h2>Path 5: Quick Review for Experienced Practitioners</h2>
+
+<strong>Who</strong>: Already know these topics, need a refresher
+<strong>Time</strong>: 15-20 hours
+<strong>Goal</strong>: Review key concepts, fill knowledge gaps
+
+<h3>Rapid Review Schedule</h3>
+
+<strong>Week 1</strong> (5-7 hours):
+<ul>
+<li>Module 01: Skip</li>
+<li>Module 02: Skim, review metrics (1 hour)</li>
+<li>Module 03: Review Kriging, CRS (2-3 hours)</li>
+<li>Module 04: Semivariogram models (2-3 hours)</li>
+</ul>
+
+<strong>Week 2</strong> (5-7 hours):
+<ul>
+<li>Module 05: Regularization, GWR (2-3 hours)</li>
+<li>Module 06: Mixed models review (2-3 hours)</li>
+<li>Module 07: Skim new ML techniques (1-2 hours)</li>
+</ul>
+
+<strong>Week 3</strong> (5-6 hours):
+<ul>
+<li>Module 08: Integration frameworks (3-4 hours)</li>
+<li>Review Quick Reference (1 hour)</li>
+<li>Practice on new dataset (1-2 hours)</li>
+</ul>
+
+<hr>
+
+<h2>Path 6: Project-Based Learning</h2>
+
+<strong>Who</strong>: Learn best by doing
+<strong>Time</strong>: Variable (60-80 hours including project work)
+<strong>Goal</strong>: Build a complete project while learning
+
+<h3>Project-Driven Approach</h3>
+
+<strong>Choose a project first</strong>, then learn modules as needed:
+
+<strong>Example Project: Yield Prediction</strong>
+<p>1. Start with Module 03 (load spatial data)</p>
+<p>2. Move to Module 02 (basic regression)</p>
+<p>3. Module 04 (understand spatial patterns)</p>
+<p>4. Module 05 (improve predictions with GWR)</p>
+<p>5. Module 07 (try ML methods)</p>
+<p>6. Module 08 (integrate everything)</p>
+
+<strong>Example Project: Disease Spread Modeling</strong>
+<p>1. Module 03 (spatial data)</p>
+<p>2. Module 02 (logistic regression)</p>
+<p>3. Module 04 (spatial autocorrelation of disease)</p>
+<p>4. Module 07 (ML classification)</p>
+
+<strong>Approach</strong>:
+<ul>
+<li>Read module sections as needed for project</li>
+<li>Implement immediately</li>
+<li>Return to module for deeper understanding</li>
+<li>Iterate</li>
+</ul>
+
+<hr>
+
+<h2>Tips for All Paths</h2>
+
+<h3>Daily Study Routine</h3>
+
+<strong>Effective 1-hour session</strong>:
+<ul>
+<li>5 min: Review previous day's checkpoint</li>
+<li>25 min: Read new concepts</li>
+<li>25 min: Code examples yourself</li>
+<li>5 min: Write summary of what you learned</li>
+</ul>
+
+<strong>Effective 2-hour session</strong>:
+<ul>
+<li>10 min: Review</li>
+<li>40 min: Study new material</li>
+<li>60 min: Practice/code</li>
+<li>10 min: Checkpoints and summary</li>
+</ul>
+
+<h3>Staying on Track</h3>
+
+<strong>Weekly goals</strong>:
+<ul>
+<li>Complete at least one module checkpoint</li>
+<li>Code at least 3-4 days</li>
+<li>Review one previous concept</li>
+</ul>
+
+<strong>Signs you're moving too fast</strong>:
+<ul>
+<li>Can't answer checkpoint questions</li>
+<li>Copying code without understanding</li>
+<li>Skipping practice exercises</li>
+<li>Solution: Slow down, review previous section</li>
+</ul>
+
+<strong>Signs you're moving too slow</strong>:
+<ul>
+<li>Re-reading same section multiple times</li>
+<li>Perfectionism (every concept 100% clear)</li>
+<li>Solution: Accept some uncertainty, move forward, circle back later</li>
+</ul>
+
+<h3>Getting Unstuck</h3>
+
+<strong>When confused</strong>:
+<p>1. Try a simpler example first</p>
+<p>2. Draw it out (especially spatial concepts)</p>
+<p>3. Use Quick Reference for syntax</p>
+<p>4. Search online for alternative explanations</p>
+<p>5. Move on and return later with fresh perspective</p>
+
+<strong>When code doesn't work</strong>:
+<p>1. Read error message carefully</p>
+<p>2. Check data types and shapes</p>
+<p>3. Print intermediate values</p>
+<p>4. Start with smallest example that works</p>
+<p>5. Add complexity incrementally</p>
+
+<hr>
+
+<h2>Measuring Progress</h2>
+
+<h3>Module Completion Checklist</h3>
+
+<p>For each module, you should be able to:</p>
+<ul class="checkbox-list">
+<li>Explain key concepts in simple words</li>
+<li>Answer all checkpoint questions</li>
+<li>Write code from scratch (not just copy)</li>
+<li>Apply to different dataset</li>
+<li>Identify when to use these techniques</li>
+</ul>
+
+<h3>Course Completion</h3>
+
+<p>You've completed the course when you can:</p>
+<ul class="checkbox-list">
+<li>Load and visualize spatial data</li>
+<li>Perform appropriate statistical analyses</li>
+<li>Build and evaluate predictive models</li>
+<li>Interpret results correctly</li>
+<li>Choose right method for the problem</li>
+<li>Complete an end-to-end project</li>
+</ul>
+
+<hr>
+
+<h2>After Completion</h2>
+
+<h3>Next Steps</h3>
+
+<strong>Consolidate knowledge</strong>:
+<ul>
+<li>Redo challenging modules</li>
+<li>Teach concepts to someone else</li>
+<li>Write blog post explaining key ideas</li>
+</ul>
+
+<strong>Apply skills</strong>:
+<ul>
+<li>Use in research/work projects</li>
+<li>Contribute to open-source projects</li>
+<li>Kaggle competitions</li>
+<li>Publish analysis</li>
+</ul>
+
+<strong>Go deeper</strong>:
+<ul>
+<li>Advanced spatial statistics courses</li>
+<li>Deep learning specialization</li>
+<li>Domain-specific applications (precision ag, ecology, epidemiology)</li>
+</ul>
+
+<strong>Stay current</strong>:
+<ul>
+<li>Follow spatial data science blogs</li>
+<li>Read recent papers</li>
+<li>Learn new libraries/tools</li>
+</ul>
+
+<hr>
+
+<em>Choose your path, stay consistent, and don't hesitate to adjust as you learn what works best for you!</em>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="showSection('home')">← Previous</button>
+                    <button class="btn btn-primary" onclick="showSection('module1')">Next →</button>
+                </div>
+            </section>
+
+            <section id="module1" class="content-section">
+                <h1>Module 01: Foundations</h1>
+<h2>Python Basics, Statistics & Visualization</h2>
+
+<strong>Difficulty</strong>: ⭐ Beginner
+<strong>Time Estimate</strong>: 3-5 hours
+<strong>Prerequisites</strong>: None - This is your starting point!
+
+<hr>
+
+<h2>Module Overview</h2>
+
+<p>This module introduces you to Python programming and basic statistical concepts. Think of this as building your toolbox - you'll learn the fundamental tools you'll use throughout the course.</p>
+
+<h3>What You'll Learn</h3>
+<ul>
+<li>How to store and organize data in Python</li>
+<li>How to make decisions and repeat actions in your code</li>
+<li>How to visualize data with charts and graphs</li>
+<li>Basic statistical measures (mean, standard deviation, etc.)</li>
+<li>How different types of data are distributed</li>
+<li>Simple linear regression (finding the line of best fit)</li>
+</ul>
+
+<h3>Why This Matters</h3>
+<p>Before you can analyze spatial data or build complex models, you need to understand how to:</p>
+<ul>
+<li>Work with data in Python</li>
+<li>Calculate basic statistics</li>
+<li>Visualize patterns</li>
+<li>Understand relationships between variables</li>
+</ul>
+
+<hr>
+
+<h2>Learning Objectives</h2>
+
+<p>By the end of this module, you will be able to:</p>
+<ul class="checkbox-list">
+<li>Create and manipulate Python data structures (lists, dictionaries, tuples)</li>
+<li>Write functions and use control flow (if/else, loops)</li>
+<li>Create visualizations using Plotly</li>
+<li>Calculate summary statistics (mean, median, standard deviation)</li>
+<li>Understand common probability distributions</li>
+<li>Fit a simple linear regression model</li>
+<li>Interpret Q-Q plots for normality</li>
+</ul>
+
+<hr>
+
+<h2>Core Concepts</h2>
+
+<h3>1. Python Data Types</h3>
+
+<h4>Lists</h4>
+<strong>What it is</strong>: Think of a list like a shopping cart - it's a container that holds multiple items in order.
+
+<pre><code>
+# A list of temperatures
+temperatures = [72, 75, 68, 80, 77]
+
+# Access the first item (Python starts counting at 0!)
+first_temp = temperatures[0]  # Returns 72
+
+# Add a new temperature
+temperatures.append(79)
+</code></pre>
+
+<strong>Why it matters</strong>: Lists let you store multiple measurements (like daily temperatures or crop yields) and work with them all at once.
+
+<h4>Dictionaries</h4>
+<strong>What it is</strong>: Think of a dictionary like a real dictionary - you look up a word (the "key") to find its definition (the "value").
+
+<pre><code>
+# A dictionary storing field information
+field_info = {
+    "area": 100,  # acres
+    "crop": "corn",
+    "yield": 180  # bushels per acre
+}
+
+# Access a value using its key
+crop_type = field_info["crop"]  # Returns "corn"
+</code></pre>
+
+<strong>Why it matters</strong>: Dictionaries help you organize related information together, like keeping all data about a field in one place.
+
+<h4>Tuples</h4>
+<strong>What it is</strong>: Like a list, but it can't be changed once created. Think of it as a sealed package.
+
+<pre><code>
+# GPS coordinates (latitude, longitude) - shouldn't change!
+location = (40.1106, -88.2073)
+</code></pre>
+
+<strong>Why it matters</strong>: Use tuples for data that shouldn't be modified, like coordinates or fixed parameters.
+
+<hr>
+
+<h3>2. Control Flow</h3>
+
+<h4>If/Else Statements</h4>
+<strong>What it is</strong>: Making decisions in your code, like choosing a path at a fork in the road.
+
+<pre><code>
+temperature = 75
+
+if temperature &gt; 80:
+    print("It's hot!")
+elif temperature &gt; 60:
+    print("It's comfortable")
+else:
+    print("It's cold!")
+</code></pre>
+
+<strong>Simple example</strong>: Imagine you're deciding whether to irrigate a field:
+<pre><code>
+soil_moisture = 15  # percent
+
+if soil_moisture &lt; 20:
+    action = "Irrigate immediately"
+elif soil_moisture &lt; 35:
+    action = "Monitor closely"
+else:
+    action = "No irrigation needed"
+</code></pre>
+
+<h4>Loops</h4>
+<strong>What it is</strong>: Repeating an action multiple times, like checking each plant in a row.
+
+<pre><code>
+# For loop - repeat a fixed number of times
+yields = [180, 175, 190, 165, 185]
+
+for yield_value in yields:
+    print(f"This field produced {yield_value} bushels/acre")
+
+# While loop - repeat until a condition is met
+water_level = 100
+day = 0
+
+while water_level &gt; 20:
+    water_level = water_level - 5  # Decrease by 5% per day
+    day = day + 1
+
+print(f"Need to refill after {day} days")
+</code></pre>
+
+<h4>List Comprehension</h4>
+<strong>What it is</strong>: A compact way to create a new list by transforming each item in an existing list.
+
+<pre><code>
+# Convert Fahrenheit to Celsius for all temperatures
+fahrenheit = [72, 75, 68, 80, 77]
+celsius = [(temp - 32) * 5/9 for temp in fahrenheit]
+
+# Result: [22.2, 23.9, 20.0, 26.7, 25.0]
+</code></pre>
+
+<p>Think of it as an assembly line - each item goes in, gets transformed, and comes out changed.</p>
+
+<hr>
+
+<h3>3. Functions</h3>
+
+<strong>What it is</strong>: A reusable recipe for a task. Write it once, use it many times.
+
+<pre><code>
+def calculate_yield(area, production):
+    """Calculate yield per acre"""
+    return production / area
+
+# Use the function
+field1_yield = calculate_yield(100, 18000)  # 180 bushels/acre
+field2_yield = calculate_yield(150, 26250)  # 175 bushels/acre
+</code></pre>
+
+<strong>Why it matters</strong>: Functions help you:
+<ul>
+<li>Avoid repeating the same code</li>
+<li>Make your code easier to understand</li>
+<li>Reduce mistakes (fix it once, it's fixed everywhere)</li>
+</ul>
+
+<strong>Simple example</strong>: A function to categorize crop yields:
+<pre><code>
+def yield_category(yield_value):
+    """Categorize yield as low, medium, or high"""
+    if yield_value &lt; 150:
+        return "Low"
+    elif yield_value &lt; 180:
+        return "Medium"
+    else:
+        return "High"
+
+# Use it
+print(yield_category(165))  # Returns "Medium"
+print(yield_category(190))  # Returns "High"
+</code></pre>
+
+<hr>
+
+<h3>4. Visualization with Plotly</h3>
+
+<strong>What it is</strong>: Creating charts and graphs to see patterns in your data that numbers alone might hide.
+
+<strong>Why it matters</strong>: A good chart can show you in seconds what might take hours to understand from tables of numbers.
+
+<strong>Common plot types</strong>:
+
+<p>1. <strong>Scatter plot</strong>: Shows the relationship between two variables</p>
+<ul>
+<li>Example: Plot yield vs rainfall to see if more rain means higher yield</li>
+</ul>
+
+<p>2. <strong>Histogram</strong>: Shows how data is distributed</p>
+<ul>
+<li>Example: How many fields produced 150-160 bushels/acre? 160-170?</li>
+</ul>
+
+<p>3. <strong>Line plot</strong>: Shows how something changes over time</p>
+<ul>
+<li>Example: Daily temperature over a growing season</li>
+</ul>
+
+<strong>Simple example</strong>: Imagine plotting crop yield vs fertilizer amount to see if more fertilizer helps:
+<pre><code>
+import plotly.graph_objects as go
+
+fertilizer = [0, 50, 100, 150, 200]  # pounds per acre
+yield_data = [120, 150, 175, 180, 181]  # bushels per acre
+
+fig = go.Figure(data=go.Scatter(x=fertilizer, y=yield_data, mode='markers'))
+fig.update_layout(title='Yield vs Fertilizer',
+                  xaxis_title='Fertilizer (lbs/acre)',
+                  yaxis_title='Yield (bushels/acre)')
+fig.show()
+</code></pre>
+
+<hr>
+
+<h3>5. Summary Statistics</h3>
+
+<strong>What it is</strong>: Single numbers that describe your entire dataset.
+
+<h4>Mean (Average)</h4>
+<strong>Simple explanation</strong>: Add up all the values and divide by how many you have.
+
+<pre><code>
+yields = [180, 175, 190, 165, 185]
+mean_yield = sum(yields) / len(yields)  # 179
+</code></pre>
+
+<strong>Why it matters</strong>: Gives you a "typical" value, but can be misleading if you have outliers.
+
+<h4>Median (Middle Value)</h4>
+<strong>Simple explanation</strong>: Line up all values from smallest to largest and pick the middle one.
+
+<pre><code>
+import numpy as np
+yields = [180, 175, 190, 165, 185]
+median_yield = np.median(yields)  # 180
+</code></pre>
+
+<strong>Example</strong>: If yields are [100, 175, 180, 185, 190], the median is 180 (the middle value). If one field had a terrible year and only produced 10 bushels, the mean would drop a lot, but the median would barely change. That's why median is often more reliable!
+
+<h4>Standard Deviation</h4>
+<strong>Simple explanation</strong>: Measures how spread out your data is. Small standard deviation = most values are close to the mean. Large standard deviation = values are all over the place.
+
+<pre><code>
+import numpy as np
+yields = [180, 175, 190, 165, 185]
+std_dev = np.std(yields)  # About 9.1
+</code></pre>
+
+<strong>Think of it this way</strong>:
+<ul>
+<li>Standard deviation of 5: Most fields produce within 5 bushels of the average (very consistent!)</li>
+<li>Standard deviation of 30: Yields vary wildly (inconsistent - might need to investigate why!)</li>
+</ul>
+
+<hr>
+
+<h3>6. Probability Distributions</h3>
+
+<strong>What it is</strong>: A pattern that describes how likely different values are to occur.
+
+<h4>Normal Distribution (Bell Curve)</h4>
+<strong>Simple explanation</strong>: Most values cluster around the average, with fewer values as you go further away. Looks like a bell when plotted.
+
+<strong>Real-world example</strong>: Heights of corn plants in a field. Most are around average height (say, 8 feet), some are a bit shorter (7 feet) or taller (9 feet), and very few are extremely short (5 feet) or tall (11 feet).
+
+<strong>In Python</strong>:
+<pre><code>
+from scipy import stats
+import numpy as np
+
+# Generate 1000 random values from a normal distribution
+# mean=170, standard deviation=15
+yields = stats.norm.rvs(loc=170, scale=15, size=1000)
+</code></pre>
+
+<h4>Binomial Distribution</h4>
+<strong>Simple explanation</strong>: Used when you have yes/no outcomes repeated many times.
+
+<strong>Real-world example</strong>: Germination test. If 85% of seeds normally germinate, what's the probability that exactly 80 out of 100 seeds will germinate?
+
+<pre><code>
+from scipy import stats
+
+# Probability of exactly 80 successes in 100 trials with 85% success rate
+prob = stats.binom.pmf(k=80, n=100, p=0.85)
+</code></pre>
+
+<h4>Poisson Distribution</h4>
+<strong>Simple explanation</strong>: Used for counting how many times something happens in a fixed period.
+
+<strong>Real-world example</strong>: Number of weeds found per square meter in a field. Average is 5 weeds/m². What's the probability of finding exactly 3 weeds in a random square meter?
+
+<pre><code>
+from scipy import stats
+
+# Probability of exactly 3 occurrences when average is 5
+prob = stats.poisson.pmf(k=3, mu=5)
+</code></pre>
+
+<hr>
+
+<h3>7. Simple Linear Regression</h3>
+
+<strong>What it is</strong>: Finding the straight line that best fits through a scatter of points. Used to predict one variable based on another.
+
+<strong>Simple explanation</strong>: Imagine you have crop yield data and rainfall data for many fields. Linear regression finds the line that best shows how yield changes with rainfall. Then you can use that line to predict: "If we get 30 inches of rain, what yield should we expect?"
+
+<strong>The equation</strong>: <code>y = mx + b</code>
+<ul>
+<li><code>y</code> = what you're predicting (yield)</li>
+<li><code>x</code> = what you know (rainfall)</li>
+<li><code>m</code> = slope (how much y changes when x increases by 1)</li>
+<li><code>b</code> = intercept (value of y when x is 0)</li>
+</ul>
+
+<strong>Real example</strong>:
+<pre><code>
+import numpy as np
+from scipy import stats
+
+# Rainfall data (inches)
+rainfall = np.array([20, 25, 30, 35, 40])
+
+# Yield data (bushels/acre)
+yields = np.array([140, 160, 175, 185, 190])
+
+# Fit the line
+slope, intercept, r_value, p_value, std_err = stats.linregress(rainfall, yields)
+
+# Predict yield for 32 inches of rainfall
+predicted_yield = slope * 32 + intercept
+
+print(f"For 32 inches of rain, expect {predicted_yield:.1f} bushels/acre")
+print(f"R-squared: {r_value**2:.3f}")  # How well the line fits (0-1, higher is better)
+</code></pre>
+
+<strong>Understanding R-squared</strong>:
+<ul>
+<li>R² = 0.95: The line fits the data really well (95% of variation in yield is explained by rainfall)</li>
+<li>R² = 0.50: The line fits okay (rainfall explains 50% of yield variation)</li>
+<li>R² = 0.10: The line fits poorly (rainfall barely explains yield variation)</li>
+</ul>
+
+<hr>
+
+<h3>8. Q-Q Plots (Quantile-Quantile Plots)</h3>
+
+<strong>What it is</strong>: A visual way to check if your data follows a normal distribution.
+
+<strong>Simple explanation</strong>: A Q-Q plot compares your data to what you'd expect if it were perfectly normally distributed. If the points fall on a straight diagonal line, your data is normal. If they curve or scatter, it's not.
+
+<strong>Why it matters</strong>: Many statistical tests assume your data is normally distributed. A Q-Q plot helps you check this assumption.
+
+<strong>How to read it</strong>:
+<ul>
+<li>Points on the diagonal line = data is normal</li>
+<li>Points curve upward at the ends = data has more extreme values than normal (heavy tails)</li>
+<li>Points curve downward = data has fewer extreme values than normal</li>
+<li>Points form an S-shape = data is skewed</li>
+</ul>
+
+<strong>Simple example</strong>: You measure soil nitrogen levels in 100 locations. Before running certain analyses, you check if the data is normally distributed:
+
+<pre><code>
+import scipy.stats as stats
+import matplotlib.pyplot as plt
+
+# Your data
+nitrogen_levels = [45, 48, 50, 52, 47, 49, 51, ...]  # 100 measurements
+
+# Create Q-Q plot
+stats.probplot(nitrogen_levels, dist="norm", plot=plt)
+plt.title("Q-Q Plot: Nitrogen Levels")
+plt.show()
+</code></pre>
+
+<p>If the points fall on the line, your nitrogen data is normally distributed and you can proceed with analyses that assume normality!</p>
+
+<hr>
+
+<h2>Course Materials</h2>
+
+<h3>Primary Notebooks</h3>
+
+<p>1. <strong><a href="/tmp/cpsc444-study/python_cheat_sheet.ipynb">python_cheat_sheet.ipynb</a></strong></p>
+<ul>
+<li>Comprehensive Python reference</li>
+<li>Data types, control flow, functions</li>
+<li>Plotly visualization examples</li>
+<li>Your main reference document!</li>
+</ul>
+
+<p>2. <strong><a href="/tmp/cpsc444-study/w01-exercises/Colab+Python-warmUp.ipynb">w01-exercises/Colab+Python-warmUp.ipynb</a></strong></p>
+<ul>
+<li>Python warm-up exercises</li>
+<li>Regression simulation example</li>
+<li>Hands-on practice with basic concepts</li>
+</ul>
+
+<p>3. <strong><a href="/tmp/cpsc444-study/w01-exercises/Basic_Functions_python.ipynb">w01-exercises/Basic_Functions_python.ipynb</a></strong></p>
+<ul>
+<li>Statistical functions in Python</li>
+<li>Distribution functions (binomial, normal, Poisson, etc.)</li>
+<li>Practical examples</li>
+</ul>
+
+<h3>Reference Materials</h3>
+
+<p>4. <strong><a href="/tmp/cpsc444-study/old_cheatsheet.ipynb">old_cheatsheet.ipynb</a></strong></p>
+<ul>
+<li>Alternative reference with additional examples</li>
+<li>Different perspective on core concepts</li>
+</ul>
+
+<hr>
+
+<h2>Key Formulas</h2>
+
+<h3>Mean</h3>
+<pre><code>
+mean = (x₁ + x₂ + x₃ + ... + xₙ) / n
+</code></pre>
+<strong>In words</strong>: Add all values, divide by how many there are.
+
+<h3>Standard Deviation</h3>
+<pre><code>
+σ = √[Σ(xᵢ - mean)² / n]
+</code></pre>
+<strong>In words</strong>:
+<p>1. Subtract the mean from each value</p>
+<p>2. Square each result</p>
+<p>3. Find the average of those squares</p>
+<p>4. Take the square root</p>
+
+<h3>Linear Regression Slope</h3>
+<pre><code>
+m = Σ[(xᵢ - x̄)(yᵢ - ȳ)] / Σ[(xᵢ - x̄)²]
+</code></pre>
+<strong>In words</strong>: The slope tells you how much y changes when x increases by 1.
+
+<h3>Linear Regression Intercept</h3>
+<pre><code>
+b = ȳ - m·x̄
+</code></pre>
+<strong>In words</strong>: The intercept is where the line crosses the y-axis (value of y when x=0).
+
+<hr>
+
+<h2>Study Checkpoints</h2>
+
+<p>Before moving to Module 02, make sure you can answer these questions:</p>
+
+<h3>Can you explain...?</h3>
+
+<p>1. <strong>What's the difference between a list and a dictionary in Python?</strong></p>
+<details>
+<summary>Click to check your understanding</summary>
+<p>A list stores items in order and you access them by position (index). A dictionary stores key-value pairs and you access values using their keys. Lists are like a numbered shopping list; dictionaries are like a phone book (name → number).</p>
+</details>
+
+<p>2. <strong>When would you use a for loop vs a while loop?</strong></p>
+<details>
+<summary>Click to check your understanding</summary>
+<p>Use a for loop when you know how many times to repeat (like processing each item in a list). Use a while loop when you repeat until a condition is met (like "keep adding water until the tank is full").</p>
+</details>
+
+<p>3. <strong>What does standard deviation tell you about your data?</strong></p>
+<details>
+<summary>Click to check your understanding</summary>
+<p>Standard deviation measures spread. Low = data points are close to the mean (consistent). High = data points are scattered (variable). Example: std dev of 5 means most values are within 5 units of the mean.</p>
+</details>
+
+<p>4. <strong>What's the difference between mean and median?</strong></p>
+<details>
+<summary>Click to check your understanding</summary>
+<p>Mean = average (sum ÷ count). Median = middle value when sorted. Median is better when you have outliers because it's not affected by extreme values like mean is.</p>
+</details>
+
+<p>5. <strong>What does R-squared tell you in a regression?</strong></p>
+<details>
+<summary>Click to check your understanding</summary>
+<p>R² tells you how well your line fits the data. R²=0.9 means 90% of the variation in y is explained by x (good fit). R²=0.2 means only 20% is explained (poor fit). Range: 0 to 1, higher is better.</p>
+</details>
+
+<h3>Can you do...?</h3>
+
+<p>1. <strong>Create a list of numbers and calculate their mean using Python?</strong></p>
+<pre><code>
+   # Try it yourself first, then check:
+   data = [10, 15, 12, 18, 14]
+   mean = sum(data) / len(data)
+   # Or using numpy: mean = np.mean(data)
+</code></pre>
+
+<p>2. <strong>Write a function that takes a temperature in Fahrenheit and returns Celsius?</strong></p>
+<pre><code>
+   # Formula: C = (F - 32) × 5/9
+   # Try writing it, then check:
+   def f_to_c(fahrenheit):
+       return (fahrenheit - 32) * 5/9
+</code></pre>
+
+<p>3. <strong>Use list comprehension to square every number in a list?</strong></p>
+<pre><code>
+   # If you have [1, 2, 3, 4, 5], create [1, 4, 9, 16, 25]
+   # Try it, then check:
+   numbers = [1, 2, 3, 4, 5]
+   squared = [n**2 for n in numbers]
+</code></pre>
+
+<p>4. <strong>Create a simple scatter plot showing the relationship between two variables?</strong></p>
+<pre><code>
+   # Try using Plotly to plot hours studied vs test score
+   # Check the python_cheat_sheet.ipynb for examples
+</code></pre>
+
+<h3>Self-Check Exercises</h3>
+
+<p>Work through these notebooks and make sure you understand them:</p>
+
+<ul class="checkbox-list">
+<li>Complete the warm-up exercises in <code>Colab+Python-warmUp.ipynb</code></li>
+<li>Run all examples in <code>python_cheat_sheet.ipynb</code> and modify them</li>
+<li>Practice with distributions in <code>Basic_Functions_python.ipynb</code></li>
+<li>Create your own simple linear regression with made-up data</li>
+</ul>
+
+<h3>Ready for Next Module?</h3>
+
+<p>Check off each item:</p>
+
+<ul class="checkbox-list">
+<li>I can create and manipulate lists, dictionaries, and tuples</li>
+<li>I can write if/else statements and loops</li>
+<li>I can write and use functions</li>
+<li>I understand mean, median, and standard deviation</li>
+<li>I can explain what a normal distribution is</li>
+<li>I can fit a simple linear regression and interpret R²</li>
+<li>I can create basic visualizations with Plotly or Matplotlib</li>
+</ul>
+
+<strong>If you checked all items</strong>: Congratulations! You're ready for <a href="Module_02_Statistical_Foundations.md">Module 02: Statistical Foundations</a>
+
+<strong>If you're unsure about some items</strong>: That's okay! Review the relevant sections and work through the notebooks again. These are foundational skills you'll use throughout the course.
+
+<hr>
+
+<h2>Learning Tips for This Module</h2>
+
+<p>1. <strong>Type, don't copy-paste</strong>: You learn by doing. Type out the code examples yourself.</p>
+
+<p>2. <strong>Break things intentionally</strong>: Change values, try different inputs, see what happens when things go wrong. This builds understanding.</p>
+
+<p>3. <strong>Use print() liberally</strong>: When learning, print intermediate values to see what's happening at each step.</p>
+
+<p>4. <strong>Start simple</strong>: If an example is complex, create a simpler version first. Master that, then add complexity.</p>
+
+<p>5. <strong>Relate to the real world</strong>: Every concept has a real-world application. Think about how you'd use it with actual data.</p>
+
+<p>6. <strong>Don't memorize syntax</strong>: You'll remember it through use. It's okay to look things up!</p>
+
+<p>7. <strong>Practice with your own data</strong>: If you have data from a project or hobby, try applying these concepts to it.</p>
+
+<hr>
+
+<h2>Common Beginner Mistakes</h2>
+
+<p>1. <strong>Forgetting that Python starts counting at 0</strong></p>
+<pre><code>
+   temps = [72, 75, 68]
+   first_temp = temps[0]  # Not temps[1]!
+</code></pre>
+
+<p>2. <strong>Confusing = and ==</strong></p>
+<ul>
+<li><code>=</code> assigns a value: <code>x = 5</code></li>
+<li><code>==</code> checks if equal: <code>if x == 5:</code></li>
+</ul>
+
+<p>3. <strong>Indentation errors</strong></p>
+<p>Python uses indentation to group code. All lines in a function or loop must be indented the same way.</p>
+
+<p>4. <strong>Forgetting to import libraries</strong></p>
+<pre><code>
+   import numpy as np  # Do this at the top of your file!
+   mean = np.mean(data)  # Now you can use numpy
+</code></pre>
+
+<p>5. <strong>Interpreting correlation as causation</strong></p>
+<p>Just because yield and rainfall are correlated doesn't mean rain directly causes yield changes. Other factors might be involved!</p>
+
+<hr>
+
+<h2>Next Steps</h2>
+
+<p>Once you're comfortable with this module:</p>
+
+<p>→ <strong>Continue to <a href="Module_02_Statistical_Foundations.md">Module 02: Statistical Foundations</a></strong></p>
+
+<p>You'll learn about:</p>
+<ul>
+<li>Multiple regression (predicting with multiple variables)</li>
+<li>Logistic regression (yes/no predictions)</li>
+<li>Model evaluation techniques</li>
+<li>Correlation analysis</li>
+</ul>
+
+<hr>
+
+<em>Remember: Everyone learns at their own pace. Take your time, practice, and don't hesitate to revisit concepts that seem unclear!</em>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="showSection('paths')">← Previous</button>
+                    <button class="btn btn-primary" onclick="showSection('module2')">Next →</button>
+                </div>
+            </section>
+
+            <section id="module2" class="content-section">
+                <h1>Module 02: Statistical Foundations</h1>
+<h2>Multiple Regression, Logistic Regression & Model Evaluation</h2>
+
+<strong>Difficulty</strong>: ⭐⭐ Intermediate
+<strong>Time Estimate</strong>: 5-7 hours
+<strong>Prerequisites</strong>: Module 01 (Python basics, simple regression, statistics)
+
+<hr>
+
+<h2>Module Overview</h2>
+
+<p>In Module 01, you learned simple linear regression - predicting one variable from another (like yield from rainfall). In this module, you'll learn how to use MULTIPLE variables to make predictions (like yield from rainfall AND temperature AND soil type). You'll also learn how to make yes/no predictions (logistic regression) and how to evaluate whether your models are actually good.</p>
+
+<h3>What You'll Learn</h3>
+<ul>
+<li>Multiple regression (using several predictors at once)</li>
+<li>Matrix-based solutions for regression</li>
+<li>Logistic regression (for yes/no outcomes)</li>
+<li>How to evaluate model quality</li>
+<li>Correlation vs causation</li>
+<li>Model assumptions and diagnostics</li>
+</ul>
+
+<h3>Why This Matters</h3>
+<p>Real-world outcomes usually depend on multiple factors, not just one:</p>
+<ul>
+<li>Crop yield depends on rainfall, temperature, soil nutrients, planting date, etc.</li>
+<li>Disease occurrence depends on temperature, humidity, crop variety, previous crops, etc.</li>
+<li>Knowing how to use multiple predictors and evaluate model quality is essential for practical data analysis.</li>
+</ul>
+
+<hr>
+
+<h2>Learning Objectives</h2>
+
+<p>By the end of this module, you will be able to:</p>
+<ul class="checkbox-list">
+<li>Build multiple regression models with several predictors</li>
+<li>Understand the matrix formulation of regression</li>
+<li>Apply logistic regression for binary classification</li>
+<li>Evaluate models using R², MSE, and confusion matrices</li>
+<li>Interpret regression coefficients correctly</li>
+<li>Assess model assumptions</li>
+<li>Distinguish correlation from causation</li>
+</ul>
+
+<hr>
+
+<h2>Core Concepts</h2>
+
+<h3>1. Multiple Linear Regression</h3>
+
+<strong>What it is</strong>: Predicting one outcome variable using TWO OR MORE predictor variables.
+
+<strong>Simple regression</strong>: <code>Yield = b₀ + b₁ × Rainfall</code>
+<strong>Multiple regression</strong>: <code>Yield = b₀ + b₁ × Rainfall + b₂ × Temperature + b₃ × Nitrogen</code>
+
+<strong>Simple explanation</strong>: Instead of drawing a line through points (simple regression), you're fitting a plane or higher-dimensional surface through your data (multiple regression).
+
+<strong>Real-world example</strong>: Predicting corn yield
+
+<pre><code>
+import numpy as np
+from sklearn.linear_model import LinearRegression
+
+# Predictor variables (X) - each column is a different predictor
+X = np.array([
+    [30, 75, 120],  # Field 1: 30" rain, 75°F avg temp, 120 lb/acre nitrogen
+    [25, 78, 100],  # Field 2
+    [35, 72, 130],  # Field 3
+    [28, 77, 115],  # Field 4
+    [32, 74, 125],  # Field 5
+])
+
+# Outcome variable (y)
+y = np.array([175, 160, 185, 170, 180])  # Yields in bushels/acre
+
+# Fit the model
+model = LinearRegression()
+model.fit(X, y)
+
+# The equation is:
+# Yield = intercept + (coef₁ × Rainfall) + (coef₂ × Temp) + (coef₃ × Nitrogen)
+print(f"Intercept: {model.intercept_}")
+print(f"Coefficients: {model.coef_}")
+
+# Predict yield for new field: 31" rain, 76°F, 120 lb/acre nitrogen
+new_field = np.array([[31, 76, 120]])
+predicted_yield = model.predict(new_field)
+print(f"Predicted yield: {predicted_yield[0]:.1f} bushels/acre")
+</code></pre>
+
+<strong>Interpreting coefficients</strong>:
+<p>If the rainfall coefficient is 2.5, it means: "Holding temperature and nitrogen constant, each additional inch of rain increases yield by 2.5 bushels/acre."</p>
+
+<p>This is key: each coefficient shows the effect of that variable when ALL OTHER variables are held constant.</p>
+
+<hr>
+
+<h3>2. Matrix Formulation</h3>
+
+<strong>What it is</strong>: A mathematical way to solve regression problems using matrices and linear algebra.
+
+<strong>The normal equation</strong>: <code>β = (XᵀX)⁻¹Xᵀy</code>
+
+<strong>Simple explanation</strong>: This formula gives you all the regression coefficients (β) in one calculation.
+
+<strong>Breaking it down</strong>:
+<ul>
+<li><code>X</code> = matrix of all your predictor values</li>
+<li><code>Xᵀ</code> = X transposed (flipped rows and columns)</li>
+<li><code>y</code> = vector of outcome values</li>
+<li><code>β</code> = the coefficients you're solving for</li>
+<li><code>⁻¹</code> = matrix inverse (like division for matrices)</li>
+</ul>
+
+<strong>Why it matters</strong>: This is what's happening "under the hood" when you use regression functions. Understanding it helps you:
+<ul>
+<li>Know what assumptions are being made</li>
+<li>Understand when regression might fail (like when XᵀX can't be inverted)</li>
+<li>Debug problems with your models</li>
+</ul>
+
+<strong>Simple example with 2 predictors</strong>:
+
+<pre><code>
+import numpy as np
+
+# Predictor matrix X (add column of 1s for intercept)
+X = np.array([
+    [1, 30, 120],  # 1, rainfall, nitrogen
+    [1, 25, 100],
+    [1, 35, 130],
+    [1, 28, 115],
+    [1, 32, 125],
+])
+
+y = np.array([175, 160, 185, 170, 180])
+
+# Solve using normal equation: β = (XᵀX)⁻¹Xᵀy
+XtX = X.T @ X  # @ is matrix multiplication
+XtX_inv = np.linalg.inv(XtX)
+Xty = X.T @ y
+beta = XtX_inv @ Xty
+
+print(f"Coefficients: {beta}")
+# beta[0] = intercept
+# beta[1] = rainfall coefficient
+# beta[2] = nitrogen coefficient
+</code></pre>
+
+<strong>When this fails</strong>: If two predictors are perfectly correlated (multicollinearity), XᵀX can't be inverted. Example: including both "area in acres" and "area in hectares" as separate predictors.
+
+<hr>
+
+<h3>3. Logistic Regression</h3>
+
+<strong>What it is</strong>: Used when you want to predict a yes/no outcome (will it rain? will the crop fail? will the pest appear?).
+
+<strong>Simple explanation</strong>: Regular regression predicts numbers. Logistic regression predicts probabilities (0 to 1), which you can interpret as "probability of yes."
+
+<strong>How it works</strong>: Uses a sigmoid (S-shaped) function to squeeze predictions between 0 and 1:
+
+<pre><code>
+P(yes) = 1 / (1 + e^(-z))
+
+where z = b₀ + b₁x₁ + b₂x₂ + ...
+</code></pre>
+
+<strong>Real-world example</strong>: Predicting if a field will experience drought stress
+
+<pre><code>
+from sklearn.linear_model import LogisticRegression
+import numpy as np
+
+# Features: [rainfall (inches), temperature (°F)]
+X = np.array([
+    [35, 72],  # Good rain, moderate temp
+    [15, 85],  # Low rain, hot
+    [40, 70],  # Excellent conditions
+    [12, 88],  # Drought risk!
+    [30, 78],  # Moderate
+    [10, 90],  # High drought risk
+    [38, 73],  # Good
+])
+
+# Outcome: 1 = drought stress, 0 = no stress
+y = np.array([0, 1, 0, 1, 0, 1, 0])
+
+# Fit logistic regression
+model = LogisticRegression()
+model.fit(X, y)
+
+# Predict for new field: 20" rain, 83°F
+new_field = np.array([[20, 83]])
+
+# Get probability of drought stress
+prob_drought = model.predict_proba(new_field)[0, 1]
+print(f"Probability of drought stress: {prob_drought:.2%}")
+
+# Get yes/no prediction (uses 0.5 as cutoff by default)
+prediction = model.predict(new_field)[0]
+print(f"Prediction: {'Drought stress' if prediction == 1 else 'No stress'}")
+</code></pre>
+
+<strong>Key difference from linear regression</strong>:
+<ul>
+<li>Linear: Predicts any number (-∞ to +∞)</li>
+<li>Logistic: Predicts probability (0 to 1), then converts to yes/no</li>
+</ul>
+
+<strong>Understanding the sigmoid curve</strong>:
+<ul>
+<li>When z is very negative → probability ≈ 0</li>
+<li>When z = 0 → probability = 0.5</li>
+<li>When z is very positive → probability ≈ 1</li>
+</ul>
+
+<p>The curve is S-shaped, transitioning smoothly from 0 to 1.</p>
+
+<hr>
+
+<h3>4. Decision Boundaries</h3>
+
+<strong>What it is</strong>: The line (or surface) that separates "predict yes" from "predict no" in classification.
+
+<strong>Simple explanation</strong>: Imagine plotting all your data points on a graph, with positive outcomes in red and negative outcomes in blue. The decision boundary is the line that best separates red from blue.
+
+<strong>Example with logistic regression</strong>:
+
+<p>In 1D (one predictor):</p>
+<ul>
+<li>If temperature > 85°F → predict drought</li>
+<li>Decision boundary is a single point: 85°F</li>
+</ul>
+
+<p>In 2D (two predictors):</p>
+<ul>
+<li>Decision boundary is a line dividing the space</li>
+<li>Example: <code>0.5 × Rainfall + 0.3 × Temperature = threshold</code></li>
+</ul>
+
+<p>In 3D (three predictors):</p>
+<ul>
+<li>Decision boundary is a plane</li>
+</ul>
+
+<strong>Why it matters</strong>: Visualizing decision boundaries helps you understand what your model is doing. If the boundary doesn't make sense, your model might not be capturing the right patterns.
+
+<hr>
+
+<h3>5. Model Evaluation Metrics</h3>
+
+<p>How do you know if your model is good? Use these metrics:</p>
+
+<h4>For Regression Models (predicting numbers):</h4>
+
+<strong>1. R-squared (R²)</strong>
+<ul>
+<li><strong>What</strong>: Proportion of variance explained by the model</li>
+<li><strong>Range</strong>: 0 to 1 (higher is better)</li>
+<li><strong>Simple explanation</strong>: If R² = 0.85, your model explains 85% of the variation in the outcome</li>
+</ul>
+
+<pre><code>
+from sklearn.metrics import r2_score
+
+r2 = r2_score(y_true, y_predicted)
+</code></pre>
+
+<strong>Interpretation</strong>:
+<ul>
+<li>R² = 0.9+: Excellent fit</li>
+<li>R² = 0.7-0.9: Good fit</li>
+<li>R² = 0.5-0.7: Moderate fit</li>
+<li>R² < 0.5: Poor fit (model isn't capturing much)</li>
+</ul>
+
+<strong>2. Mean Squared Error (MSE)</strong>
+<ul>
+<li><strong>What</strong>: Average of squared differences between predicted and actual values</li>
+<li><strong>Range</strong>: 0 to ∞ (lower is better)</li>
+<li><strong>Simple explanation</strong>: Measures how far off your predictions are on average</li>
+</ul>
+
+<pre><code>
+from sklearn.metrics import mean_squared_error
+
+mse = mean_squared_error(y_true, y_predicted)
+rmse = np.sqrt(mse)  # Root MSE is in same units as y
+</code></pre>
+
+<strong>Example</strong>: If predicting yield and RMSE = 15, your predictions are typically off by about 15 bushels/acre.
+
+<strong>3. Mean Absolute Error (MAE)</strong>
+<ul>
+<li><strong>What</strong>: Average absolute difference (doesn't square the errors)</li>
+<li><strong>Simple explanation</strong>: On average, how far off are predictions?</li>
+</ul>
+
+<pre><code>
+from sklearn.metrics import mean_absolute_error
+
+mae = mean_absolute_error(y_true, y_predicted)
+</code></pre>
+
+<strong>MSE vs MAE</strong>: MSE punishes large errors more (because of squaring). Use MSE when large errors are especially bad, MAE when all errors are equally important.
+
+<h4>For Classification Models (yes/no predictions):</h4>
+
+<strong>1. Confusion Matrix</strong>
+
+<strong>What it is</strong>: A table showing correct and incorrect predictions:
+
+<pre><code>
+                   Predicted: No    Predicted: Yes
+Actual: No         True Negative    False Positive
+Actual: Yes        False Negative   True Positive
+</code></pre>
+
+<strong>Simple example</strong>: Predicting disease in plants
+
+<pre><code>
+from sklearn.metrics import confusion_matrix
+
+y_true = [0, 1, 0, 1, 1, 0, 1, 0]  # Actual disease status
+y_pred = [0, 1, 0, 0, 1, 0, 1, 1]  # Model predictions
+
+cm = confusion_matrix(y_true, y_pred)
+print(cm)
+# [[3, 1],     3 correct "no disease", 1 false alarm
+#  [1, 3]]     1 missed disease, 3 correct "disease"
+</code></pre>
+
+<strong>2. Accuracy</strong>
+<ul>
+<li><strong>What</strong>: Percentage of correct predictions</li>
+<li><strong>Formula</strong>: (TP + TN) / Total</li>
+</ul>
+
+<pre><code>
+from sklearn.metrics import accuracy_score
+accuracy = accuracy_score(y_true, y_pred)  # 0.75 = 75% correct
+</code></pre>
+
+<strong>Warning</strong>: Accuracy can be misleading with imbalanced classes! If disease is rare (only 5% of plants), a model that always predicts "no disease" gets 95% accuracy but is useless.
+
+<strong>3. Precision and Recall</strong>
+
+<strong>Precision</strong>: Of all the "yes" predictions, how many were right?
+<ul>
+<li>Formula: TP / (TP + FP)</li>
+<li>Example: Of all plants predicted diseased, what % actually were?</li>
+</ul>
+
+<strong>Recall (Sensitivity)</strong>: Of all actual "yes" cases, how many did we catch?
+<ul>
+<li>Formula: TP / (TP + FN)</li>
+<li>Example: Of all actually diseased plants, what % did we detect?</li>
+</ul>
+
+<pre><code>
+from sklearn.metrics import precision_score, recall_score
+
+precision = precision_score(y_true, y_pred)
+recall = recall_score(y_true, y_pred)
+</code></pre>
+
+<strong>Trade-off</strong>: You can increase recall by predicting "yes" more often, but this decreases precision (more false alarms). There's usually a balance to strike.
+
+<strong>4. ROC Curve and AUC</strong>
+
+<strong>ROC curve</strong>: Plots true positive rate vs false positive rate at different prediction thresholds
+
+<strong>AUC (Area Under Curve)</strong>: Summary metric for ROC curve
+<ul>
+<li><strong>Range</strong>: 0.5 to 1.0</li>
+<li><strong>Simple explanation</strong>:</li>
+<li>AUC = 1.0: Perfect classifier</li>
+<li>AUC = 0.9: Excellent</li>
+<li>AUC = 0.8: Good</li>
+<li>AUC = 0.7: Fair</li>
+<li>AUC = 0.5: Random guessing (useless)</li>
+</ul>
+
+<pre><code>
+from sklearn.metrics import roc_auc_score, roc_curve
+import matplotlib.pyplot as plt
+
+# Get probability predictions
+y_probs = model.predict_proba(X_test)[:, 1]
+
+# Calculate AUC
+auc = roc_auc_score(y_true, y_probs)
+
+# Plot ROC curve
+fpr, tpr, thresholds = roc_curve(y_true, y_probs)
+plt.plot(fpr, tpr, label=f'AUC = {auc:.2f}')
+plt.plot([0, 1], [0, 1], 'k--', label='Random')
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('ROC Curve')
+plt.legend()
+plt.show()
+</code></pre>
+
+<hr>
+
+<h3>6. Correlation vs Causation</h3>
+
+<strong>Critical concept</strong>: Just because two things are correlated doesn't mean one causes the other!
+
+<strong>Classic example</strong>: Ice cream sales and drowning deaths are correlated. Does ice cream cause drowning? No! Both increase in summer (confounding variable: weather).
+
+<strong>In agriculture</strong>:
+<ul>
+<li>Yield and fertilizer price might be correlated (both go up during good economic years)</li>
+<li>But fertilizer price doesn't cause yield; economic conditions affect both</li>
+</ul>
+
+<strong>How to think about it</strong>:
+<p>1. <strong>Correlation</strong>: Two variables move together</p>
+<p>2. <strong>Causation</strong>: One variable directly causes changes in the other</p>
+
+<strong>What regression shows</strong>: Regression finds correlation (association), not causation. To establish causation, you need:
+<ul>
+<li>Controlled experiments (randomized trials)</li>
+<li>Temporal precedence (cause happens before effect)</li>
+<li>No alternative explanations (rule out confounders)</li>
+</ul>
+
+<strong>Practical advice</strong>: Use regression to find relationships and generate hypotheses, but be cautious about claiming causation without experimental evidence.
+
+<hr>
+
+<h2>Course Materials</h2>
+
+<h3>Primary Notebooks</h3>
+
+<p>1. <strong><a href="/tmp/cpsc444-study/python_notebooks/MultipleRegression.ipynb">python_notebooks/MultipleRegression.ipynb</a></strong></p>
+<ul>
+<li>Matrix solutions for multiple regression</li>
+<li>Normal equation implementation</li>
+<li>Understanding XᵀX and matrix inversion</li>
+</ul>
+
+<p>2. <strong><a href="/tmp/cpsc444-study/python_notebooks/Correlation&MLR.ipynb">python_notebooks/Correlation&MLR.ipynb</a></strong></p>
+<ul>
+<li>Correlation analysis</li>
+<li>Multiple linear regression examples</li>
+<li>Relationship between correlation and regression</li>
+</ul>
+
+<p>3. <strong><a href="/tmp/cpsc444-study/python_notebooks/LogisticRegression.ipynb">python_notebooks/LogisticRegression.ipynb</a></strong></p>
+<ul>
+<li>Logistic regression implementation</li>
+<li>Gradient descent algorithm</li>
+<li>Sigmoid function</li>
+<li>Decision boundaries in 1D, 2D, and 3D</li>
+<li>Classification metrics</li>
+</ul>
+
+<p>4. <strong><a href="/tmp/cpsc444-study/python_notebooks/GaltonSeeds.ipynb">python_notebooks/GaltonSeeds.ipynb</a></strong></p>
+<ul>
+<li>Historical example of regression</li>
+<li>Understanding regression to the mean</li>
+<li>Practical regression application</li>
+</ul>
+
+<p>5. <strong><a href="/tmp/cpsc444-study/python_notebooks/GoF.ipynb">python_notebooks/GoF.ipynb</a></strong></p>
+<ul>
+<li>Goodness of fit testing</li>
+<li>Model diagnostics</li>
+<li>Checking regression assumptions</li>
+</ul>
+
+<hr>
+
+<h2>Key Formulas</h2>
+
+<h3>Multiple Regression</h3>
+<pre><code>
+y = β₀ + β₁x₁ + β₂x₂ + β₃x₃ + ... + ε
+</code></pre>
+<strong>In words</strong>: Outcome = intercept + (coef × predictor₁) + (coef × predictor₂) + ... + error
+
+<h3>Matrix Form of Regression</h3>
+<pre><code>
+β = (XᵀX)⁻¹Xᵀy
+</code></pre>
+<strong>In words</strong>: Coefficients = (X-transpose times X, inverted) times (X-transpose times y)
+
+<h3>Logistic Regression (Sigmoid)</h3>
+<pre><code>
+P(y=1) = 1 / (1 + e^(-z))
+where z = β₀ + β₁x₁ + β₂x₂ + ...
+</code></pre>
+<strong>In words</strong>: Probability of "yes" is determined by a sigmoid curve applied to the linear combination of predictors.
+
+<h3>Mean Squared Error</h3>
+<pre><code>
+MSE = (1/n) Σ(yᵢ - ŷᵢ)²
+</code></pre>
+<strong>In words</strong>: Average of squared differences between actual and predicted values.
+
+<h3>R-squared</h3>
+<pre><code>
+R² = 1 - (SS_residual / SS_total)
+</code></pre>
+<strong>In words</strong>: Proportion of variance explained = 1 - (unexplained variance / total variance)
+
+<hr>
+
+<h2>Study Checkpoints</h2>
+
+<p>Before moving to Module 03, make sure you can answer these questions:</p>
+
+<h3>Can you explain...?</h3>
+
+<p>1. <strong>What's the difference between simple and multiple regression?</strong></p>
+<details>
+<summary>Click to check</summary>
+<p>Simple regression uses ONE predictor to predict the outcome (y = b₀ + b₁x). Multiple regression uses TWO OR MORE predictors (y = b₀ + b₁x₁ + b₂x₂ + ...). Multiple regression can capture more complex relationships but requires more data.</p>
+</details>
+
+<p>2. <strong>What does a regression coefficient mean in multiple regression?</strong></p>
+<details>
+<summary>Click to check</summary>
+<p>Each coefficient shows the change in the outcome for a one-unit increase in that predictor, HOLDING ALL OTHER PREDICTORS CONSTANT. Example: if rainfall coefficient is 3.0, yield increases by 3 bushels/acre for each additional inch of rain, assuming temperature, nitrogen, etc. stay the same.</p>
+</details>
+
+<p>3. <strong>When would you use logistic regression instead of linear regression?</strong></p>
+<details>
+<summary>Click to check</summary>
+<p>Use logistic regression when your outcome is binary (yes/no, success/fail, 0/1). Examples: Will it rain? Will the crop fail? Is the plant diseased? Linear regression is for continuous numeric outcomes (yield, temperature, price).</p>
+</details>
+
+<p>4. <strong>Why is accuracy sometimes misleading for classification models?</strong></p>
+<details>
+<summary>Click to check</summary>
+<p>With imbalanced classes, high accuracy can be achieved by always predicting the majority class. Example: If only 2% of plants have disease, predicting "no disease" for everyone gives 98% accuracy but catches zero disease cases. Precision, recall, and AUC are often more informative.</p>
+</details>
+
+<p>5. <strong>What's the difference between correlation and causation?</strong></p>
+<details>
+<summary>Click to check</summary>
+<p>Correlation means two variables change together (when one goes up, the other tends to go up/down). Causation means one variable directly causes changes in the other. Correlation doesn't prove causation - there might be a third variable affecting both, or the relationship might be coincidental.</p>
+</details>
+
+<h3>Can you do...?</h3>
+
+<p>1. <strong>Fit a multiple regression model with at least 3 predictors and interpret the coefficients?</strong></p>
+<pre><code>
+   # Try with this data: predict yield from rainfall, temp, nitrogen
+   # Check python_notebooks/Correlation&amp;MLR.ipynb for examples
+</code></pre>
+
+<p>2. <strong>Calculate R² and MSE for a model and explain what they mean?</strong></p>
+<pre><code>
+   from sklearn.metrics import r2_score, mean_squared_error
+   # Practice with actual vs predicted values
+</code></pre>
+
+<p>3. <strong>Fit a logistic regression model and interpret the predicted probabilities?</strong></p>
+<pre><code>
+   # Try predicting a binary outcome
+   # Check python_notebooks/LogisticRegression.ipynb
+</code></pre>
+
+<p>4. <strong>Create and interpret a confusion matrix?</strong></p>
+<pre><code>
+   from sklearn.metrics import confusion_matrix
+   # What do TP, TN, FP, FN mean in your specific problem?
+</code></pre>
+
+<h3>Self-Check Exercises</h3>
+
+<p>Work through these notebooks:</p>
+
+<ul class="checkbox-list">
+<li>Complete the multiple regression examples in <code>MultipleRegression.ipynb</code></li>
+<li>Understand the matrix formulation and try computing β manually</li>
+<li>Work through all logistic regression examples in <code>LogisticRegression.ipynb</code></li>
+<li>Practice interpreting confusion matrices and ROC curves</li>
+<li>Explore the historical Galton example in <code>GaltonSeeds.ipynb</code></li>
+</ul>
+
+<h3>Ready for Next Module?</h3>
+
+<p>Check off each item:</p>
+
+<ul class="checkbox-list">
+<li>I can fit and interpret multiple regression models</li>
+<li>I understand what the normal equation does</li>
+<li>I can apply logistic regression to binary classification problems</li>
+<li>I know how to evaluate regression models (R², MSE)</li>
+<li>I know how to evaluate classification models (accuracy, precision, recall, AUC)</li>
+<li>I understand the difference between correlation and causation</li>
+<li>I can interpret model coefficients correctly</li>
+</ul>
+
+<strong>All checked?</strong> Great! Move on to <a href="Module_03_Geospatial_Fundamentals.md">Module 03: Geospatial Fundamentals</a>
+
+<strong>Need more practice?</strong> Focus on the areas where you're less confident. These concepts are crucial for everything that follows.
+
+<hr>
+
+<h2>Common Mistakes to Avoid</h2>
+
+<p>1. <strong>Interpreting coefficients without "holding other variables constant"</strong></p>
+<ul>
+<li>Wrong: "Rainfall coefficient is 3, so more rain means higher yield"</li>
+<li>Right: "Holding temperature and nitrogen constant, each inch of rain adds 3 bushels/acre"</li>
+</ul>
+
+<p>2. <strong>Using linear regression for yes/no outcomes</strong></p>
+<ul>
+<li>Linear regression can predict values outside 0-1, which doesn't make sense for probabilities</li>
+<li>Always use logistic regression for binary outcomes</li>
+</ul>
+
+<p>3. <strong>Trusting high accuracy without checking other metrics</strong></p>
+<ul>
+<li>Always look at precision, recall, and confusion matrix too</li>
+<li>Especially important with imbalanced data</li>
+</ul>
+
+<p>4. <strong>Assuming correlation means causation</strong></p>
+<ul>
+<li>Regression finds associations, not causal relationships</li>
+<li>Need experiments to establish causation</li>
+</ul>
+
+<p>5. <strong>Not checking assumptions</strong></p>
+<ul>
+<li>Regression assumes linear relationships, normal residuals, constant variance</li>
+<li>Check diagnostics (GoF.ipynb) to verify assumptions hold</li>
+</ul>
+
+<hr>
+
+<h2>Tips for Success</h2>
+
+<p>1. <strong>Visualize your data first</strong>: Before fitting any model, plot your predictors vs outcome. See if relationships look linear.</p>
+
+<p>2. <strong>Start simple</strong>: Fit a model with one predictor first, then add more one at a time. See how R² and coefficients change.</p>
+
+<p>3. <strong>Check residuals</strong>: Plot predicted vs actual, and look at residual plots. Patterns in residuals suggest model problems.</p>
+
+<p>4. <strong>Use domain knowledge</strong>: Do the coefficients make sense? If temperature coefficient is negative for crop yield, does that align with what you know about crops?</p>
+
+<p>5. <strong>Compare models</strong>: Fit multiple versions and compare metrics. Which predictors actually help?</p>
+
+<p>6. <strong>Cross-validate</strong>: Test your model on held-out data to see if it generalizes (you'll learn more about this in later modules).</p>
+
+<hr>
+
+<h2>Next Steps</h2>
+
+<p>Ready for spatial data?</p>
+
+<p>→ <strong>Continue to <a href="Module_03_Geospatial_Fundamentals.md">Module 03: Geospatial Fundamentals</a></strong></p>
+
+<p>You'll learn:</p>
+<ul>
+<li>What makes spatial data special</li>
+<li>Coordinate reference systems</li>
+<li>Rasters vs vectors</li>
+<li>Spatial interpolation (Kriging)</li>
+</ul>
+
+<hr>
+
+<em>Statistical foundations are the bedrock of data analysis. Master these concepts and you'll be well-prepared for the spatial challenges ahead!</em>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="showSection('module1')">← Previous</button>
+                    <button class="btn btn-primary" onclick="showSection('module3')">Next →</button>
+                </div>
+            </section>
+
+            <section id="module3" class="content-section">
+                <h1>Module 03: Geospatial Fundamentals</h1>
+<h2>Spatial Data, Coordinate Systems & Interpolation</h2>
+
+<strong>Difficulty</strong>: ⭐⭐⭐ Intermediate
+<strong>Time Estimate</strong>: 8-10 hours
+<strong>Prerequisites</strong>: Modules 01 (Python basics), 02 (Statistics & regression)
+
+<hr>
+
+<h2>Module Overview</h2>
+
+<p>Until now, you've worked with regular data - numbers in tables. But what if your data has a LOCATION component? That's spatial data! A temperature reading isn't just "75°F" - it's "75°F at GPS coordinates (40.11, -88.21)." This module teaches you how to work with, visualize, and analyze data that exists in geographic space.</p>
+
+<h3>What You'll Learn</h3>
+<ul>
+<li>What makes spatial data different</li>
+<li>Raster data (like satellite images) vs vector data (like points/polygons)</li>
+<li>Coordinate reference systems (how locations are represented)</li>
+<li>How to fill gaps in spatial data (interpolation with Kriging and IDW)</li>
+<li>Spatial sampling strategies</li>
+<li>How to create and manipulate spatial data files</li>
+</ul>
+
+<h3>Why This Matters</h3>
+<p>Almost everything in agriculture, environmental science, and earth sciences has a spatial component:</p>
+<ul>
+<li>Soil samples from different parts of a field</li>
+<li>Weather measurements from different stations</li>
+<li>Satellite images showing crop health</li>
+<li>Field boundaries and management zones</li>
+</ul>
+
+<p>Understanding spatial data is essential for working with real-world agricultural and environmental datasets.</p>
+
+<hr>
+
+<h2>Learning Objectives</h2>
+
+<p>By the end of this module, you will be able to:</p>
+<ul class="checkbox-list">
+<li>Distinguish between raster and vector data formats</li>
+<li>Load and visualize spatial data in Python</li>
+<li>Understand and transform coordinate reference systems</li>
+<li>Perform spatial sampling</li>
+<li>Use Kriging to interpolate spatial data</li>
+<li>Create shapefiles and GeoTIFFs</li>
+<li>Overlay and combine spatial datasets</li>
+</ul>
+
+<hr>
+
+<h2>Core Concepts</h2>
+
+<h3>1. What is Spatial Data?</h3>
+
+<strong>Simple explanation</strong>: Data where each observation has a location (coordinates) attached to it.
+
+<strong>Regular data</strong>:
+<pre><code>
+Temperature
+-----------
+75°F
+72°F
+80°F
+</code></pre>
+
+<strong>Spatial data</strong>:
+<pre><code>
+Latitude  Longitude  Temperature
+----------------------------------------
+40.10     -88.20     75°F
+40.15     -88.25     72°F
+40.08     -88.18     80°F
+</code></pre>
+
+<strong>What makes it special</strong>:
+<p>1. <strong>Nearby things are related</strong>: Soil samples 10 feet apart are more similar than samples 1 mile apart</p>
+<p>2. <strong>Location matters</strong>: The value at (40.10, -88.20) can influence neighbors</p>
+<p>3. <strong>Spatial patterns exist</strong>: Hot spots, cold spots, gradients, clusters</p>
+
+<strong>Real-world example</strong>: Measuring corn yield across a field. Yields aren't random - high-yielding areas tend to cluster together (maybe better soil there), and low-yielding areas cluster too (maybe poor drainage). This spatial structure is what we analyze!
+
+<hr>
+
+<h3>2. Raster vs Vector Data</h3>
+
+<p>Think of this like the difference between a photo and a drawing:</p>
+
+<h4>Raster Data (Like a Photo)</h4>
+
+<strong>What it is</strong>: Space is divided into a grid of cells (pixels), each with a value.
+
+<strong>Example</strong>: Satellite image - each pixel (say, 30m × 30m) has a value like:
+<ul>
+<li>Vegetation index (how green it is)</li>
+<li>Temperature</li>
+<li>Elevation</li>
+</ul>
+
+<strong>Visual representation</strong>:
+<pre><code>
+Grid of cells, each with a value:
+[45] [47] [46] [48]
+[44] [46] [47] [49]
+[46] [45] [48] [47]
+</code></pre>
+
+<strong>Common uses</strong>:
+<ul>
+<li>Satellite imagery</li>
+<li>Elevation maps (DEMs - Digital Elevation Models)</li>
+<li>Temperature maps</li>
+<li>Rainfall maps</li>
+</ul>
+
+<strong>File formats</strong>: GeoTIFF (.tif), IMG, HDF
+
+<strong>Advantages</strong>:
+<ul>
+<li>Great for continuous data (temperature, elevation)</li>
+<li>Easy to do map algebra (add, subtract rasters)</li>
+<li>Satellite/drone imagery is naturally raster</li>
+</ul>
+
+<strong>Disadvantages</strong>:
+<ul>
+<li>File sizes can be huge</li>
+<li>Fixed resolution (can't zoom in infinitely)</li>
+</ul>
+
+<h4>Vector Data (Like a Drawing)</h4>
+
+<strong>What it is</strong>: Features defined by coordinates - points, lines, or polygons.
+
+<strong>Types</strong>:
+<p>1. <strong>Points</strong>: Single locations (weather stations, sample points)</p>
+<p>2. <strong>Lines</strong>: Connected points (roads, rivers, field borders)</p>
+<p>3. <strong>Polygons</strong>: Closed shapes (field boundaries, counties, management zones)</p>
+
+<strong>Example - Field boundary (polygon)</strong>:
+<pre><code>
+Points defining a field:
+(40.100, -88.200)
+(40.100, -88.210)
+(40.110, -88.210)
+(40.110, -88.200)
+[connects back to first point]
+</code></pre>
+
+<strong>Common uses</strong>:
+<ul>
+<li>Field boundaries</li>
+<li>Sample point locations</li>
+<li>Roads and rivers</li>
+<li>Administrative boundaries</li>
+</ul>
+
+<strong>File formats</strong>: Shapefile (.shp + .shx + .dbf), GeoPackage (.gpkg), GeoJSON
+
+<strong>Advantages</strong>:
+<ul>
+<li>Precise boundaries</li>
+<li>Small file sizes</li>
+<li>Can zoom in infinitely</li>
+<li>Easy to attach attributes (field ID, crop type, etc.)</li>
+</ul>
+
+<strong>Disadvantages</strong>:
+<ul>
+<li>Not ideal for continuous phenomena (like temperature)</li>
+<li>Complex operations can be slow</li>
+</ul>
+
+<strong>When to use each</strong>:
+<ul>
+<li>Raster: Continuous data (temperature, elevation, imagery)</li>
+<li>Vector: Discrete features (field boundaries, sample points)</li>
+</ul>
+
+<hr>
+
+<h3>3. Coordinate Reference Systems (CRS)</h3>
+
+<strong>The problem</strong>: Earth is a 3D sphere, but maps are 2D. How do we represent locations?
+
+<strong>What is a CRS?</strong>: A system for defining where things are on Earth.
+
+<h4>Two Main Types:</h4>
+
+<strong>1. Geographic CRS (Latitude/Longitude)</strong>
+
+<ul>
+<li>Uses degrees: latitude (N/S), longitude (E/W)</li>
+<li>Example: (40.1106°N, 88.2073°W)</li>
+<li><strong>Advantage</strong>: Universal, everyone understands it</li>
+<li><strong>Disadvantage</strong>: Distances aren't equal everywhere (1° longitude in Alaska is shorter than 1° at the equator)</li>
+</ul>
+
+<strong>Most common</strong>: WGS84 (EPSG:4326) - what GPS uses
+
+<strong>2. Projected CRS (X/Y in meters)</strong>
+
+<ul>
+<li>Uses meters (or feet) from a reference point</li>
+<li>Example: (500000 m East, 4430000 m North)</li>
+<li><strong>Advantage</strong>: Distances and areas are accurate, easy to measure</li>
+<li><strong>Disadvantage</strong>: Only accurate in a specific region</li>
+</ul>
+
+<strong>Common projected systems</strong>:
+<ul>
+<li>UTM (Universal Transverse Mercator): divides world into zones</li>
+<li>State Plane (USA): optimized for each state</li>
+<li>Web Mercator (EPSG:3857): what Google Maps uses</li>
+</ul>
+
+<h4>Why CRS Matters</h4>
+
+<strong>Problem</strong>: You have a field boundary in one CRS and satellite imagery in another. If you don't align them, they won't overlay correctly!
+
+<strong>Solution</strong>: Transform everything to the same CRS before analysis.
+
+<strong>Example in Python</strong>:
+<pre><code>
+import geopandas as gpd
+
+# Load shapefile (might be in one CRS)
+fields = gpd.read_file('fields.shp')
+print(fields.crs)  # Check current CRS
+
+# Transform to different CRS (e.g., UTM Zone 16N)
+fields_utm = fields.to_crs('EPSG:32616')
+
+# Now distances and areas are in meters!
+fields_utm['area_m2'] = fields_utm.geometry.area
+fields_utm['area_acres'] = fields_utm['area_m2'] / 4047
+</code></pre>
+
+<strong>Rule of thumb</strong>:
+<ul>
+<li>Use geographic CRS (lat/lon) for global data or display</li>
+<li>Use projected CRS (meters) for analysis, area calculations, distance measurements</li>
+</ul>
+
+<hr>
+
+<h3>4. Spatial Interpolation - The Big Picture</h3>
+
+<strong>The problem</strong>: You measured soil nutrients at 50 points in a field. What about the other 99% of the field where you didn't sample?
+
+<strong>Solution</strong>: Interpolation - estimating values at unsampled locations based on nearby sampled points.
+
+<strong>Simple analogy</strong>: You know it's 70°F in City A and 80°F in City B (50 miles apart). What's the temperature halfway between? Probably around 75°F. That's interpolation!
+
+<h4>Two Common Methods:</h4>
+
+<strong>1. IDW (Inverse Distance Weighting)</strong>
+<ul>
+<li><strong>Idea</strong>: Nearby points have more influence than distant points</li>
+<li><strong>Simple</strong>: Average of neighbors, weighted by distance</li>
+<li><strong>Fast</strong>: But assumes smooth gradients</li>
+</ul>
+
+<strong>2. Kriging (More sophisticated)</strong>
+<ul>
+<li><strong>Idea</strong>: Use spatial correlation structure to make best predictions</li>
+<li><strong>Better</strong>: Accounts for how similarity changes with distance</li>
+<li><strong>Slower</strong>: But gives you prediction uncertainty too</li>
+</ul>
+
+<p>We'll focus on Kriging since it's more powerful for agricultural/environmental data.</p>
+
+<hr>
+
+<h3>5. Kriging Interpolation</h3>
+
+<strong>What it is</strong>: A sophisticated interpolation method that uses the spatial correlation structure in your data to predict values at unsampled locations.
+
+<strong>Simple explanation</strong>: Kriging looks at how similar values are at different distances, then uses that pattern to make predictions. It also tells you how confident to be in each prediction!
+
+<h4>The Process:</h4>
+
+<strong>Step 1: Calculate the empirical variogram</strong>
+
+<strong>What</strong>: A graph showing how different points become as distance increases.
+
+<strong>Simple analogy</strong>: Measure temperature at pairs of points:
+<ul>
+<li>Points 1 meter apart differ by 0.5°C on average</li>
+<li>Points 10 meters apart differ by 2°C</li>
+<li>Points 100 meters apart differ by 5°C</li>
+</ul>
+
+<p>As distance increases, points become more different (less correlated).</p>
+
+<strong>Formula</strong> (don't panic!):
+<pre><code>
+γ(h) = (1/2N(h)) × Σ(z_i - z_j)²
+</code></pre>
+
+<strong>In words</strong>:
+<ul>
+<li>For all pairs of points that are distance h apart</li>
+<li>Calculate how different they are: (value_i - value_j)²</li>
+<li>Average those differences</li>
+<li>Divide by 2</li>
+</ul>
+
+<strong>What you get</strong>: A curve showing variance vs distance
+
+<strong>Step 2: Fit a model to the variogram</strong>
+
+<strong>Common models</strong>:
+
+<p>1. <strong>Spherical</strong>: Gradual increase, then levels off</p>
+<pre><code>
+   γ(h) = nugget + sill × [1.5(h/range) - 0.5(h/range)³]  for h &lt; range
+   γ(h) = nugget + sill                                     for h ≥ range
+</code></pre>
+
+<p>2. <strong>Exponential</strong>: Smooth exponential curve</p>
+<pre><code>
+   γ(h) = nugget + sill × [1 - exp(-3h/range)]
+</code></pre>
+
+<p>3. <strong>Gaussian</strong>: Very smooth, for very continuous data</p>
+<pre><code>
+   γ(h) = nugget + sill × [1 - exp(-3h²/range²)]
+</code></pre>
+
+<strong>Three key parameters</strong>:
+
+<p>1. <strong>Nugget</strong>: Variance at distance = 0 (measurement error + very small-scale variation)</p>
+<p>2. <strong>Sill</strong>: Maximum variance (plateau value)</p>
+<p>3. <strong>Range</strong>: Distance at which points become uncorrelated</p>
+
+<strong>Simple visualization</strong>:
+<pre><code>
+Semivariance
+    |
+    |  ....... ←─── Sill (max variance)
+    |  /
+    | /        ←─── Range (distance to sill)
+    |/
+    *──────────────&gt; Distance
+    ↑
+  Nugget
+</code></pre>
+
+<strong>Step 3: Use the model to make predictions (Ordinary Kriging)</strong>
+
+<p>For each unsampled location:</p>
+<p>1. Find nearby sampled points</p>
+<p>2. Weight them based on distance AND spatial correlation structure</p>
+<p>3. Compute weighted average = prediction</p>
+<p>4. Also compute prediction variance = uncertainty</p>
+
+<strong>Why Kriging is better than simple averaging</strong>:
+<ul>
+<li>Accounts for spatial structure (not just distance)</li>
+<li>Gives you uncertainty estimates</li>
+<li>Minimizes prediction error</li>
+</ul>
+
+<h4>Kriging in Python:</h4>
+
+<pre><code>
+from pykrige.ok import OrdinaryKriging
+import numpy as np
+
+# Sample data: (x, y, value)
+x = np.array([0, 1, 2, 3, 4])
+y = np.array([0, 1, 2, 1, 0])
+values = np.array([45, 47, 50, 46, 44])  # e.g., nitrogen levels
+
+# Create Kriging model
+OK = OrdinaryKriging(
+    x, y, values,
+    variogram_model='spherical',
+    verbose=False,
+    enable_plotting=False
+)
+
+# Predict on a grid
+grid_x = np.arange(0, 4, 0.1)
+grid_y = np.arange(0, 2, 0.1)
+z_pred, ss_pred = OK.execute('grid', grid_x, grid_y)
+
+# z_pred = predicted values
+# ss_pred = prediction variance (uncertainty)
+</code></pre>
+
+<strong>Output</strong>:
+<ul>
+<li>Predicted value at every grid point</li>
+<li>Uncertainty at every grid point (higher where samples are sparse)</li>
+</ul>
+
+<hr>
+
+<h3>6. Spatial Sampling Strategies</h3>
+
+<strong>The problem</strong>: You can't measure everywhere. Where should you take samples?
+
+<h4>Common Strategies:</h4>
+
+<strong>1. Random Sampling</strong>
+<ul>
+<li><strong>Idea</strong>: Place samples randomly across the area</li>
+<li><strong>Advantage</strong>: Unbiased, good for statistical inference</li>
+<li><strong>Disadvantage</strong>: Might miss important areas, might cluster by chance</li>
+</ul>
+
+<strong>2. Systematic/Grid Sampling</strong>
+<ul>
+<li><strong>Idea</strong>: Regular grid of samples</li>
+<li><strong>Advantage</strong>: Even coverage, easy to plan</li>
+<li><strong>Disadvantage</strong>: Might align with hidden patterns (e.g., field rows)</li>
+</ul>
+
+<strong>3. Stratified Sampling</strong>
+<ul>
+<li><strong>Idea</strong>: Divide area into zones (strata), sample within each</li>
+<li><strong>Advantage</strong>: Ensures coverage of different conditions</li>
+<li><strong>Example</strong>: Sample high, medium, low elevation areas separately</li>
+</ul>
+
+<strong>4. Clustered Sampling</strong>
+<ul>
+<li><strong>Idea</strong>: Multiple samples in selected locations</li>
+<li><strong>Advantage</strong>: Good for understanding local variability</li>
+<li><strong>Use case</strong>: Detailed study of specific problem areas</li>
+</ul>
+
+<strong>For Kriging</strong>: Regular grid or random sampling works well. Need enough samples to capture spatial structure (usually 50-100 minimum).
+
+<strong>In Python</strong>:
+<pre><code>
+import numpy as np
+
+# Random sampling within a field boundary
+n_samples = 50
+x_samples = np.random.uniform(0, 100, n_samples)  # Random x between 0-100
+y_samples = np.random.uniform(0, 50, n_samples)   # Random y between 0-50
+
+# Grid sampling
+x_grid = np.linspace(0, 100, 10)  # 10 points from 0 to 100
+y_grid = np.linspace(0, 50, 5)    # 5 points from 0 to 50
+X, Y = np.meshgrid(x_grid, y_grid)  # Creates all combinations
+</code></pre>
+
+<hr>
+
+<h3>7. Working with Spatial Data in Python</h3>
+
+<h4>Loading Raster Data:</h4>
+
+<pre><code>
+import rasterio
+import matplotlib.pyplot as plt
+
+# Load a GeoTIFF
+with rasterio.open('elevation.tif') as src:
+    elevation = src.read(1)  # Read band 1
+    print(f"CRS: {src.crs}")
+    print(f"Shape: {elevation.shape}")
+    print(f"Resolution: {src.res}")
+
+    # Plot it
+    plt.imshow(elevation, cmap='terrain')
+    plt.colorbar(label='Elevation (m)')
+    plt.title('Elevation Map')
+    plt.show()
+</code></pre>
+
+<h4>Loading Vector Data:</h4>
+
+<pre><code>
+import geopandas as gpd
+
+# Load shapefile or GeoPackage
+fields = gpd.read_file('fields.gpkg')
+
+# Explore
+print(fields.head())
+print(fields.crs)
+
+# Plot
+fields.plot(column='yield', legend=True, cmap='YlGn')
+plt.title('Yield by Field')
+plt.show()
+</code></pre>
+
+<h4>Creating a GeoTIFF from Interpolation:</h4>
+
+<pre><code>
+import rasterio
+from rasterio.transform import from_origin
+import numpy as np
+
+# After Kriging, you have a grid of predictions: z_pred
+
+# Define spatial reference
+transform = from_origin(xmin, ymax, pixel_width, pixel_height)
+
+# Write to GeoTIFF
+with rasterio.open(
+    'prediction.tif', 'w',
+    driver='GTiff',
+    height=z_pred.shape[0],
+    width=z_pred.shape[1],
+    count=1,
+    dtype=z_pred.dtype,
+    crs='EPSG:32616',  # UTM Zone 16N
+    transform=transform,
+) as dst:
+    dst.write(z_pred, 1)
+</code></pre>
+
+<hr>
+
+<h3>8. Spatial Overlay Operations</h3>
+
+<strong>What it is</strong>: Combining multiple spatial layers to answer questions.
+
+<strong>Example question</strong>: "What's the average yield for each soil type?"
+
+<strong>Process</strong>:
+<p>1. Have a yield raster</p>
+<p>2. Have a soil type polygon layer</p>
+<p>3. Overlay them to extract yield values for each soil type</p>
+
+<pre><code>
+import geopandas as gpd
+import rasterstats
+
+# Load soil polygons
+soils = gpd.read_file('soil_types.shp')
+
+# Extract statistics from yield raster for each soil polygon
+stats = rasterstats.zonal_stats(
+    soils,
+    'yield.tif',
+    stats=['mean', 'std', 'min', 'max']
+)
+
+# Add to GeoDataFrame
+soils['mean_yield'] = [s['mean'] for s in stats]
+soils['std_yield'] = [s['std'] for s in stats]
+
+# Now you can analyze yield by soil type!
+print(soils[['soil_type', 'mean_yield', 'std_yield']])
+</code></pre>
+
+<hr>
+
+<h2>Course Materials</h2>
+
+<h3>Primary Notebooks</h3>
+
+<p>1. <strong><a href="/tmp/cpsc444-study/w01-exercises/Spatial_Plotting_python.ipynb">w01-exercises/Spatial_Plotting_python.ipynb</a></strong></p>
+<ul>
+<li>Loading and visualizing rasters with rasterio</li>
+<li>Working with geopandas for vector data</li>
+<li>Basic spatial plotting</li>
+</ul>
+
+<p>2. <strong><a href="/tmp/cpsc444-study/w01-exercises/Spatial_sampling_functions.ipynb">w01-exercises/Spatial_sampling_functions.ipynb</a></strong></p>
+<ul>
+<li>Different spatial sampling strategies</li>
+<li>Random, grid, and stratified sampling</li>
+<li>Evaluating sampling designs</li>
+</ul>
+
+<p>3. <strong><a href="/tmp/cpsc444-study/w01-exercises/SamplingExamples.ipynb">w01-exercises/SamplingExamples.ipynb</a></strong></p>
+<ul>
+<li>Practical sampling demonstrations</li>
+<li>Comparing sampling methods</li>
+<li>Sample size considerations</li>
+</ul>
+
+<p>4. <strong><a href="/tmp/cpsc444-study/w01-exercises/Kriging-ECto30-python.ipynb">w01-exercises/Kriging-ECto30-python.ipynb</a></strong></p>
+<ul>
+<li>Complete Kriging workflow</li>
+<li>Empirical variogram calculation</li>
+<li>Variogram model fitting (spherical, exponential)</li>
+<li>Ordinary Kriging interpolation</li>
+<li>Creating GeoTIFF output</li>
+</ul>
+
+<p>5. <strong><a href="/tmp/cpsc444-study/w01-exercises/Geospatial_Overlay_Tutorial.ipynb">w01-exercises/Geospatial_Overlay_Tutorial.ipynb</a></strong></p>
+<ul>
+<li>Overlaying vector and raster data</li>
+<li>Spatial joins</li>
+<li>Extracting values from rasters</li>
+</ul>
+
+<p>6. <strong><a href="/tmp/cpsc444-study/w01-exercises/TrialDesign_SpatialMapping_Tutorial.ipynb">w01-exercises/TrialDesign_SpatialMapping_Tutorial.ipynb</a></strong></p>
+<ul>
+<li>Field trial mapping</li>
+<li>Creating spatial maps from trial data</li>
+<li>Visualizing treatment effects spatially</li>
+</ul>
+
+<hr>
+
+<h2>Key Formulas</h2>
+
+<h3>Semivariance</h3>
+<pre><code>
+γ(h) = (1 / 2N(h)) × Σ [z(xᵢ) - z(xᵢ + h)]²
+</code></pre>
+<strong>In words</strong>: For all pairs of points separated by distance h, calculate half the average squared difference.
+
+<h3>Spherical Variogram Model</h3>
+<pre><code>
+γ(h) = nugget + (sill - nugget) × [1.5(h/range) - 0.5(h/range)³]   for h &lt; range
+γ(h) = sill                                                          for h ≥ range
+</code></pre>
+
+<h3>Kriging Prediction</h3>
+<pre><code>
+ẑ(x₀) = Σ λᵢ × z(xᵢ)
+</code></pre>
+<strong>In words</strong>: Predicted value = weighted sum of nearby observations, where weights (λ) are optimized based on spatial correlation.
+
+<h3>Kriging Variance (Uncertainty)</h3>
+<pre><code>
+σ²(x₀) = γ(0) - Σ λᵢ × γ(xᵢ, x₀)
+</code></pre>
+<strong>In words</strong>: Prediction uncertainty depends on how far the location is from sample points.
+
+<hr>
+
+<h2>Study Checkpoints</h2>
+
+<h3>Can you explain...?</h3>
+
+<p>1. <strong>What's the difference between raster and vector data? When would you use each?</strong></p>
+<details>
+<summary>Click to check</summary>
+<p>Raster = grid of cells, each with a value. Good for continuous data (temperature, elevation, satellite imagery). Vector = points/lines/polygons defined by coordinates. Good for discrete features (boundaries, sample points). Use raster for imagery/continuous phenomena; vector for precise features.</p>
+</details>
+
+<p>2. <strong>Why do coordinate reference systems matter?</strong></p>
+<details>
+<summary>Click to check</summary>
+<p>Different datasets might use different CRS. If you don't align them (transform to same CRS), they won't overlay correctly. Also, geographic CRS (lat/lon) gives distorted distances/areas. Projected CRS (meters) is needed for accurate measurements.</p>
+</details>
+
+<p>3. <strong>What does a variogram tell you, and why is it important for Kriging?</strong></p>
+<details>
+<summary>Click to check</summary>
+<p>A variogram shows how similarity decreases with distance. It reveals the spatial correlation structure. Kriging uses this structure to weight nearby points optimally when making predictions. The nugget/sill/range parameters describe the pattern of spatial dependence.</p>
+</details>
+
+<p>4. <strong>How is Kriging different from simple averaging?</strong></p>
+<details>
+<summary>Click to check</summary>
+<p>Simple averaging treats all nearby points equally. Kriging weights points based on distance AND spatial correlation structure (from the variogram). Kriging also provides prediction uncertainty. Result: better predictions, especially when spatial patterns are complex.</p>
+</details>
+
+<p>5. <strong>What's the difference between nugget, sill, and range in a variogram?</strong></p>
+<details>
+<summary>Click to check</summary>
+<p>Nugget = variance at distance zero (measurement error + micro-scale variation). Sill = maximum variance (plateau value). Range = distance at which points become uncorrelated (where variogram reaches sill). These parameters describe spatial correlation structure.</p>
+</details>
+
+<h3>Can you do...?</h3>
+
+<p>1. <strong>Load a raster file and visualize it?</strong></p>
+<pre><code>
+   # Use rasterio and matplotlib
+   # Check Spatial_Plotting_python.ipynb
+</code></pre>
+
+<p>2. <strong>Load a shapefile and check its CRS?</strong></p>
+<pre><code>
+   import geopandas as gpd
+   data = gpd.read_file('file.shp')
+   print(data.crs)
+</code></pre>
+
+<p>3. <strong>Transform a GeoDataFrame to a different CRS?</strong></p>
+<pre><code>
+   data_utm = data.to_crs('EPSG:32616')
+</code></pre>
+
+<p>4. <strong>Perform Kriging interpolation on sample points and create a prediction map?</strong></p>
+<pre><code>
+   # Follow the workflow in Kriging-ECto30-python.ipynb
+   # Calculate variogram, fit model, predict on grid
+</code></pre>
+
+<p>5. <strong>Calculate the area of a polygon in a projected CRS?</strong></p>
+<pre><code>
+   # First transform to projected CRS (meters)
+   # Then: polygon.area gives area in m²
+</code></pre>
+
+<h3>Self-Check Exercises</h3>
+
+<p>Work through these notebooks:</p>
+
+<ul class="checkbox-list">
+<li>Load and plot rasters and vectors in <code>Spatial_Plotting_python.ipynb</code></li>
+<li>Try different sampling strategies in <code>Spatial_sampling_functions.ipynb</code></li>
+<li>Complete the full Kriging workflow in <code>Kriging-ECto30-python.ipynb</code></li>
+<li>Practice overlay operations in <code>Geospatial_Overlay_Tutorial.ipynb</code></li>
+<li>Understand field trial mapping in <code>TrialDesign_SpatialMapping_Tutorial.ipynb</code></li>
+</ul>
+
+<h3>Ready for Next Module?</h3>
+
+<p>Check off each item:</p>
+
+<ul class="checkbox-list">
+<li>I understand raster vs vector data</li>
+<li>I can load and visualize spatial data in Python</li>
+<li>I know what CRS is and why it matters</li>
+<li>I can transform between different CRS</li>
+<li>I understand how variograms work</li>
+<li>I can perform Kriging interpolation</li>
+<li>I know different spatial sampling strategies</li>
+<li>I can create GeoTIFFs and shapefiles</li>
+</ul>
+
+<strong>All checked?</strong> Move on to <a href="Module_04_Spatial_Statistics.md">Module 04: Spatial Statistics</a>
+
+<strong>Need more practice?</strong> Spend more time with the Kriging notebook. It's complex but crucial!
+
+<hr>
+
+<h2>Common Mistakes to Avoid</h2>
+
+<p>1. <strong>Mixing CRS without transforming</strong></p>
+<ul>
+<li>Always check CRS and transform to match before overlaying</li>
+</ul>
+
+<p>2. <strong>Using lat/lon for distance calculations</strong></p>
+<ul>
+<li>Transform to projected CRS first, or distances will be wrong</li>
+</ul>
+
+<p>3. <strong>Not checking variogram fit</strong></p>
+<ul>
+<li>Plot your empirical variogram and fitted model - make sure it fits well!</li>
+</ul>
+
+<p>4. <strong>Too few sample points for Kriging</strong></p>
+<ul>
+<li>Need 50+ points to get reliable variogram, more is better</li>
+</ul>
+
+<p>5. <strong>Extrapolating too far</strong></p>
+<ul>
+<li>Kriging predictions far from sample points are unreliable</li>
+<li>Check prediction variance - high variance = low confidence</li>
+</ul>
+
+<hr>
+
+<h2>Tips for Success</h2>
+
+<p>1. <strong>Always visualize first</strong>: Plot your data before analysis. Does the spatial pattern make sense?</p>
+
+<p>2. <strong>Check CRS immediately</strong>: First thing - print and verify CRS of all datasets</p>
+
+<p>3. <strong>Understand your variogram</strong>: Don't just fit it automatically. Look at the plot. Does the model fit well? Do the parameters make sense?</p>
+
+<p>4. <strong>Start with IDW</strong>: Before Kriging, try simple IDW interpolation to get a baseline</p>
+
+<p>5. <strong>Validate predictions</strong>: Hold out some sample points, predict them with Kriging, compare predicted vs actual</p>
+
+<p>6. <strong>Use domain knowledge</strong>: Does your interpolated map make sense given what you know about the field/region?</p>
+
+<hr>
+
+<h2>Next Steps</h2>
+
+<p>Ready for advanced spatial statistics?</p>
+
+<p>→ <strong>Continue to <a href="Module_04_Spatial_Statistics.md">Module 04: Spatial Statistics</a></strong></p>
+
+<p>You'll learn:</p>
+<ul>
+<li>Spatial autocorrelation in depth</li>
+<li>Advanced semivariogram modeling</li>
+<li>Contiguity and neighborhood structures</li>
+<li>Spatial correlograms</li>
+</ul>
+
+<hr>
+
+<em>Spatial data is everywhere in environmental and agricultural sciences. Master these fundamentals and you'll be able to analyze any geographic dataset!</em>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="showSection('module2')">← Previous</button>
+                    <button class="btn btn-primary" onclick="showSection('module4')">Next →</button>
+                </div>
+            </section>
+
+            <section id="module4" class="content-section">
+                <h1>Module 04: Spatial Statistics</h1>
+<h2>Spatial Autocorrelation, Semivariograms & Neighborhood Structures</h2>
+
+<strong>Difficulty</strong>: ⭐⭐⭐⭐ Advanced
+<strong>Time Estimate</strong>: 10-12 hours
+<strong>Prerequisites</strong>: Module 03 (Geospatial fundamentals, basic Kriging)
+
+<hr>
+
+<h2>Module Overview</h2>
+
+<p>In Module 03, you learned to USE variograms for Kriging. Now you'll learn the theory BEHIND spatial statistics - why nearby things are related, how to measure that relationship, and how to model spatial patterns from first principles.</p>
+
+<h3>What You'll Learn</h3>
+<ul>
+<li>Deep understanding of spatial autocorrelation</li>
+<li>Building semivariograms from scratch</li>
+<li>Different variogram models and when to use them</li>
+<li>Neighborhood structures (Rook vs Queen contiguity)</li>
+<li>Spatial correlograms</li>
+<li>Distance measures for spatial analysis</li>
+</ul>
+
+<h3>Why This Matters</h3>
+<p>Understanding spatial statistics at this level lets you:</p>
+<ul>
+<li>Diagnose problems in spatial models</li>
+<li>Choose appropriate methods for your data</li>
+<li>Understand assumptions and limitations</li>
+<li>Build custom spatial models</li>
+</ul>
+
+<hr>
+
+<h2>Learning Objectives</h2>
+
+<p>By the end of this module, you will be able to:</p>
+<ul class="checkbox-list">
+<li>Calculate empirical semivariograms from scratch</li>
+<li>Fit and compare different variogram models</li>
+<li>Measure and interpret spatial autocorrelation</li>
+<li>Build contiguity matrices (Rook and Queen)</li>
+<li>Create and interpret spatial correlograms</li>
+<li>Choose appropriate distance metrics</li>
+<li>Understand lagged spatial correlation</li>
+</ul>
+
+<hr>
+
+<h2>Core Concepts</h2>
+
+<h3>1. Spatial Autocorrelation - The Foundation</h3>
+
+<strong>Tobler's First Law of Geography</strong>: "Everything is related to everything else, but near things are more related than distant things."
+
+<strong>Simple explanation</strong>: Values at nearby locations tend to be similar. Temperature 1 meter away is probably similar to here. Temperature 100 km away? Could be very different.
+
+<strong>Why it happens</strong>:
+<ul>
+<li><strong>Continuous processes</strong>: Temperature, soil properties spread smoothly across space</li>
+<li><strong>Spillover effects</strong>: Fertilizer applied here affects nearby plants</li>
+<li><strong>Common causes</strong>: Nearby areas experience same weather, same soil parent material</li>
+</ul>
+
+<strong>Positive spatial autocorrelation</strong> (most common):
+<ul>
+<li>High values cluster near high values</li>
+<li>Low values cluster near low values</li>
+<li>Example: Fertile areas of a field tend to cluster together</li>
+</ul>
+
+<strong>Negative spatial autocorrelation</strong> (rare):
+<ul>
+<li>High values next to low values</li>
+<li>Checkerboard pattern</li>
+<li>Example: Competition (tall plants surrounded by stunted plants)</li>
+</ul>
+
+<strong>How to measure</strong>: Semivariograms and correlograms!
+
+<hr>
+
+<h3>2. Semivariograms from Scratch</h3>
+
+<p>In Module 03, you used semivariograms for Kriging. Now let's build one from the ground up.</p>
+
+<strong>The formula</strong>:
+<pre><code>
+γ(h) = (1 / 2N(h)) × Σ[z(xᵢ) - z(xᵢ + h)]²
+</code></pre>
+
+<strong>Step-by-step process</strong>:
+
+<strong>Step 1</strong>: Calculate all pairwise distances
+<pre><code>
+import numpy as np
+from scipy.spatial.distance import pdist, squareform
+
+# Sample locations (x, y)
+coords = np.array([
+    [0, 0],
+    [1, 0],
+    [2, 0],
+    [0, 1],
+    [1, 1],
+])
+
+# Calculate all pairwise distances
+distances = squareform(pdist(coords))
+</code></pre>
+
+<strong>Step 2</strong>: Group distances into bins (lags)
+<pre><code>
+# Create distance bins (lags)
+lag_bins = np.arange(0, 3, 0.5)  # Bins: 0-0.5, 0.5-1, 1-1.5, etc.
+</code></pre>
+
+<strong>Step 3</strong>: For each bin, calculate semivariance
+<pre><code>
+values = np.array([45, 47, 50, 46, 49])  # Measured values at each location
+
+def calculate_semivariogram(coords, values, lag_bins):
+    distances = squareform(pdist(coords))
+    n_lags = len(lag_bins) - 1
+
+    lags = []
+    gamma = []
+
+    for i in range(n_lags):
+        # Find pairs in this distance bin
+        mask = (distances &gt;= lag_bins[i]) &amp; (distances &lt; lag_bins[i+1])
+        pairs = np.where(mask)
+
+        if len(pairs[0]) &gt; 0:
+            # Calculate semivariance for these pairs
+            diffs_squared = [(values[i] - values[j])**2
+                             for i, j in zip(pairs[0], pairs[1])]
+            gamma_h = np.mean(diffs_squared) / 2
+
+            lags.append((lag_bins[i] + lag_bins[i+1]) / 2)
+            gamma.append(gamma_h)
+
+    return np.array(lags), np.array(gamma)
+
+lags, gamma = calculate_semivariogram(coords, values, lag_bins)
+</code></pre>
+
+<strong>Step 4</strong>: Plot empirical variogram
+<pre><code>
+import matplotlib.pyplot as plt
+
+plt.scatter(lags, gamma)
+plt.xlabel('Distance (lag)')
+plt.ylabel('Semivariance γ(h)')
+plt.title('Empirical Semivariogram')
+plt.show()
+</code></pre>
+
+<strong>What you see</strong>:
+<ul>
+<li>At small distances: Low semivariance (nearby points are similar)</li>
+<li>At larger distances: Higher semivariance (distant points more different)</li>
+<li>Eventually plateaus at the sill (maximum variance)</li>
+</ul>
+
+<hr>
+
+<h3>3. Variogram Models - Choosing the Right One</h3>
+
+<p>You need to fit a mathematical model to your empirical variogram. Common choices:</p>
+
+<h4>Spherical Model (Most Common)</h4>
+<pre><code>
+γ(h) = nugget + (sill - nugget) × [1.5(h/range) - 0.5(h/range)³]   for h &lt; range
+γ(h) = sill                                                          for h ≥ range
+</code></pre>
+
+<strong>When to use</strong>: Moderate continuity, reaches sill at a definite distance
+<strong>Best for</strong>: Soil properties, crop yields
+
+<strong>Shape</strong>: Gradual rise, then levels off sharply at range
+
+<h4>Exponential Model</h4>
+<pre><code>
+γ(h) = nugget + (sill - nugget) × [1 - exp(-3h/range)]
+</code></pre>
+
+<strong>When to use</strong>: Gradual spatial correlation decay
+<strong>Best for</strong>: Atmospheric phenomena, temperature
+
+<strong>Shape</strong>: Smooth exponential approach to sill (never quite reaches it)
+
+<h4>Gaussian Model</h4>
+<pre><code>
+γ(h) = nugget + (sill - nugget) × [1 - exp(-3h²/range²)]
+</code></pre>
+
+<strong>When to use</strong>: Very smooth, continuous phenomena
+<strong>Best for</strong>: Highly continuous processes
+
+<strong>Shape</strong>: Very gradual start, then rapid increase
+
+<strong>How to choose</strong>:
+<p>1. Plot empirical variogram</p>
+<p>2. Try each model</p>
+<p>3. Compare fits visually</p>
+<p>4. Use cross-validation to test predictions</p>
+
+<pre><code>
+from sklearn.model_selection import cross_val_score
+
+# Fit different models and compare
+models = ['spherical', 'exponential', 'gaussian']
+for model in models:
+    OK = OrdinaryKriging(x, y, values, variogram_model=model)
+    # Evaluate prediction accuracy
+</code></pre>
+
+<hr>
+
+<h3>4. Rook vs Queen Contiguity</h3>
+
+<strong>Contiguity</strong>: Which locations are "neighbors"?
+
+<strong>Think of chess pieces</strong>:
+
+<strong>Rook contiguity</strong>: Neighbors share an edge
+<pre><code>
+    [ ] [X] [ ]
+    [X] [●] [X]    ● = focal cell
+    [ ] [X] [ ]    X = neighbors (4 total)
+</code></pre>
+
+<strong>Queen contiguity</strong>: Neighbors share edge OR corner
+<pre><code>
+    [X] [X] [X]
+    [X] [●] [X]    ● = focal cell
+    [X] [X] [X]    X = neighbors (8 total)
+</code></pre>
+
+<strong>When it matters</strong>:
+<ul>
+<li>Analyzing raster data</li>
+<li>Spatial autoregressive models</li>
+<li>Detecting clusters</li>
+<li>Smoothing operations</li>
+</ul>
+
+<strong>Example</strong>: Detecting hot spots in yield data
+<ul>
+<li>Rook: Stricter definition of "nearby"</li>
+<li>Queen: More inclusive, accounts for diagonal patterns</li>
+</ul>
+
+<strong>In Python</strong> (for raster):
+<pre><code>
+import numpy as np
+
+def get_rook_neighbors(grid, i, j):
+    """Get Rook neighbors of cell (i,j)"""
+    neighbors = []
+    rows, cols = grid.shape
+
+    # Up, Down, Left, Right
+    for di, dj in [(-1,0), (1,0), (0,-1), (0,1)]:
+        ni, nj = i + di, j + dj
+        if 0 &lt;= ni &lt; rows and 0 &lt;= nj &lt; cols:
+            neighbors.append((ni, nj))
+
+    return neighbors
+
+def get_queen_neighbors(grid, i, j):
+    """Get Queen neighbors of cell (i,j)"""
+    neighbors = []
+    rows, cols = grid.shape
+
+    # All 8 directions
+    for di in [-1, 0, 1]:
+        for dj in [-1, 0, 1]:
+            if di == 0 and dj == 0:
+                continue
+            ni, nj = i + di, j + dj
+            if 0 &lt;= ni &lt; rows and 0 &lt;= nj &lt; cols:
+                neighbors.append((ni, nj))
+
+    return neighbors
+</code></pre>
+
+<hr>
+
+<h3>5. Spatial Correlograms</h3>
+
+<strong>What it is</strong>: Shows correlation at different distance lags (similar to variogram but uses correlation instead of variance).
+
+<strong>Simple explanation</strong>: A variogram shows how different points become with distance. A correlogram shows how correlated they remain with distance.
+
+<strong>The pattern</strong>:
+<ul>
+<li>Lag 0: Correlation = 1 (perfect correlation with itself)</li>
+<li>Increasing lag: Correlation decreases</li>
+<li>Large lag: Correlation ≈ 0 (no relationship)</li>
+</ul>
+
+<strong>Creating a correlogram</strong>:
+<pre><code>
+def spatial_correlogram(coords, values, max_lag, n_bins):
+    from scipy.spatial.distance import pdist, squareform
+    from scipy.stats import pearsonr
+
+    distances = squareform(pdist(coords))
+    lag_bins = np.linspace(0, max_lag, n_bins+1)
+
+    lags = []
+    correlations = []
+
+    for i in range(n_bins):
+        mask = (distances &gt;= lag_bins[i]) &amp; (distances &lt; lag_bins[i+1])
+        pairs = np.where(mask)
+
+        if len(pairs[0]) &gt; 10:  # Need enough pairs
+            values_i = values[pairs[0]]
+            values_j = values[pairs[1]]
+            corr, _ = pearsonr(values_i, values_j)
+
+            lags.append((lag_bins[i] + lag_bins[i+1]) / 2)
+            correlations.append(corr)
+
+    return np.array(lags), np.array(correlations)
+
+# Plot
+lags, corrs = spatial_correlogram(coords, values, max_lag=10, n_bins=20)
+plt.plot(lags, corrs, 'o-')
+plt.axhline(0, color='k', linestyle='--')
+plt.xlabel('Distance lag')
+plt.ylabel('Correlation')
+plt.title('Spatial Correlogram')
+plt.show()
+</code></pre>
+
+<strong>Interpreting</strong>:
+<ul>
+<li>High correlation at small lags: Strong spatial autocorrelation</li>
+<li>Correlation drops to zero quickly: Short-range dependence</li>
+<li>Correlation remains high: Long-range dependence</li>
+</ul>
+
+<strong>Variogram vs Correlogram</strong>:
+<ul>
+<li>Variogram: Emphasizes differences (variance)</li>
+<li>Correlogram: Emphasizes similarity (correlation)</li>
+<li>They're inverse relationships: high correlation = low semivariance</li>
+</ul>
+
+<hr>
+
+<h3>6. Distance Measures</h3>
+
+<p>Not all distances are created equal!</p>
+
+<h4>Euclidean Distance (Most Common)</h4>
+<pre><code>
+d = √[(x₁ - x₂)² + (y₁ - y₂)²]
+</code></pre>
+<strong>Use</strong>: Standard distance, works for most applications
+
+<h4>Manhattan Distance</h4>
+<pre><code>
+d = |x₁ - x₂| + |y₁ - y₂|
+</code></pre>
+<strong>Use</strong>: When movement is constrained to grid (city blocks)
+
+<h4>Great Circle Distance</h4>
+<pre><code>
+(Complex formula using haversine)
+</code></pre>
+<strong>Use</strong>: Distance on Earth's surface (lat/lon coordinates)
+<strong>Important</strong>: Accounts for Earth's curvature
+
+<pre><code>
+from math import radians, sin, cos, sqrt, atan2
+
+def haversine_distance(lat1, lon1, lat2, lon2):
+    """Great circle distance between two lat/lon points (km)"""
+    R = 6371  # Earth radius in km
+
+    dlat = radians(lat2 - lat1)
+    dlon = radians(lon2 - lon1)
+    lat1, lat2 = radians(lat1), radians(lat2)
+
+    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+    c = 2 * atan2(sqrt(a), sqrt(1-a))
+
+    return R * c
+</code></pre>
+
+<strong>When it matters</strong>: Large geographic areas where Earth's curvature is significant (>100 km)
+
+<hr>
+
+<h2>Course Materials</h2>
+
+<h3>Primary Notebooks</h3>
+
+<p>1. <strong><a href="/tmp/cpsc444-study/python_notebooks/ModelingSpatialVariability_Part1.ipynb">python_notebooks/ModelingSpatialVariability_Part1.ipynb</a></strong></p>
+<ul>
+<li>Building semivariograms from scratch</li>
+<li>Understanding semivariance calculation</li>
+<li>Empirical variogram construction</li>
+</ul>
+
+<p>2. <strong><a href="/tmp/cpsc444-study/python_notebooks/ModelingSpatialVariability-Part2.ipynb">python_notebooks/ModelingSpatialVariability-Part2.ipynb</a></strong></p>
+<ul>
+<li>Advanced variogram modeling</li>
+<li>Fitting different models</li>
+<li>Model comparison</li>
+</ul>
+
+<p>3. <strong><a href="/tmp/cpsc444-study/python_notebooks/ModelingSpatialVariability_Part3.ipynb">python_notebooks/ModelingSpatialVariability_Part3.ipynb</a></strong></p>
+<ul>
+<li>Applications of spatial variability models</li>
+<li>Real-world examples</li>
+</ul>
+
+<p>4. <strong><a href="/tmp/cpsc444-study/python_notebooks/DistanceMeasures.ipynb">python_notebooks/DistanceMeasures.ipynb</a></strong></p>
+<ul>
+<li>Different distance metrics</li>
+<li>When to use each</li>
+<li>Impact on spatial analysis</li>
+</ul>
+
+<p>5. <strong><a href="/tmp/cpsc444-study/python_notebooks/ToyRaster_Contiguity.ipynb">python_notebooks/ToyRaster_Contiguity.ipynb</a></strong></p>
+<ul>
+<li>Rook vs Queen contiguity</li>
+<li>Building neighborhood matrices</li>
+<li>Applications in raster analysis</li>
+</ul>
+
+<p>6. <strong><a href="/tmp/cpsc444-study/python_notebooks/ToyRaster_Contiguity_Extended_pub.ipynb">python_notebooks/ToyRaster_Contiguity_Extended_pub.ipynb</a></strong></p>
+<ul>
+<li>Extended contiguity analysis</li>
+<li>Advanced neighborhood structures</li>
+</ul>
+
+<p>7. <strong><a href="/tmp/cpsc444-study/python_notebooks/PairsPlot_Correlogram.ipynb">python_notebooks/PairsPlot_Correlogram.ipynb</a></strong></p>
+<ul>
+<li>Creating spatial correlograms</li>
+<li>Interpreting lagged correlation</li>
+<li>Comparing to variograms</li>
+</ul>
+
+<hr>
+
+<h2>Study Checkpoints</h2>
+
+<h3>Can you explain...?</h3>
+
+<p>1. <strong>What is spatial autocorrelation and why does it occur?</strong></p>
+<p>2. <strong>How is a semivariogram different from a correlogram?</strong></p>
+<p>3. <strong>What do nugget, sill, and range represent physically?</strong></p>
+<p>4. <strong>When would you use Rook vs Queen contiguity?</strong></p>
+<p>5. <strong>Why might you choose an exponential over a spherical variogram model?</strong></p>
+
+<h3>Can you do...?</h3>
+
+<p>1. <strong>Calculate an empirical semivariogram from scratch (without pykrige)?</strong></p>
+<p>2. <strong>Fit different variogram models and compare them?</strong></p>
+<p>3. <strong>Build a contiguity matrix for a raster?</strong></p>
+<p>4. <strong>Create and interpret a spatial correlogram?</strong></p>
+<p>5. <strong>Choose the appropriate distance metric for your data?</strong></p>
+
+<h3>Ready for Next Module?</h3>
+
+<ul class="checkbox-list">
+<li>I can build semivariograms from raw data</li>
+<li>I understand different variogram models</li>
+<li>I know Rook vs Queen contiguity</li>
+<li>I can create correlograms</li>
+<li>I understand spatial autocorrelation deeply</li>
+</ul>
+
+<strong>Ready?</strong> → <a href="Module_05_Advanced_Regression.md">Module 05: Advanced Regression</a>
+
+<hr>
+
+<em>Spatial statistics is the foundation of all spatial analysis. Master these concepts and you'll understand what's really happening in spatial models!</em>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="showSection('module3')">← Previous</button>
+                    <button class="btn btn-primary" onclick="showSection('module5')">Next →</button>
+                </div>
+            </section>
+
+            <section id="module5" class="content-section">
+                <h1>Module 05: Advanced Regression</h1>
+<h2>Regularization, Geographically Weighted Regression & Hyperparameter Tuning</h2>
+
+<strong>Difficulty</strong>: ⭐⭐⭐⭐ Advanced
+<strong>Time Estimate</strong>: 8-10 hours
+<strong>Prerequisites</strong>: Modules 02 (Regression), 03 (Spatial data), 04 (Spatial stats)
+
+<hr>
+
+<h2>Module Overview</h2>
+
+<p>Regular regression has limitations: it can overfit, perform poorly with many predictors, and assume relationships are the same everywhere. This module teaches advanced techniques to address these problems.</p>
+
+<h3>What You'll Learn</h3>
+<ul>
+<li>Regularization (Lasso, Ridge) to prevent overfitting</li>
+<li>Geographically Weighted Regression (GWR) for spatially-varying relationships</li>
+<li>Hyperparameter optimization</li>
+<li>Cross-validation strategies</li>
+<li>Non-linear curve fitting</li>
+</ul>
+
+<h3>Why This Matters</h3>
+<p>Real-world relationships are rarely simple:</p>
+<ul>
+<li>Fertilizer response might differ across a field (need GWR)</li>
+<li>With 50 predictors, regular regression overfits (need regularization)</li>
+<li>Model performance depends on parameter choices (need optimization)</li>
+</ul>
+
+<hr>
+
+<h2>Core Concepts</h2>
+
+<h3>1. The Overfitting Problem</h3>
+
+<strong>What is overfitting?</strong> Model fits training data TOO well, including noise, so it performs poorly on new data.
+
+<strong>Simple analogy</strong>: Memorizing test answers vs understanding concepts. Memorization works on that exact test but fails on similar questions.
+
+<strong>Example</strong>:
+<ul>
+<li>Training data: 95% accuracy</li>
+<li>Test data: 60% accuracy</li>
+<li><strong>Problem</strong>: Overfit!</li>
+</ul>
+
+<strong>Solution</strong>: Regularization
+
+<hr>
+
+<h3>2. Ridge Regression (L2 Regularization)</h3>
+
+<strong>What it does</strong>: Penalizes large coefficients, forcing the model to use all predictors but keep coefficients small.
+
+<strong>Formula</strong>:
+<pre><code>
+Minimize: Σ(y - ŷ)² + λΣβ²
+          ↑            ↑
+     prediction     penalty
+        error       on large
+                   coefficients
+</code></pre>
+
+<strong>Simple explanation</strong>: Find coefficients that predict well BUT keep them small. The λ (lambda) parameter controls the trade-off.
+
+<strong>When to use</strong>: Many correlated predictors (multicollinearity)
+
+<strong>Example</strong>:
+<pre><code>
+from sklearn.linear_model import Ridge
+
+# λ = alpha in sklearn
+ridge = Ridge(alpha=1.0)
+ridge.fit(X_train, y_train)
+
+# Coefficients will be smaller than ordinary regression
+print(ridge.coef_)
+</code></pre>
+
+<strong>Effect of λ</strong>:
+<ul>
+<li>λ = 0: Regular regression (no penalty)</li>
+<li>λ small: Slight penalty</li>
+<li>λ large: All coefficients shrink toward zero</li>
+</ul>
+
+<hr>
+
+<h3>3. Lasso Regression (L1 Regularization)</h3>
+
+<strong>What it does</strong>: Penalizes coefficients, but can set some to EXACTLY ZERO (feature selection).
+
+<strong>Formula</strong>:
+<pre><code>
+Minimize: Σ(y - ŷ)² + λΣ|β|
+</code></pre>
+
+<strong>Simple explanation</strong>: Like Ridge, but can completely eliminate unimportant predictors.
+
+<strong>When to use</strong>: Want to identify which predictors matter most
+
+<strong>Example</strong>:
+<pre><code>
+from sklearn.linear_model import Lasso
+
+lasso = Lasso(alpha=1.0)
+lasso.fit(X_train, y_train)
+
+# Some coefficients will be exactly 0
+print(lasso.coef_)
+# Example output: [2.3, 0, 1.5, 0, 0, 3.1, 0]
+#                       ↑     ↑  ↑      ↑
+#                   These predictors were eliminated
+</code></pre>
+
+<strong>Ridge vs Lasso</strong>:
+<ul>
+<li>Ridge: Keeps all predictors, shrinks coefficients</li>
+<li>Lasso: Eliminates some predictors entirely</li>
+<li>Lasso is easier to interpret (fewer non-zero coefficients)</li>
+</ul>
+
+<hr>
+
+<h3>4. Geographically Weighted Regression (GWR)</h3>
+
+<strong>The problem</strong>: Regular regression assumes relationships are the same everywhere. But what if fertilizer response differs across a field?
+
+<strong>Solution</strong>: Fit LOCAL regression models - different coefficients for different locations.
+
+<strong>Simple analogy</strong>: Instead of one "average" recipe for the whole country, you have regional variations (Southern cooking, New England cooking, etc.).
+
+<strong>How it works</strong>:
+
+<p>1. Choose a location to predict</p>
+<p>2. Weight nearby data points more heavily</p>
+<p>3. Fit a regression using those weights</p>
+<p>4. Repeat for every location</p>
+
+<strong>Weighting function</strong> (Gaussian kernel):
+<pre><code>
+w_i = exp(-(d_i / bandwidth)²)
+</code></pre>
+<ul>
+<li><code>d_i</code> = distance from prediction location to data point i</li>
+<li>Closer points get higher weights</li>
+<li><code>bandwidth</code> controls how far influence extends</li>
+</ul>
+
+<strong>Example</strong>:
+<pre><code>
+# Conceptual example (simplified)
+def gwr_predict(x0, y0, X, Y, values, bandwidth):
+    """Predict at location (x0, y0) using GWR"""
+
+    # Calculate distances to all data points
+    distances = np.sqrt((X - x0)**2 + (Y - y0)**2)
+
+    # Calculate weights (Gaussian kernel)
+    weights = np.exp(-(distances / bandwidth)**2)
+
+    # Fit weighted regression
+    from sklearn.linear_model import LinearRegression
+    model = LinearRegression()
+    model.fit(predictors, values, sample_weight=weights)
+
+    # Predict at this location
+    return model.predict(new_predictors)
+</code></pre>
+
+<strong>Output</strong>: Different coefficients at every location!
+
+<strong>Example interpretation</strong>:
+<ul>
+<li>West side of field: Rainfall coefficient = 3.5 (rain really helps here)</li>
+<li>East side of field: Rainfall coefficient = 1.2 (rain helps less)</li>
+<li><strong>Conclusion</strong>: Water management could be spatially targeted</li>
+</ul>
+
+<hr>
+
+<h3>5. Hyperparameter Tuning</h3>
+
+<strong>What are hyperparameters?</strong> Settings you choose BEFORE fitting the model (like λ in Ridge/Lasso, bandwidth in GWR).
+
+<strong>The challenge</strong>: How do you choose the best value?
+
+<h4>Grid Search</h4>
+
+<strong>What</strong>: Try every combination of parameters from a list.
+
+<pre><code>
+from sklearn.model_selection import GridSearchCV
+from sklearn.linear_model import Ridge
+
+# Define parameter grid
+param_grid = {
+    'alpha': [0.1, 1.0, 10, 100, 1000]
+}
+
+# Grid search with cross-validation
+grid_search = GridSearchCV(
+    Ridge(),
+    param_grid,
+    cv=5,  # 5-fold cross-validation
+    scoring='r2'
+)
+
+grid_search.fit(X_train, y_train)
+
+print(f"Best alpha: {grid_search.best_params_}")
+print(f"Best R²: {grid_search.best_score_}")
+</code></pre>
+
+<strong>Pros</strong>: Guaranteed to find best combination in grid
+<strong>Cons</strong>: Slow with many parameters
+
+<h4>Random Search</h4>
+
+<strong>What</strong>: Try random combinations.
+
+<pre><code>
+from sklearn.model_selection import RandomizedSearchCV
+from scipy.stats import uniform
+
+# Define parameter distributions
+param_dist = {
+    'alpha': uniform(0.1, 1000)  # Uniform distribution
+}
+
+random_search = RandomizedSearchCV(
+    Ridge(),
+    param_dist,
+    n_iter=50,  # Try 50 random combinations
+    cv=5,
+    scoring='r2'
+)
+
+random_search.fit(X_train, y_train)
+</code></pre>
+
+<strong>Pros</strong>: Faster, explores more space
+<strong>Cons</strong>: Might miss optimal value
+
+<h4>Bayesian Optimization</h4>
+
+<strong>What</strong>: Intelligently choose next parameters to try based on previous results.
+
+<pre><code>
+from skopt import BayesSearchCV
+
+# More efficient than random search
+bayes_search = BayesSearchCV(
+    Ridge(),
+    {'alpha': (0.1, 1000, 'log-uniform')},
+    n_iter=30,
+    cv=5
+)
+
+bayes_search.fit(X_train, y_train)
+</code></pre>
+
+<strong>Pros</strong>: Most efficient
+<strong>Cons</strong>: More complex
+
+<hr>
+
+<h3>6. Cross-Validation</h3>
+
+<strong>The problem</strong>: If you test on the same data you trained on, you can't detect overfitting.
+
+<strong>Solution</strong>: Split data into folds, train on some, test on others.
+
+<h4>K-Fold Cross-Validation</h4>
+
+<pre><code>
+Dataset split into 5 folds:
+[1] [2] [3] [4] [5]
+
+Iteration 1: Train on [2][3][4][5], test on [1]
+Iteration 2: Train on [1][3][4][5], test on [2]
+Iteration 3: Train on [1][2][4][5], test on [3]
+...
+</code></pre>
+
+<strong>Average performance across all folds = true model quality</strong>
+
+<pre><code>
+from sklearn.model_selection import cross_val_score
+from sklearn.linear_model import Ridge
+
+scores = cross_val_score(
+    Ridge(alpha=10),
+    X, y,
+    cv=5,  # 5-fold
+    scoring='r2'
+)
+
+print(f"Mean R²: {scores.mean()}")
+print(f"Std: {scores.std()}")
+</code></pre>
+
+<h4>Spatial Cross-Validation</h4>
+
+<strong>Problem</strong>: With spatial data, nearby points are correlated. Random CV splits put correlated data in train AND test sets!
+
+<strong>Solution</strong>: Spatial CV - test set is spatially separated from training set.
+
+<strong>Example</strong>: Leave out entire regions
+<pre><code>
+# Group by spatial clusters
+from sklearn.model_selection import GroupKFold
+
+# Assign each point to a spatial cluster
+clusters = assign_spatial_clusters(coordinates)
+
+gkf = GroupKFold(n_splits=5)
+for train_idx, test_idx in gkf.split(X, y, groups=clusters):
+    # Train and test sets are spatially separated
+    ...
+</code></pre>
+
+<hr>
+
+<h3>7. Non-linear Curve Fitting</h3>
+
+<strong>Problem</strong>: Relationships aren't always linear!
+
+<strong>Example</strong>: Yield vs fertilizer
+<ul>
+<li>Too little: Low yield</li>
+<li>Optimal amount: High yield</li>
+<li>Too much: Yield drops (toxicity)</li>
+<li><strong>Shape</strong>: Curve, not line!</li>
+</ul>
+
+<strong>Solution</strong>: Fit non-linear models
+
+<pre><code>
+from scipy.optimize import curve_fit
+
+# Define non-linear function (e.g., quadratic)
+def quadratic(x, a, b, c):
+    return a*x**2 + b*x + c
+
+# Fit
+params, covariance = curve_fit(
+    quadratic,
+    fertilizer_amounts,
+    yields
+)
+
+# Predict
+predicted_yield = quadratic(new_fertilizer, *params)
+</code></pre>
+
+<strong>Common non-linear forms</strong>:
+<ul>
+<li>Quadratic: <code>y = ax² + bx + c</code></li>
+<li>Exponential: <code>y = a × exp(bx)</code></li>
+<li>Logistic (S-curve): <code>y = L / (1 + exp(-k(x-x₀)))</code></li>
+</ul>
+
+<hr>
+
+<h2>Course Materials</h2>
+
+<p>1. <strong><a href="/tmp/cpsc444-study/python_notebooks/Regularization.ipynb">Regularization.ipynb</a></strong> - Lasso & Ridge</p>
+<p>2. <strong><a href="/tmp/cpsc444-study/python_notebooks/CurveFittingAlgorithms.ipynb">CurveFittingAlgorithms.ipynb</a></strong> - Non-linear fits</p>
+<p>3. <strong><a href="/tmp/cpsc444-study/python_notebooks/Automobile-nonlinearity.ipynb">Automobile-nonlinearity.ipynb</a></strong> - Real example</p>
+<p>4. <strong><a href="/tmp/cpsc444-study/python_notebooks/GeographicallyWeightedRegression_Kernels.ipynb">GeographicallyWeightedRegression_Kernels.ipynb</a></strong> - GWR theory</p>
+<p>5. <strong><a href="/tmp/cpsc444-study/python_notebooks/GWR_CaseStudy.ipynb">GWR_CaseStudy.ipynb</a></strong> - GWR application</p>
+<p>6. <strong><a href="/tmp/cpsc444-study/python_notebooks/GWR_CaseStudy_Updated.ipynb">GWR_CaseStudy_Updated.ipynb</a></strong> - Updated examples</p>
+
+<hr>
+
+<h2>Study Checkpoints</h2>
+
+<h3>Can you explain...?</h3>
+<p>1. <strong>What's the difference between Ridge and Lasso?</strong></p>
+<p>2. <strong>Why is GWR better than regular regression for spatial data?</strong></p>
+<p>3. <strong>What does λ (lambda) control in regularization?</strong></p>
+<p>4. <strong>Why do we need cross-validation?</strong></p>
+
+<h3>Can you do...?</h3>
+<p>1. <strong>Fit Ridge and Lasso models and compare results?</strong></p>
+<p>2. <strong>Use GridSearchCV to find optimal hyperparameters?</strong></p>
+<p>3. <strong>Implement basic GWR for a spatial dataset?</strong></p>
+<p>4. <strong>Fit non-linear curves to data?</strong></p>
+
+<h3>Ready?</h3>
+<ul class="checkbox-list">
+<li>I understand Ridge and Lasso regularization</li>
+<li>I can perform GWR and interpret local coefficients</li>
+<li>I know how to tune hyperparameters</li>
+<li>I understand cross-validation strategies</li>
+</ul>
+
+<strong>Next</strong>: <a href="Module_06_Mixed_Models.md">Module 06: Mixed Models</a>
+
+<hr>
+
+<em>Advanced regression techniques unlock the complexity in real-world data!</em>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="showSection('module4')">← Previous</button>
+                    <button class="btn btn-primary" onclick="showSection('module6')">Next →</button>
+                </div>
+            </section>
+
+            <section id="module6" class="content-section">
+                <h1>Module 06: Mixed Models & Hierarchical Data</h1>
+<h2>Fixed vs Random Effects, BLUP & EM Algorithm</h2>
+
+<strong>Difficulty</strong>: ⭐⭐⭐⭐⭐ Advanced
+<strong>Time Estimate</strong>: 10-12 hours
+<strong>Prerequisites</strong>: Modules 02 (Regression), 04 (Spatial stats)
+
+<hr>
+
+<h2>Module Overview</h2>
+
+<p>Regular regression assumes all observations are independent. But what if your data has GROUPS? Like plots within fields, fields within farms, students within schools? Mixed models handle hierarchical (nested) data properly.</p>
+
+<h3>What You'll Learn</h3>
+<ul>
+<li>Fixed vs random effects</li>
+<li>Random intercept and random slope models</li>
+<li>Best Linear Unbiased Prediction (BLUP)</li>
+<li>Expectation-Maximization (EM) algorithm</li>
+<li>When to use mixed models vs regular regression</li>
+</ul>
+
+<h3>Why This Matters</h3>
+<p>Agricultural and environmental data is often hierarchical:</p>
+<ul>
+<li>Measurements within plots within fields</li>
+<li>Fields within farms within regions</li>
+<li>Time series within locations</li>
+<li>Ignoring this structure leads to wrong conclusions!</li>
+</ul>
+
+<hr>
+
+<h2>Core Concepts</h2>
+
+<h3>1. The Hierarchical Data Problem</h3>
+
+<strong>Example</strong>: Measuring crop yield in a multi-location trial
+
+<pre><code>
+Farm 1:
+  Field A: [180, 175, 182, 178]
+  Field B: [165, 170, 168, 172]
+
+Farm 2:
+  Field C: [190, 185, 192, 188]
+  Field D: [175, 178, 173, 180]
+</code></pre>
+
+<strong>Problem with regular regression</strong>:
+<ul>
+<li>Treats all 16 measurements as independent</li>
+<li><strong>But they're not!</strong> Measurements within the same field are more similar</li>
+</ul>
+
+<strong>Why it matters</strong>:
+<ul>
+<li>Underestimates uncertainty</li>
+<li>Incorrect p-values</li>
+<li>Wrong conclusions about treatment effects</li>
+</ul>
+
+<strong>Solution</strong>: Mixed models account for grouping
+
+<hr>
+
+<h3>2. Fixed vs Random Effects</h3>
+
+<strong>Fixed effects</strong>: Variables you want to estimate and make inferences about
+<ul>
+<li>Treatment effects (fertilizer amount, variety)</li>
+<li>Controlled experimental factors</li>
+<li><strong>Example</strong>: Effect of nitrogen level on yield</li>
+</ul>
+
+<strong>Random effects</strong>: Random variation due to grouping
+<ul>
+<li>Field-to-field variation</li>
+<li>Farm-to-farm variation</li>
+<li>Not interested in specific values, just the variability</li>
+<li><strong>Example</strong>: Which farm doesn't matter, but farms vary randomly</li>
+</ul>
+
+<strong>Simple analogy</strong>:
+<ul>
+<li><strong>Fixed</strong>: You specifically chose these treatments to test</li>
+<li><strong>Random</strong>: You randomly sampled these fields/farms from a larger population</li>
+</ul>
+
+<strong>Mathematical notation</strong>:
+<pre><code>
+Fixed effect: y = β₀ + β₁ × treatment + ε
+Random effect: y = β₀ + u_j + β₁ × treatment + ε
+                      ↑
+             random intercept for group j
+</code></pre>
+
+<hr>
+
+<h3>3. Random Intercept Model</h3>
+
+<strong>The idea</strong>: Each group has its own baseline (intercept), but same slope.
+
+<strong>Example</strong>: Yield vs fertilizer across multiple fields
+
+<strong>Model</strong>:
+<pre><code>
+y_ij = (β₀ + u_j) + β₁ × fertilizer + ε_ij
+       ↑
+   intercept for field j
+</code></pre>
+
+<strong>Simple explanation</strong>:
+<ul>
+<li><code>β₀</code>: Average baseline yield (fixed)</li>
+<li><code>u_j</code>: How much field j differs from average (random)</li>
+<li><code>β₁</code>: Fertilizer effect (fixed, same for all fields)</li>
+<li><code>ε_ij</code>: Residual error</li>
+</ul>
+
+<strong>Visual</strong>:
+<pre><code>
+Yield
+  |     Field C ___/
+  |         /
+  |    Field A___/     All parallel (same slope β₁)
+  |       /
+  | Field B___/      But different intercepts
+  |
+  +-------------------&gt; Fertilizer
+</code></pre>
+
+<strong>When to use</strong>: Groups have different baselines but same response to predictors
+
+<strong>Python (using statsmodels)</strong>:
+<pre><code>
+import statsmodels.formula.api as smf
+
+# Random intercept for field
+model = smf.mixedlm(
+    "yield ~ fertilizer",  # Fixed effects
+    data,
+    groups=data["field_id"]  # Random intercept per field
+)
+result = model.fit()
+print(result.summary())
+</code></pre>
+
+<hr>
+
+<h3>4. Random Slope Model</h3>
+
+<strong>The idea</strong>: Each group has different baseline AND different response to predictors.
+
+<strong>Model</strong>:
+<pre><code>
+y_ij = (β₀ + u_0j) + (β₁ + u_1j) × fertilizer + ε_ij
+                      ↑
+               random slope for field j
+</code></pre>
+
+<strong>Visual</strong>:
+<pre><code>
+Yield
+  |       ___/  Field C (high baseline, strong response)
+  |    __/
+  | __/ Field A (medium)
+  |_____
+  |     ---  Field B (low baseline, weak response)
+  +-------------------&gt; Fertilizer
+</code></pre>
+
+<strong>When to use</strong>: Both baseline and response vary by group
+
+<strong>Example</strong>: Fertilizer response differs by soil type - sandy soils respond differently than clay soils.
+
+<strong>Python</strong>:
+<pre><code>
+# Random intercept AND random slope
+model = smf.mixedlm(
+    "yield ~ fertilizer",
+    data,
+    groups=data["field_id"],
+    re_formula="~fertilizer"  # Random slope on fertilizer
+)
+result = model.fit()
+</code></pre>
+
+<hr>
+
+<h3>5. BLUP (Best Linear Unbiased Prediction)</h3>
+
+<strong>What it is</strong>: Method for predicting random effects.
+
+<strong>Simple explanation</strong>: BLUP "shrinks" group-specific estimates toward the global average. Groups with little data get shrunk more.
+
+<strong>Example</strong>: Estimating yield for each field
+
+<strong>Naive approach</strong>: Average yield in each field
+<ul>
+<li>Field with 100 observations: Trust the average</li>
+<li>Field with 2 observations: Don't trust the average (too noisy!)</li>
+</ul>
+
+<strong>BLUP approach</strong>:
+<ul>
+<li>Field with lots of data: Estimate close to field average</li>
+<li>Field with little data: Shrink toward overall average</li>
+</ul>
+
+<strong>Formula (conceptual)</strong>:
+<pre><code>
+BLUP_j = w × field_j_average + (1-w) × global_average
+
+where w depends on:
+  - Amount of data in group
+  - Within-group variability
+  - Between-group variability
+</code></pre>
+
+<strong>Why it's better</strong>: Prevents overconfidence in noisy estimates
+
+<hr>
+
+<h3>6. Variance Components</h3>
+
+<strong>Mixed models partition variance</strong>:
+
+<pre><code>
+Total variance = Between-group variance + Within-group variance
+
+σ²_total = σ²_between + σ²_within
+</code></pre>
+
+<strong>Example</strong>:
+<ul>
+<li>Total yield variance: 400 (bushels/acre)²</li>
+<li>Between-field variance: 250</li>
+<li>Within-field variance: 150</li>
+</ul>
+
+<strong>Interpretation</strong>: 62.5% of variation is between fields, 37.5% within fields
+
+<strong>Intraclass Correlation (ICC)</strong>:
+<pre><code>
+ICC = σ²_between / (σ²_between + σ²_within)
+    = 250 / 400
+    = 0.625
+</code></pre>
+
+<strong>Meaning</strong>: 62.5% of variance is due to field differences
+
+<strong>Why it matters</strong>: High ICC = must account for grouping! Low ICC = regular regression might be okay.
+
+<hr>
+
+<h3>7. Expectation-Maximization (EM) Algorithm</h3>
+
+<strong>What it is</strong>: Iterative algorithm for fitting mixed models when you have missing information (the random effects).
+
+<strong>The problem</strong>: You want to estimate:
+<ul>
+<li>Fixed effects (β)</li>
+<li>Random effects (u)</li>
+<li>Variance components (σ²)</li>
+</ul>
+
+<p>But random effects aren't directly observed!</p>
+
+<strong>EM Solution - Two steps repeated</strong>:
+
+<strong>E-step (Expectation)</strong>: Given current parameter estimates, predict random effects
+<strong>M-step (Maximization)</strong>: Given random effect predictions, update parameter estimates
+
+<strong>Repeat until convergence</strong>
+
+<strong>Conceptual algorithm</strong>:
+<pre><code>
+1. Initialize parameters (β, σ²_between, σ²_within)
+
+2. Repeat until convergence:
+
+   E-step:
+   - Predict random effects u_j given current parameters
+   - These are the BLUPs
+
+   M-step:
+   - Update β by weighted regression
+   - Update σ² components by analyzing residuals
+
+3. Converged parameters are final estimates
+</code></pre>
+
+<strong>Why it works</strong>: Each step improves the likelihood. Eventually reaches optimum.
+
+<strong>You don't implement this yourself</strong> - it's built into mixed model functions. But understanding it helps you:
+<ul>
+<li>Know why fitting takes longer than regular regression</li>
+<li>Understand convergence warnings</li>
+<li>Interpret the output</li>
+</ul>
+
+<hr>
+
+<h3>8. Comparing Models: ANOVA vs Mixed Models</h3>
+
+<strong>ANOVA approach</strong>:
+<ul>
+<li>Treats groups as fixed effects</li>
+<li>Tests if group means differ</li>
+<li>Can't predict new groups</li>
+</ul>
+
+<strong>Mixed model approach</strong>:
+<ul>
+<li>Treats groups as random sample from population</li>
+<li>Estimates variance components</li>
+<li>Can predict new groups (using BLUP)</li>
+</ul>
+
+<strong>When to use each</strong>:
+
+<strong>Use ANOVA when</strong>:
+<ul>
+<li>You care about specific groups (these exact fields)</li>
+<li>Not generalizing to other groups</li>
+<li>Small number of groups</li>
+</ul>
+
+<strong>Use mixed models when</strong>:
+<ul>
+<li>Groups are random sample (could have been different fields)</li>
+<li>Want to generalize to population</li>
+<li>Many groups (10+)</li>
+<li>Unbalanced data (different sample sizes per group)</li>
+</ul>
+
+<hr>
+
+<h2>Course Materials</h2>
+
+<p>1. <strong><a href="/tmp/cpsc444-study/python_notebooks/MLM_implementation.ipynb">MLM_implementation.ipynb</a></strong></p>
+<ul>
+<li>Implementing mixed linear models</li>
+<li>Random intercepts and slopes</li>
+<li>Variance components</li>
+</ul>
+
+<p>2. <strong><a href="/tmp/cpsc444-study/python_notebooks/ANOVAvsMLM.ipynb">ANOVAvsMLM.ipynb</a></strong></p>
+<ul>
+<li>Comparing ANOVA and mixed models</li>
+<li>When to use each</li>
+<li>Interpretation differences</li>
+</ul>
+
+<p>3. <strong><a href="/tmp/cpsc444-study/python_notebooks/Part1_ANOVAvsMLM+SpatialEffects.ipynb">Part1_ANOVAvsMLM+SpatialEffects.ipynb</a></strong></p>
+<ul>
+<li>Adding spatial effects to mixed models</li>
+<li>Combining hierarchical and spatial structure</li>
+</ul>
+
+<p>4. <strong><a href="/tmp/cpsc444-study/python_notebooks/ExpectationMaximization.ipynb">ExpectationMaximization.ipynb</a></strong></p>
+<ul>
+<li>EM algorithm details</li>
+<li>How mixed models are fit</li>
+<li>Convergence and diagnostics</li>
+</ul>
+
+<hr>
+
+<h2>Key Formulas</h2>
+
+<h3>Random Intercept Model</h3>
+<pre><code>
+y_ij = (β₀ + u_j) + β₁x_ij + ε_ij
+
+where:
+  u_j ~ N(0, σ²_between)
+  ε_ij ~ N(0, σ²_within)
+</code></pre>
+
+<h3>Random Slope Model</h3>
+<pre><code>
+y_ij = (β₀ + u_0j) + (β₁ + u_1j)x_ij + ε_ij
+</code></pre>
+
+<h3>Variance Decomposition</h3>
+<pre><code>
+Var(y_ij) = σ²_between + σ²_within
+</code></pre>
+
+<h3>Intraclass Correlation</h3>
+<pre><code>
+ICC = σ²_between / (σ²_between + σ²_within)
+</code></pre>
+
+<hr>
+
+<h2>Study Checkpoints</h2>
+
+<h3>Can you explain...?</h3>
+<p>1. <strong>What's the difference between fixed and random effects?</strong></p>
+<p>2. <strong>Why use mixed models instead of regular regression?</strong></p>
+<p>3. <strong>What does BLUP do and why is it better than simple averages?</strong></p>
+<p>4. <strong>What does ICC tell you about your data?</strong></p>
+
+<h3>Can you do...?</h3>
+<p>1. <strong>Fit a random intercept model?</strong></p>
+<p>2. <strong>Interpret variance components?</strong></p>
+<p>3. <strong>Compare ANOVA vs mixed model results?</strong></p>
+<p>4. <strong>Extract and interpret BLUPs?</strong></p>
+
+<h3>Ready?</h3>
+<ul class="checkbox-list">
+<li>I understand fixed vs random effects</li>
+<li>I can fit random intercept/slope models</li>
+<li>I know when to use mixed models</li>
+<li>I understand BLUP and EM algorithm basics</li>
+</ul>
+
+<strong>Next</strong>: <a href="Module_07_Machine_Learning.md">Module 07: Machine Learning</a>
+
+<hr>
+
+<em>Mixed models are essential for real-world hierarchical data - master them and avoid common pitfalls!</em>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="showSection('module5')">← Previous</button>
+                    <button class="btn btn-primary" onclick="showSection('module7')">Next →</button>
+                </div>
+            </section>
+
+            <section id="module7" class="content-section">
+                <h1>Module 07: Machine Learning & Ensemble Methods</h1>
+<h2>Random Forest, XGBoost, CNNs for Spatial Data</h2>
+
+<strong>Difficulty</strong>: ⭐⭐⭐⭐⭐ Advanced
+<strong>Time Estimate</strong>: 12-15 hours
+<strong>Prerequisites</strong>: Modules 02 (Regression), 05 (Advanced regression)
+
+<hr>
+
+<h2>Module Overview</h2>
+
+<p>Classical statistics (regression, ANOVA) make assumptions about your data. Machine learning methods are more flexible - they can learn complex, non-linear patterns automatically. This module teaches powerful ML techniques particularly useful for spatial and agricultural data.</p>
+
+<h3>What You'll Learn</h3>
+<ul>
+<li>Ensemble methods (combining multiple models)</li>
+<li>Random Forest and XGBoost</li>
+<li>Convolutional Neural Networks (CNNs) for spatial patterns</li>
+<li>Pattern removal and detrending</li>
+<li>Imputation for missing data</li>
+</ul>
+
+<h3>Why This Matters</h3>
+<p>Real-world patterns are complex:</p>
+<ul>
+<li>Non-linear relationships</li>
+<li>Interactions between variables</li>
+<li>Spatial patterns that classical methods miss</li>
+<li>ML can capture these automatically</li>
+</ul>
+
+<hr>
+
+<h2>Core Concepts</h2>
+
+<h3>1. Ensemble Methods - The Big Idea</h3>
+
+<strong>Simple analogy</strong>: "Wisdom of the crowd" - many okay models together beat one great model.
+
+<strong>How it works</strong>:
+<p>1. Train many models (each is okay, not perfect)</p>
+<p>2. Combine their predictions</p>
+<p>3. Result: Better than any single model</p>
+
+<strong>Why it works</strong>:
+<ul>
+<li>Each model makes different mistakes</li>
+<li>Averaging reduces errors</li>
+<li>Captures different aspects of patterns</li>
+</ul>
+
+<strong>Three main approaches</strong>:
+<p>1. <strong>Bagging</strong>: Train models on different subsets of data (Random Forest)</p>
+<p>2. <strong>Boosting</strong>: Train models sequentially, each fixing previous errors (XGBoost)</p>
+<p>3. <strong>Stacking</strong>: Combine different model types with a meta-learner</p>
+
+<hr>
+
+<h3>2. Random Forest</h3>
+
+<strong>What it is</strong>: Ensemble of decision trees, each trained on random subset of data.
+
+<strong>How a single decision tree works</strong>:
+<pre><code>
+                   Rainfall &gt; 25"?
+                   /           \
+                 Yes            No
+                 /               \
+        Nitrogen &gt; 100?      Yield = 150
+            /      \
+          Yes       No
+          /          \
+    Yield = 180  Yield = 165
+</code></pre>
+
+<strong>Simple explanation</strong>: Ask yes/no questions about features, split data accordingly, predict at leaves.
+
+<strong>Random Forest combines many trees</strong>:
+<p>1. Create 100+ trees</p>
+<p>2. Each tree sees random subset of data (bagging)</p>
+<p>3. Each split uses random subset of features</p>
+<p>4. Average all predictions</p>
+
+<strong>Why it's powerful</strong>:
+<ul>
+<li>Handles non-linear relationships automatically</li>
+<li>No assumptions about data distribution</li>
+<li>Resistant to overfitting (averaging reduces variance)</li>
+<li>Tells you which features are important</li>
+</ul>
+
+<strong>Python example</strong>:
+<pre><code>
+from sklearn.ensemble import RandomForestRegressor
+
+# Create model (100 trees)
+rf = RandomForestRegressor(
+    n_estimators=100,  # Number of trees
+    max_depth=10,      # Max tree depth
+    min_samples_leaf=5, # Min samples per leaf
+    random_state=42
+)
+
+# Fit
+rf.fit(X_train, y_train)
+
+# Predict
+y_pred = rf.predict(X_test)
+
+# Feature importance (which predictors matter most?)
+importances = rf.feature_importances_
+</code></pre>
+
+<strong>Feature importance</strong>: Shows which variables are most useful for predictions.
+
+<strong>When to use</strong>:
+<ul>
+<li>Many features</li>
+<li>Non-linear relationships</li>
+<li>Don't know which features matter</li>
+<li>Want robust predictions without much tuning</li>
+</ul>
+
+<hr>
+
+<h3>3. XGBoost (Extreme Gradient Boosting)</h3>
+
+<strong>What it is</strong>: Builds trees sequentially - each new tree corrects previous errors.
+
+<strong>How boosting works</strong>:
+<pre><code>
+Tree 1: Makes predictions → Errors = Actual - Predicted
+Tree 2: Predicts the errors from Tree 1
+Tree 3: Predicts remaining errors from Tree 1 + Tree 2
+...
+
+Final prediction = Tree1 + Tree2 + Tree3 + ...
+</code></pre>
+
+<strong>Simple analogy</strong>: Like editing a draft - first pass catches big mistakes, second pass catches smaller ones, etc.
+
+<strong>Why XGBoost is special</strong>:
+<ul>
+<li><strong>Regularization</strong>: Prevents overfitting</li>
+<li><strong>Parallel processing</strong>: Faster than other boosting</li>
+<li><strong>Handles missing data</strong>: Built-in</li>
+<li><strong>Pruning</strong>: Removes unhelpful branches</li>
+</ul>
+
+<strong>Python example</strong>:
+<pre><code>
+import xgboost as xgb
+
+# Create model
+xgb_model = xgb.XGBRegressor(
+    n_estimators=100,     # Number of trees
+    learning_rate=0.1,    # Step size (smaller = slower but better)
+    max_depth=5,          # Max tree depth
+    subsample=0.8,        # Fraction of data for each tree
+    colsample_bytree=0.8, # Fraction of features per tree
+    random_state=42
+)
+
+# Fit
+xgb_model.fit(X_train, y_train)
+
+# Predict
+y_pred = xgb_model.predict(X_test)
+
+# Feature importance
+importances = xgb_model.feature_importances_
+</code></pre>
+
+<strong>Key hyperparameters</strong>:
+<ul>
+<li><code>learning_rate</code>: How much each tree contributes (smaller = slower but often better)</li>
+<li><code>max_depth</code>: Tree complexity</li>
+<li><code>n_estimators</code>: Number of trees</li>
+<li><code>subsample</code>: Fraction of data per tree (prevents overfitting)</li>
+</ul>
+
+<strong>Random Forest vs XGBoost</strong>:
+<ul>
+<li>RF: Parallel, independent trees</li>
+<li>XGB: Sequential, each tree learns from previous</li>
+<li>RF: Faster to train, more robust</li>
+<li>XGB: Often slightly better accuracy, requires more tuning</li>
+</ul>
+
+<hr>
+
+<h3>4. Convolutional Neural Networks (CNNs) for Spatial Data</h3>
+
+<strong>What it is</strong>: Neural networks that learn spatial patterns automatically.
+
+<strong>Originally from</strong>: Computer vision (recognizing objects in images)
+
+<strong>Applied to spatial data</strong>: Learn spatial patterns in agricultural/environmental rasters
+
+<strong>The key innovation: Convolution</strong>
+
+<strong>Simple explanation</strong>: Slide a small "filter" across your data, looking for patterns.
+
+<strong>Example</strong>: Detecting high-yield patches in a field
+<pre><code>
+Yield raster:
+[150, 155, 160, 155, 150]
+[155, 180, 185, 180, 155]  ← High-yield patch!
+[160, 185, 190, 185, 160]
+[155, 180, 185, 180, 155]
+[150, 155, 160, 155, 150]
+
+Filter (3×3):
+[1, 1, 1]
+[1, 1, 1]
+[1, 1, 1]
+
+Convolution = slide filter, compute sum at each position
+→ Detects regions with high average yield
+</code></pre>
+
+<strong>CNN architecture for spatial data</strong>:
+<pre><code>
+Input raster → Conv layer → Activation → Conv layer → Output
+
+Example:
+Yield map (100×100) → Learn spatial filters → Predict true yield
+                                               (removing noise/trends)
+</code></pre>
+
+<strong>Why CNNs for spatial ag data</strong>:
+<ul>
+<li>Learn spatial patterns automatically (hot spots, gradients)</li>
+<li>Remove systematic field trends</li>
+<li>Denoise spatial data</li>
+<li>Detect anomalies</li>
+</ul>
+
+<strong>Use case: Pattern removal</strong>
+
+<strong>Problem</strong>: Yield data has systematic patterns (field slope, old fence lines) that aren't interesting.
+
+<strong>Solution</strong>: Train CNN to predict these patterns, subtract them out.
+
+<pre><code>
+import torch
+import torch.nn as nn
+
+class SpatialCNN(nn.Module):
+    def __init__(self):
+        super(SpatialCNN, self).__init__()
+        self.conv1 = nn.Conv2d(1, 32, kernel_size=3, padding=1)
+        self.conv2 = nn.Conv2d(32, 64, kernel_size=3, padding=1)
+        self.conv3 = nn.Conv2d(64, 1, kernel_size=3, padding=1)
+        self.relu = nn.ReLU()
+
+    def forward(self, x):
+        x = self.relu(self.conv1(x))
+        x = self.relu(self.conv2(x))
+        x = self.conv3(x)
+        return x
+
+# Train CNN to learn spatial pattern
+model = SpatialCNN()
+# ... training code ...
+
+# Predicted pattern
+pattern = model(yield_raster)
+
+# Detrended data
+detrended_yield = yield_raster - pattern
+</code></pre>
+
+<strong>Result</strong>: Removes large-scale spatial trends, reveals local variation.
+
+<hr>
+
+<h3>5. CNN for Detrending vs Traditional Methods</h3>
+
+<strong>Traditional spatial detrending</strong>: Fit polynomial surface, subtract it
+<pre><code>
+z = β₀ + β₁x + β₂y + β₃x² + β₄y² + β₅xy
+Detrended = Observed - Fitted surface
+</code></pre>
+
+<strong>CNN detrending</strong>: Let network learn the pattern
+<ul>
+<li><strong>Advantage</strong>: Can learn complex, non-polynomial patterns</li>
+<li><strong>Advantage</strong>: Adapts to actual data structure</li>
+<li><strong>Disadvantage</strong>: Needs more data</li>
+<li><strong>Disadvantage</strong>: "Black box" - harder to interpret</li>
+</ul>
+
+<strong>Comparison</strong>:
+<ul>
+<li><strong>Polynomial</strong>: Fast, interpretable, limited flexibility</li>
+<li><strong>CNN</strong>: Slower, less interpretable, very flexible</li>
+</ul>
+
+<strong>When to use CNN</strong>:
+<ul>
+<li>Large datasets (1000+ points)</li>
+<li>Complex spatial patterns</li>
+<li>Traditional methods don't capture the trend</li>
+</ul>
+
+<hr>
+
+<h3>6. Rook/Queen Contiguity vs CNN Filters</h3>
+
+<strong>Rook/Queen</strong>: Fixed neighborhood structure
+<ul>
+<li>Always uses immediate neighbors</li>
+<li>Same weights for all locations</li>
+</ul>
+
+<strong>CNN filters</strong>: Learned neighborhood structure
+<ul>
+<li>Network learns which neighbors matter</li>
+<li>Different effective neighborhoods for different patterns</li>
+</ul>
+
+<strong>Example</strong>: Detecting weed patches
+<ul>
+<li>Fixed contiguity might use 8 neighbors equally</li>
+<li>CNN might learn that diagonal neighbors matter more for this pattern</li>
+</ul>
+
+<strong>Comparison (from course notebooks)</strong>:
+<ul>
+<li>Both can remove spatial autocorrelation</li>
+<li>CNN more flexible but needs more data</li>
+<li>Contiguity-based methods faster, more interpretable</li>
+</ul>
+
+<hr>
+
+<h3>7. Imputation with ML</h3>
+
+<strong>Problem</strong>: Missing data in spatial/temporal datasets
+
+<strong>ML approach</strong>: Train model to predict missing values based on:
+<ul>
+<li>Nearby locations</li>
+<li>Time series patterns</li>
+<li>Correlated variables</li>
+</ul>
+
+<strong>Example</strong>:
+<pre><code>
+from sklearn.experimental import enable_iterative_imputer
+from sklearn.impute import IterativeImputer
+from sklearn.ensemble import RandomForestRegressor
+
+# Use Random Forest to impute missing values
+imputer = IterativeImputer(
+    estimator=RandomForestRegressor(n_estimators=10),
+    max_iter=10,
+    random_state=42
+)
+
+# Impute
+data_imputed = imputer.fit_transform(data_with_missing)
+</code></pre>
+
+<strong>How it works</strong>:
+<p>1. Start with simple imputation (mean)</p>
+<p>2. Predict each missing value using other variables</p>
+<p>3. Iterate until convergence</p>
+
+<strong>Better than mean imputation because</strong>: Preserves relationships between variables.
+
+<hr>
+
+<h2>Course Materials</h2>
+
+<p>1. <strong><a href="/tmp/cpsc444-study/python_notebooks/ENSEMBLMethods.ipynb">ENSEMBLMethods.ipynb</a></strong></p>
+<ul>
+<li>Bagging, Boosting, Stacking</li>
+<li>Random Forest and XGBoost</li>
+<li>Hyperparameter tuning</li>
+</ul>
+
+<p>2. <strong><a href="/tmp/cpsc444-study/python_notebooks/CNN_PatternRemover.ipynb">CNN_PatternRemover.ipynb</a></strong></p>
+<ul>
+<li>CNNs for detrending spatial data</li>
+<li>Removing large-scale patterns</li>
+<li>Residual learning</li>
+</ul>
+
+<p>3. <strong><a href="/tmp/cpsc444-study/python_notebooks/Field_Spatial_CNN_vs_RookQueen_Laplacian.ipynb">Field_Spatial_CNN_vs_RookQueen_Laplacian.ipynb</a></strong></p>
+<ul>
+<li>Comparing CNN filters to traditional contiguity</li>
+<li>Spatial filtering approaches</li>
+</ul>
+
+<p>4. <strong><a href="/tmp/cpsc444-study/python_notebooks/SourceSeperatorCNN.ipynb">SourceSeperatorCNN.ipynb</a></strong></p>
+<ul>
+<li>Separating different spatial sources</li>
+<li>Multi-scale spatial patterns</li>
+</ul>
+
+<p>5. <strong><a href="/tmp/cpsc444-study/python_notebooks/ImputationWorkflow.ipynb">ImputationWorkflow.ipynb</a></strong></p>
+<ul>
+<li>Missing data imputation strategies</li>
+<li>ML-based imputation</li>
+</ul>
+
+<hr>
+
+<h2>Key Concepts Summary</h2>
+
+<h3>Random Forest</h3>
+<ul>
+<li>Ensemble of decision trees</li>
+<li>Bootstrap samples + random features</li>
+<li>Robust, handles non-linearity</li>
+<li>Easy to use, minimal tuning</li>
+</ul>
+
+<h3>XGBoost</h3>
+<ul>
+<li>Sequential boosting</li>
+<li>Each tree corrects previous errors</li>
+<li>Often highest accuracy</li>
+<li>Requires careful tuning</li>
+</ul>
+
+<h3>CNNs for Spatial Data</h3>
+<ul>
+<li>Learn spatial patterns via convolution</li>
+<li>Flexible, powerful</li>
+<li>Great for detrending and pattern detection</li>
+<li>Needs more data, less interpretable</li>
+</ul>
+
+<hr>
+
+<h2>Study Checkpoints</h2>
+
+<h3>Can you explain...?</h3>
+<p>1. <strong>How do ensemble methods improve predictions?</strong></p>
+<p>2. <strong>What's the difference between bagging (RF) and boosting (XGBoost)?</strong></p>
+<p>3. <strong>How do CNNs learn spatial patterns?</strong></p>
+<p>4. <strong>Why use CNNs for detrending instead of polynomials?</strong></p>
+
+<h3>Can you do...?</h3>
+<p>1. <strong>Fit Random Forest and interpret feature importance?</strong></p>
+<p>2. <strong>Tune XGBoost hyperparameters using cross-validation?</strong></p>
+<p>3. <strong>Apply CNN for spatial pattern removal?</strong></p>
+<p>4. <strong>Compare traditional and ML-based spatial methods?</strong></p>
+
+<h3>Ready?</h3>
+<ul class="checkbox-list">
+<li>I understand ensemble methods</li>
+<li>I can use Random Forest and XGBoost</li>
+<li>I understand CNNs for spatial data</li>
+<li>I know when to use ML vs traditional methods</li>
+</ul>
+
+<strong>Next</strong>: <a href="Module_08_Specialized_Applications.md">Module 08: Specialized Applications</a>
+
+<hr>
+
+<em>Machine learning unlocks patterns that classical methods can't capture - powerful tools for complex spatial data!</em>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="showSection('module6')">← Previous</button>
+                    <button class="btn btn-primary" onclick="showSection('module8')">Next →</button>
+                </div>
+            </section>
+
+            <section id="module8" class="content-section">
+                <h1>Module 08: Specialized Applications</h1>
+<h2>Crop Modeling, Multi-Source Data Fusion & Real-World Integration</h2>
+
+<strong>Difficulty</strong>: ⭐⭐⭐⭐⭐ Expert
+<strong>Time Estimate</strong>: 10-15 hours
+<strong>Prerequisites</strong>: Multiple previous modules (this is the capstone!)
+
+<hr>
+
+<h2>Module Overview</h2>
+
+<p>This module brings together everything you've learned and applies it to real-world problems. You'll see how spatial statistics, regression, machine learning, and domain knowledge combine to solve complex agricultural and environmental challenges.</p>
+
+<h3>What You'll Learn</h3>
+<ul>
+<li>Mechanistic crop growth models</li>
+<li>Process-based simulation</li>
+<li>Multi-source spatial data fusion</li>
+<li>Integrated prediction frameworks</li>
+<li>Genomic data applications</li>
+<li>Mathematical foundations (convolution)</li>
+</ul>
+
+<h3>Why This Matters</h3>
+<p>Real applications require:</p>
+<ul>
+<li>Combining multiple data sources (satellite, weather, soil, management)</li>
+<li>Integrating statistical and process-based models</li>
+<li>Domain-specific expertise</li>
+<li>This module shows you how it all comes together</li>
+</ul>
+
+<hr>
+
+<h2>Core Concepts</h2>
+
+<h3>1. Mechanistic vs Statistical Models</h3>
+
+<strong>Statistical models</strong> (what you've learned so far):
+<ul>
+<li>Learn patterns from data</li>
+<li>Example: Yield = f(rainfall, temperature, nitrogen)</li>
+<li><strong>Strength</strong>: Flexible, data-driven</li>
+<li><strong>Weakness</strong>: Can't extrapolate beyond training data</li>
+</ul>
+
+<strong>Mechanistic (process-based) models</strong>:
+<ul>
+<li>Simulate underlying biological/physical processes</li>
+<li>Example: Photosynthesis equations → growth → yield</li>
+<li><strong>Strength</strong>: Based on science, can extrapolate</li>
+<li><strong>Weakness</strong>: Complex, needs many parameters</li>
+</ul>
+
+<strong>Best approach</strong>: Combine both!
+<ul>
+<li>Use mechanistic model for structure</li>
+<li>Use statistical methods to calibrate parameters</li>
+<li>Use ML to capture residual patterns</li>
+</ul>
+
+<hr>
+
+<h3>2. Crop Growth Modeling Basics</h3>
+
+<strong>The core process</strong>: Light + CO₂ + Water → Photosynthesis → Biomass → Yield
+
+<strong>Simple mechanistic model</strong>:
+<pre><code>
+Light interception = LAI × (1 - exp(-k × LAI))
+  where LAI = Leaf Area Index
+        k = extinction coefficient
+
+Photosynthesis = ε × Intercepted light
+  where ε = light use efficiency
+
+Biomass(t+1) = Biomass(t) + Photosynthesis - Respiration
+
+Yield = Biomass × HI
+  where HI = Harvest Index (fraction going to grain)
+</code></pre>
+
+<strong>Simple explanation</strong>:
+<ul>
+<li>More leaves → intercept more light</li>
+<li>More light → more photosynthesis → more growth</li>
+<li>But plants also respire (use energy)</li>
+<li>At harvest, only part of biomass is grain (harvest index)</li>
+</ul>
+
+<strong>Parameters to estimate</strong>:
+<ul>
+<li>k (light extinction)</li>
+<li>ε (efficiency)</li>
+<li>Respiration rate</li>
+<li>HI (harvest index)</li>
+</ul>
+
+<strong>How spatial data helps</strong>:
+<ul>
+<li>Satellite imagery → estimate LAI over space</li>
+<li>Weather stations → temperature, radiation</li>
+<li>Spatial variation in parameters → better predictions</li>
+</ul>
+
+<hr>
+
+<h3>3. Photosynthesis Toy Models</h3>
+
+<strong>Simplified Farquhar model</strong> (photosynthesis rate):
+<pre><code>
+A = min(Wc, Wj) - Rd
+
+where:
+  Wc = Rubisco-limited rate
+  Wj = Light-limited rate
+  Rd = Dark respiration
+  A = Net photosynthesis
+</code></pre>
+
+<strong>Simple explanation</strong>:
+<ul>
+<li>Two limiting processes: enzyme (Rubisco) and light</li>
+<li>Photosynthesis limited by whichever is lower</li>
+<li>Subtract respiration to get net</li>
+</ul>
+
+<strong>Temperature effects</strong>:
+<pre><code>
+Optimal temperature: ~25-30°C
+Too cold: Enzymes slow
+Too hot: Enzymes denature
+</code></pre>
+
+<strong>Why model this?</strong>:
+<ul>
+<li>Predict response to climate change</li>
+<li>Understand heat stress</li>
+<li>Optimize planting dates</li>
+</ul>
+
+<strong>Integration with spatial data</strong>:
+<ul>
+<li>Map temperature across landscape</li>
+<li>Predict spatial variation in photosynthesis</li>
+<li>Identify heat-stress zones</li>
+</ul>
+
+<hr>
+
+<h3>4. Multi-Source Spatial Data Fusion</h3>
+
+<strong>The challenge</strong>: Combine data from multiple sources with:
+<ul>
+<li>Different spatial resolutions</li>
+<li>Different temporal frequencies</li>
+<li>Different coverage areas</li>
+<li>Different measurement errors</li>
+</ul>
+
+<strong>Example data sources for yield prediction</strong>:
+<p>1. <strong>Satellite imagery</strong>: 10m resolution, every 5 days, NDVI</p>
+<p>2. <strong>Weather stations</strong>: Point data, daily, temperature/rainfall</p>
+<p>3. <strong>Soil sampling</strong>: Irregular points, one-time, nutrients</p>
+<p>4. <strong>Yield monitor</strong>: 5m resolution, annual, actual yield</p>
+
+<strong>How do you combine these?</strong>
+
+<h4>Approach 1: Spatial Regression Framework</h4>
+
+<pre><code>
+# 1. Interpolate all sources to common grid
+soil_grid = kriging(soil_samples, target_grid)
+weather_grid = interpolate(weather_stations, target_grid)
+ndvi_grid = resample(satellite_ndvi, target_grid)
+
+# 2. Stack as predictors
+X = np.stack([soil_grid, weather_grid, ndvi_grid], axis=-1)
+
+# 3. Fit model (e.g., Random Forest)
+model = RandomForestRegressor()
+model.fit(X, yield_observations)
+
+# 4. Predict everywhere
+yield_predicted = model.predict(X_future)
+</code></pre>
+
+<h4>Approach 2: Hierarchical Bayesian Model</h4>
+
+<strong>Idea</strong>: Model each data source's relationship to underlying process, account for uncertainty.
+
+<pre><code>
+True yield (latent) → Observed yield (noisy)
+True yield ← f(True NDVI, True soil, True weather)
+  where each "True" is estimated from observations
+</code></pre>
+
+<strong>Advantage</strong>: Properly propagates uncertainty from all sources.
+
+<hr>
+
+<h3>5. Multi-Scale Spatial Patterns</h3>
+
+<strong>Real spatial data has patterns at multiple scales</strong>:
+
+<strong>Large scale</strong> (100s of meters):
+<ul>
+<li>Soil type changes</li>
+<li>Topographic effects</li>
+<li>Management zones</li>
+</ul>
+
+<strong>Medium scale</strong> (10s of meters):
+<ul>
+<li>Previous crop residue</li>
+<li>Drainage patterns</li>
+<li>Equipment patterns</li>
+</ul>
+
+<strong>Small scale</strong> (meters):
+<ul>
+<li>Individual plant variation</li>
+<li>Localized pests/disease</li>
+<li>Measurement noise</li>
+</ul>
+
+<strong>Challenge</strong>: Separate these scales!
+
+<strong>Approach 1: Wavelet decomposition</strong>
+<ul>
+<li>Decompose signal into different frequency components</li>
+<li>Like musical notes (low frequency = base note, high frequency = overtones)</li>
+</ul>
+
+<strong>Approach 2: Multi-scale CNN</strong>
+<ul>
+<li>Different filter sizes capture different scales</li>
+<li>Combine information across scales</li>
+</ul>
+
+<strong>Why it matters</strong>:
+<ul>
+<li>Management decisions at different scales</li>
+<li>Understanding which processes operate at which scales</li>
+<li>Removing nuisance patterns at one scale to see patterns at another</li>
+</ul>
+
+<hr>
+
+<h3>6. Genomic Data Application (Arabidopsis FAAs)</h3>
+
+<strong>Context</strong>: Applying spatial/statistical methods to genomic data.
+
+<strong>The data</strong>: Functional amino acid sequences (FAAs) across genome
+
+<strong>Spatial analogy</strong>:
+<ul>
+<li>Genome position is like spatial location</li>
+<li>Gene expression is like spatial measurement</li>
+<li>Correlation structure along genome similar to spatial autocorrelation</li>
+</ul>
+
+<strong>Methods applied</strong>:
+<ul>
+<li>Semivariograms along genome</li>
+<li>Detecting clusters of related genes</li>
+<li>Smoothing noisy expression data</li>
+</ul>
+
+<strong>Key insight</strong>: Spatial statistics apply to ANY data with distance/correlation structure, not just geographic space!
+
+<hr>
+
+<h3>7. Complete Prediction Framework</h3>
+
+<strong>Integrating all course concepts</strong>:
+
+<pre><code>
+Step 1: Data acquisition and preprocessing
+  - Load spatial data (rasters, vectors)
+  - Check and align CRS
+  - Handle missing data (imputation)
+
+Step 2: Exploratory spatial analysis
+  - Visualize spatial patterns
+  - Calculate semivariograms
+  - Identify spatial autocorrelation
+  - Detect trends
+
+Step 3: Detrending (if needed)
+  - Remove large-scale spatial patterns (polynomial or CNN)
+  - Analyze residuals
+
+Step 4: Feature engineering
+  - Create derived variables
+  - Lag features (spatial neighbors)
+  - Temporal features
+
+Step 5: Model selection
+  - Simple baseline (linear regression)
+  - Spatial regression (GWR if relationships vary spatially)
+  - Mixed models (if hierarchical structure)
+  - ML methods (RF, XGBoost for non-linearity)
+  - Ensemble (combine multiple approaches)
+
+Step 6: Model evaluation
+  - Spatial cross-validation (not random!)
+  - Multiple metrics (R², RMSE, spatial autocorrelation of residuals)
+  - Validate on held-out years/locations
+
+Step 7: Prediction and uncertainty
+  - Generate predictions
+  - Estimate uncertainty (kriging variance, bootstrap, etc.)
+  - Visualize on maps
+
+Step 8: Interpretation
+  - Feature importance
+  - Partial dependence plots
+  - Spatial patterns in predictions
+  - Domain expertise validation
+</code></pre>
+
+<strong>This is the complete workflow!</strong>
+
+<hr>
+
+<h3>8. Convolution Mathematics (Bonus Theory)</h3>
+
+<strong>Convolution operation</strong> (from CNN module, but deeper):
+
+<strong>Definition</strong>:
+<pre><code>
+(f ∗ g)(t) = ∫ f(τ) g(t - τ) dτ
+</code></pre>
+
+<strong>Discrete version (for images/rasters)</strong>:
+<pre><code>
+(I ∗ K)(i,j) = ΣΣ I(i+m, j+n) × K(m, n)
+</code></pre>
+
+<strong>What it means</strong>:
+<ul>
+<li>Slide filter K over image I</li>
+<li>At each position, multiply and sum</li>
+<li>Result: Filtered image</li>
+</ul>
+
+<strong>Properties proven in notebook</strong>:
+<ul>
+<li>Commutative: f ∗ g = g ∗ f</li>
+<li>Associative: (f ∗ g) ∗ h = f ∗ (g ∗ h)</li>
+<li>Distributive: f ∗ (g + h) = (f ∗ g) + (f ∗ h)</li>
+</ul>
+
+<strong>Why this matters for CNNs</strong>:
+<ul>
+<li>Convolution is mathematically well-founded</li>
+<li>Properties guarantee certain behaviors</li>
+<li>Understanding helps debug CNN issues</li>
+</ul>
+
+<hr>
+
+<h2>Course Materials</h2>
+
+<p>1. <strong><a href="/tmp/cpsc444-study/python_notebooks/Crop_Modeling_Example.ipynb">Crop_Modeling_Example.ipynb</a></strong></p>
+<ul>
+<li>Mechanistic crop growth simulation</li>
+<li>Parameter estimation</li>
+<li>Sensitivity analysis</li>
+</ul>
+
+<p>2. <strong><a href="/tmp/cpsc444-study/python_notebooks/Photosynthesis_ToyModels.ipynb">Photosynthesis_ToyModels.ipynb</a></strong></p>
+<ul>
+<li>Simplified photosynthesis models</li>
+<li>Temperature response curves</li>
+<li>Integration with environmental data</li>
+</ul>
+
+<p>3. <strong><a href="/tmp/cpsc444-study/python_notebooks/ArabidopsisFAAs.ipynb">ArabidopsisFAAs.ipynb</a></strong></p>
+<ul>
+<li>Applying spatial methods to genomic data</li>
+<li>Correlation along genome</li>
+<li>Clustering and smoothing</li>
+</ul>
+
+<p>4. <strong><a href="/tmp/cpsc444-study/python_notebooks/Multi_Source_Spatial_Prediction-v2.ipynb">Multi_Source_Spatial_Prediction-v2.ipynb</a></strong></p>
+<ul>
+<li>Combining multiple data sources</li>
+<li>Spatial data fusion methods</li>
+<li>Integrated predictions</li>
+</ul>
+
+<p>5. <strong><a href="/tmp/cpsc444-study/python_notebooks/Multi_Source_Spatial_Framework_Complete.ipynb">Multi_Source_Spatial_Framework_Complete.ipynb</a></strong></p>
+<ul>
+<li>Complete prediction framework</li>
+<li>End-to-end workflow</li>
+<li>Best practices</li>
+</ul>
+
+<p>6. <strong><a href="/tmp/cpsc444-study/python_notebooks/ConvolutionProof+Operation.ipynb">ConvolutionProof+Operation.ipynb</a></strong></p>
+<ul>
+<li>Mathematical foundations of convolution</li>
+<li>Proofs of key properties</li>
+<li>Applications to spatial filtering</li>
+</ul>
+
+<hr>
+
+<h2>Study Checkpoints</h2>
+
+<h3>Can you explain...?</h3>
+<p>1. <strong>What's the difference between mechanistic and statistical models?</strong></p>
+<p>2. <strong>How do you combine data from multiple sources with different resolutions?</strong></p>
+<p>3. <strong>Why apply spatial methods to genomic data?</strong></p>
+<p>4. <strong>What are the key steps in a complete spatial prediction framework?</strong></p>
+
+<h3>Can you do...?</h3>
+<p>1. <strong>Set up a simple crop growth model?</strong></p>
+<p>2. <strong>Integrate multiple spatial data sources?</strong></p>
+<p>3. <strong>Apply the complete prediction framework to a new problem?</strong></p>
+<p>4. <strong>Validate predictions properly with spatial cross-validation?</strong></p>
+
+<h3>Course Complete!</h3>
+
+<p>Congratulations! You've mastered:</p>
+<ul class="checkbox-list">
+<li>Python foundations and statistics</li>
+<li>Regression and classification</li>
+<li>Geospatial data analysis</li>
+<li>Spatial statistics and autocorrelation</li>
+<li>Advanced regression techniques</li>
+<li>Mixed models for hierarchical data</li>
+<li>Machine learning methods</li>
+<li>Real-world applications and integration</li>
+</ul>
+
+<strong>What's next?</strong>
+<ul>
+<li>Apply these skills to your own research/projects</li>
+<li>Explore advanced topics in your area of interest</li>
+<li>Contribute to open-source spatial data science projects</li>
+<li>Keep practicing - mastery comes through application!</li>
+</ul>
+
+<hr>
+
+<h2>Final Project Ideas</h2>
+
+<p>To solidify your learning, try a complete project:</p>
+
+<p>1. <strong>Yield prediction across multiple fields</strong></p>
+<ul>
+<li>Combine satellite, weather, soil data</li>
+<li>Compare multiple methods</li>
+<li>Generate prediction maps with uncertainty</li>
+</ul>
+
+<p>2. <strong>Spatial disease monitoring</strong></p>
+<ul>
+<li>Detect disease clusters</li>
+<li>Predict spread using spatial models</li>
+<li>Recommend targeted interventions</li>
+</ul>
+
+<p>3. <strong>Climate change impact assessment</strong></p>
+<ul>
+<li>Use crop models with future climate scenarios</li>
+<li>Spatial variation in impacts</li>
+<li>Identify vulnerable regions</li>
+</ul>
+
+<p>4. <strong>Precision agriculture zone delineation</strong></p>
+<ul>
+<li>Multi-source data fusion</li>
+<li>Clustering algorithms</li>
+<li>Management zone recommendations</li>
+</ul>
+
+<p>5. <strong>Environmental monitoring network optimization</strong></p>
+<ul>
+<li>Use kriging variance to identify optimal sample locations</li>
+<li>Minimize uncertainty with fixed budget</li>
+<li>Adaptive sampling strategies</li>
+</ul>
+
+<hr>
+
+<em>You've completed the journey from Python basics to advanced spatial data science - now apply these powerful tools to make real-world impact!</em>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="showSection('module7')">← Previous</button>
+                    <button class="btn btn-primary" onclick="showSection('reference')">Next →</button>
+                </div>
+            </section>
+
+            <section id="reference" class="content-section">
+                <h1>Quick Reference Guide</h1>
+<h2>Formulas, Code Patterns & Library Usage</h2>
+
+<p>This is your cheat sheet for quick lookups while working through the modules or applying concepts to your own projects.</p>
+
+<hr>
+
+<h2>Key Formulas</h2>
+
+<h3>Statistics Basics</h3>
+
+<strong>Mean</strong>
+<pre><code>
+μ = (Σxᵢ) / n
+</code></pre>
+
+<strong>Standard Deviation</strong>
+<pre><code>
+σ = √[(Σ(xᵢ - μ)²) / n]
+</code></pre>
+
+<strong>Variance</strong>
+<pre><code>
+σ² = (Σ(xᵢ - μ)²) / n
+</code></pre>
+
+<hr>
+
+<h3>Regression</h3>
+
+<strong>Simple Linear Regression</strong>
+<pre><code>
+y = β₀ + β₁x + ε
+</code></pre>
+
+<strong>Multiple Linear Regression</strong>
+<pre><code>
+y = β₀ + β₁x₁ + β₂x₂ + ... + βₙxₙ + ε
+</code></pre>
+
+<strong>Normal Equation (Matrix Form)</strong>
+<pre><code>
+β = (XᵀX)⁻¹Xᵀy
+</code></pre>
+
+<strong>R-squared</strong>
+<pre><code>
+R² = 1 - (SS_residual / SS_total)
+</code></pre>
+
+<strong>Mean Squared Error</strong>
+<pre><code>
+MSE = (1/n) Σ(yᵢ - ŷᵢ)²
+</code></pre>
+
+<hr>
+
+<h3>Logistic Regression</h3>
+
+<strong>Sigmoid Function</strong>
+<pre><code>
+P(y=1) = 1 / (1 + e^(-z))
+where z = β₀ + β₁x₁ + β₂x₂ + ...
+</code></pre>
+
+<hr>
+
+<h3>Spatial Statistics</h3>
+
+<strong>Semivariance</strong>
+<pre><code>
+γ(h) = (1 / 2N(h)) × Σ[z(xᵢ) - z(xᵢ + h)]²
+</code></pre>
+
+<strong>Spherical Variogram Model</strong>
+<pre><code>
+γ(h) = nugget + (sill - nugget) × [1.5(h/range) - 0.5(h/range)³]   for h &lt; range
+γ(h) = sill                                                          for h ≥ range
+</code></pre>
+
+<strong>Exponential Variogram Model</strong>
+<pre><code>
+γ(h) = nugget + (sill - nugget) × [1 - exp(-3h/range)]
+</code></pre>
+
+<strong>Intraclass Correlation</strong>
+<pre><code>
+ICC = σ²_between / (σ²_between + σ²_within)
+</code></pre>
+
+<hr>
+
+<h3>Regularization</h3>
+
+<strong>Ridge (L2)</strong>
+<pre><code>
+Minimize: Σ(y - ŷ)² + λΣβ²
+</code></pre>
+
+<strong>Lasso (L1)</strong>
+<pre><code>
+Minimize: Σ(y - ŷ)² + λΣ|β|
+</code></pre>
+
+<hr>
+
+<h3>Mixed Models</h3>
+
+<strong>Random Intercept</strong>
+<pre><code>
+y_ij = (β₀ + u_j) + β₁x_ij + ε_ij
+where u_j ~ N(0, σ²_between)
+</code></pre>
+
+<strong>Random Slope</strong>
+<pre><code>
+y_ij = (β₀ + u_0j) + (β₁ + u_1j)x_ij + ε_ij
+</code></pre>
+
+<hr>
+
+<h2>Essential Python Code Patterns</h2>
+
+<h3>Data Loading & Manipulation</h3>
+
+<pre><code>
+import numpy as np
+import pandas as pd
+
+# Load CSV
+data = pd.read_csv('file.csv')
+
+# Basic stats
+data.describe()
+data['column'].mean()
+data['column'].std()
+
+# Select columns
+X = data[['col1', 'col2', 'col3']]
+y = data['target']
+
+# Handle missing data
+data.dropna()  # Remove rows with NaN
+data.fillna(0)  # Fill NaN with 0
+</code></pre>
+
+<hr>
+
+<h3>Visualization</h3>
+
+<pre><code>
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Scatter plot
+plt.scatter(x, y)
+plt.xlabel('X label')
+plt.ylabel('Y label')
+plt.title('Title')
+plt.show()
+
+# Histogram
+plt.hist(data, bins=20)
+
+# Heatmap (correlation matrix)
+sns.heatmap(data.corr(), annot=True, cmap='coolwarm')
+
+# Plotly (interactive)
+import plotly.graph_objects as go
+fig = go.Figure(data=go.Scatter(x=x, y=y, mode='markers'))
+fig.show()
+</code></pre>
+
+<hr>
+
+<h3>Linear Regression</h3>
+
+<pre><code>
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score, mean_squared_error
+
+# Fit model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Predict
+y_pred = model.predict(X_test)
+
+# Evaluate
+r2 = r2_score(y_test, y_pred)
+mse = mean_squared_error(y_test, y_pred)
+rmse = np.sqrt(mse)
+
+# Coefficients
+print(f"Intercept: {model.intercept_}")
+print(f"Coefficients: {model.coef_}")
+</code></pre>
+
+<hr>
+
+<h3>Logistic Regression</h3>
+
+<pre><code>
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, confusion_matrix, roc_auc_score
+
+# Fit
+log_model = LogisticRegression()
+log_model.fit(X_train, y_train)
+
+# Predict classes
+y_pred = log_model.predict(X_test)
+
+# Predict probabilities
+y_prob = log_model.predict_proba(X_test)[:, 1]
+
+# Evaluate
+accuracy = accuracy_score(y_test, y_pred)
+conf_matrix = confusion_matrix(y_test, y_pred)
+auc = roc_auc_score(y_test, y_prob)
+</code></pre>
+
+<hr>
+
+<h3>Train-Test Split & Cross-Validation</h3>
+
+<pre><code>
+from sklearn.model_selection import train_test_split, cross_val_score
+
+# Split data (80% train, 20% test)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# K-fold cross-validation
+scores = cross_val_score(model, X, y, cv=5, scoring='r2')
+print(f"Mean R²: {scores.mean():.3f} (+/- {scores.std():.3f})")
+</code></pre>
+
+<hr>
+
+<h3>Ridge & Lasso Regression</h3>
+
+<pre><code>
+from sklearn.linear_model import Ridge, Lasso
+from sklearn.model_selection import GridSearchCV
+
+# Ridge
+ridge = Ridge(alpha=1.0)
+ridge.fit(X_train, y_train)
+
+# Lasso
+lasso = Lasso(alpha=1.0)
+lasso.fit(X_train, y_train)
+
+# Hyperparameter tuning
+param_grid = {'alpha': [0.1, 1, 10, 100]}
+grid_search = GridSearchCV(Ridge(), param_grid, cv=5)
+grid_search.fit(X_train, y_train)
+best_alpha = grid_search.best_params_['alpha']
+</code></pre>
+
+<hr>
+
+<h3>Random Forest</h3>
+
+<pre><code>
+from sklearn.ensemble import RandomForestRegressor
+
+# Fit
+rf = RandomForestRegressor(
+    n_estimators=100,
+    max_depth=10,
+    random_state=42
+)
+rf.fit(X_train, y_train)
+
+# Predict
+y_pred = rf.predict(X_test)
+
+# Feature importance
+importances = rf.feature_importances_
+feature_names = X.columns
+for name, imp in zip(feature_names, importances):
+    print(f"{name}: {imp:.3f}")
+</code></pre>
+
+<hr>
+
+<h3>XGBoost</h3>
+
+<pre><code>
+import xgboost as xgb
+
+# Fit
+xgb_model = xgb.XGBRegressor(
+    n_estimators=100,
+    learning_rate=0.1,
+    max_depth=5,
+    random_state=42
+)
+xgb_model.fit(X_train, y_train)
+
+# Predict
+y_pred = xgb_model.predict(X_test)
+
+# Feature importance
+importances = xgb_model.feature_importances_
+</code></pre>
+
+<hr>
+
+<h3>Spatial Data - Loading</h3>
+
+<pre><code>
+import geopandas as gpd
+import rasterio
+
+# Load vector data (shapefile, GeoPackage)
+gdf = gpd.read_file('fields.shp')
+print(gdf.crs)
+gdf.plot()
+
+# Load raster data (GeoTIFF)
+with rasterio.open('elevation.tif') as src:
+    raster = src.read(1)  # Read band 1
+    print(f"CRS: {src.crs}")
+    print(f"Shape: {raster.shape}")
+</code></pre>
+
+<hr>
+
+<h3>Spatial Data - CRS Transformation</h3>
+
+<pre><code>
+# Check CRS
+print(gdf.crs)
+
+# Transform to different CRS
+gdf_utm = gdf.to_crs('EPSG:32616')  # UTM Zone 16N
+gdf_wgs84 = gdf.to_crs('EPSG:4326')  # WGS84 (lat/lon)
+
+# Calculate area (after transforming to projected CRS)
+gdf_utm['area_m2'] = gdf_utm.geometry.area
+gdf_utm['area_acres'] = gdf_utm['area_m2'] / 4047
+</code></pre>
+
+<hr>
+
+<h3>Kriging</h3>
+
+<pre><code>
+from pykrige.ok import OrdinaryKriging
+import numpy as np
+
+# Sample data
+x = np.array([0, 1, 2, 3, 4])
+y = np.array([0, 1, 2, 1, 0])
+values = np.array([45, 47, 50, 46, 44])
+
+# Fit Kriging model
+OK = OrdinaryKriging(
+    x, y, values,
+    variogram_model='spherical',
+    verbose=False
+)
+
+# Predict on grid
+grid_x = np.arange(0, 4, 0.1)
+grid_y = np.arange(0, 2, 0.1)
+z_pred, ss_pred = OK.execute('grid', grid_x, grid_y)
+</code></pre>
+
+<hr>
+
+<h3>Mixed Models</h3>
+
+<pre><code>
+import statsmodels.formula.api as smf
+
+# Random intercept
+model = smf.mixedlm(
+    "yield ~ fertilizer + temperature",  # Fixed effects
+    data,
+    groups=data["field_id"]  # Random intercept
+)
+result = model.fit()
+print(result.summary())
+
+# Random slope
+model = smf.mixedlm(
+    "yield ~ fertilizer",
+    data,
+    groups=data["field_id"],
+    re_formula="~fertilizer"  # Random slope
+)
+result = model.fit()
+</code></pre>
+
+<hr>
+
+<h2>Library Quick Reference</h2>
+
+<h3>When to Use Each Library</h3>
+
+<strong>Numpy</strong>: Arrays, mathematical operations
+<pre><code>
+import numpy as np
+arr = np.array([1, 2, 3])
+mean = np.mean(arr)
+</code></pre>
+
+<strong>Pandas</strong>: Tabular data, CSV files
+<pre><code>
+import pandas as pd
+df = pd.read_csv('data.csv')
+</code></pre>
+
+<strong>Matplotlib</strong>: Static plots
+<pre><code>
+import matplotlib.pyplot as plt
+plt.plot(x, y)
+</code></pre>
+
+<strong>Seaborn</strong>: Statistical visualizations
+<pre><code>
+import seaborn as sns
+sns.scatterplot(data=df, x='col1', y='col2')
+</code></pre>
+
+<strong>Plotly</strong>: Interactive plots
+<pre><code>
+import plotly.express as px
+fig = px.scatter(df, x='col1', y='col2')
+</code></pre>
+
+<strong>Scikit-learn</strong>: Machine learning, standard algorithms
+<pre><code>
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import train_test_split
+</code></pre>
+
+<strong>XGBoost</strong>: Gradient boosting
+<pre><code>
+import xgboost as xgb
+</code></pre>
+
+<strong>GeoPandas</strong>: Vector spatial data (shapefiles, points, polygons)
+<pre><code>
+import geopandas as gpd
+gdf = gpd.read_file('data.shp')
+</code></pre>
+
+<strong>Rasterio</strong>: Raster spatial data (GeoTIFFs, satellite imagery)
+<pre><code>
+import rasterio
+with rasterio.open('raster.tif') as src:
+    data = src.read(1)
+</code></pre>
+
+<strong>PyKrige</strong>: Kriging interpolation
+<pre><code>
+from pykrige.ok import OrdinaryKriging
+</code></pre>
+
+<strong>Statsmodels</strong>: Mixed models, advanced statistics
+<pre><code>
+import statsmodels.formula.api as smf
+</code></pre>
+
+<strong>PyTorch</strong>: Deep learning, CNNs
+<pre><code>
+import torch
+import torch.nn as nn
+</code></pre>
+
+<hr>
+
+<h2>Common Errors & Solutions</h2>
+
+<h3>ValueError: shapes not aligned</h3>
+<strong>Problem</strong>: Matrix dimensions don't match
+<strong>Solution</strong>: Check X.shape and y.shape, ensure compatible
+
+<h3>CRS Mismatch</h3>
+<strong>Problem</strong>: Overlaying data with different CRS
+<strong>Solution</strong>: Transform to same CRS first
+<pre><code>
+gdf2 = gdf2.to_crs(gdf1.crs)
+</code></pre>
+
+<h3>ConvergenceWarning in Mixed Models</h3>
+<strong>Problem</strong>: Model didn't converge
+<strong>Solution</strong>: Scale predictors, check for multicollinearity, increase max iterations
+
+<h3>Overfitting (high train R², low test R²)</h3>
+<strong>Solution</strong>: Use regularization (Ridge/Lasso), reduce model complexity, get more data
+
+<h3>High prediction variance in Kriging</h3>
+<strong>Problem</strong>: Predictions far from sample points
+<strong>Solution</strong>: Collect more samples in high-variance areas, or accept uncertainty
+
+<hr>
+
+<h2>Useful Constants</h2>
+
+<strong>Earth radius</strong>: 6371 km
+
+<strong>Degrees to radians</strong>: multiply by π/180
+
+<strong>Acres to m²</strong>: multiply by 4047
+
+<strong>Feet to meters</strong>: multiply by 0.3048
+
+<strong>Common EPSG codes</strong>:
+<ul>
+<li>4326: WGS84 (lat/lon)</li>
+<li>3857: Web Mercator (Google Maps)</li>
+<li>32616: UTM Zone 16N (Illinois area)</li>
+</ul>
+
+<hr>
+
+<h2>Dataset Summary (from course repo)</h2>
+
+<p>Located in <code>/tmp/cpsc444-study/datasets/</code>:</p>
+
+<ul>
+<li>CSV files: Sample data points</li>
+<li>GeoPackage (.gpkg): Vector boundaries</li>
+<li>GeoTIFF (.tif): Raster data (elevation, imagery)</li>
+</ul>
+
+<hr>
+
+<em>Keep this reference handy while working through modules and projects!</em>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="showSection('module8')">← Previous</button>
+                    <button class="btn btn-primary" onclick="showSection('home')">Back to Home</button>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script>
+        let currentSection = 'home';
+        const sections = ['home', 'paths', 'module1', 'module2', 'module3', 'module4', 'module5', 'module6', 'module7', 'module8', 'reference'];
+        function showSection(sectionId) {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            const target = document.getElementById(sectionId);
+            if (target) target.classList.add('active');
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            if (event && event.target && event.target.classList.contains('nav-link')) {
+                event.target.classList.add('active');
+            }
+            document.querySelector('.main-content').scrollTop = 0;
+            const idx = sections.indexOf(sectionId);
+            document.getElementById('progressFill').style.width = (idx / (sections.length - 1)) * 100 + '%';
+            currentSection = sectionId;
+        }
+        document.addEventListener('keydown', function(e) {
+            const idx = sections.indexOf(currentSection);
+            if (e.key === 'ArrowRight' && idx < sections.length - 1) showSection(sections[idx + 1]);
+            else if (e.key === 'ArrowLeft' && idx > 0) showSection(sections[idx - 1]);
+        });
+        console.log('CPSC 444 Study Guide with Graphics loaded!');
+        console.log('Total plots embedded: 17');
+    </script>
+</body>
+</html>

@@ -89,6 +89,16 @@ If the rainfall coefficient is 2.5, it means: "Holding temperature and nitrogen 
 
 This is key: each coefficient shows the effect of that variable when ALL OTHER variables are held constant.
 
+**Assumptions of the Linear Model** (brief summary):
+
+1. **Linearity**: The relationship between predictors and outcome is linear - a straight line (or plane) describes it well.
+2. **Independence of errors**: Residuals are not related to each other. (Spatial data often violates this - nearby fields have similar errors. This is exactly why the spatial methods later in this course exist!)
+3. **Homoscedasticity (constant variance)**: The spread of residuals is roughly the same across all predicted values - no funnel shapes.
+4. **Normality of residuals**: Residuals follow an approximately normal distribution - check with a Q-Q plot (see Module 01).
+5. **No multicollinearity**: Predictors are not highly correlated with each other - otherwise coefficients become unstable and hard to interpret.
+
+If these assumptions hold, coefficient estimates and their p-values can be trusted. Always check them by plotting residuals - never assume they hold.
+
 ---
 
 ### 2. Matrix Formulation

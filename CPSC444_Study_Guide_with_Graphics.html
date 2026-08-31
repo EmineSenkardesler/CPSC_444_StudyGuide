@@ -1671,6 +1671,16 @@ print(f"Predicted yield: {predicted_yield[0]:.1f} bushels/acre")
 
 <p>This is key: each coefficient shows the effect of that variable when ALL OTHER variables are held constant.</p>
 
+<strong>Assumptions of the Linear Model</strong> (brief summary):
+
+<p>1. <strong>Linearity</strong>: The relationship between predictors and outcome is linear - a straight line (or plane) describes it well.</p>
+<p>2. <strong>Independence of errors</strong>: Residuals are not related to each other. (Spatial data often violates this - nearby fields have similar errors. This is exactly why the spatial methods later in this course exist!)</p>
+<p>3. <strong>Homoscedasticity (constant variance)</strong>: The spread of residuals is roughly the same across all predicted values - no funnel shapes.</p>
+<p>4. <strong>Normality of residuals</strong>: Residuals follow an approximately normal distribution - check with a Q-Q plot (see Module 01).</p>
+<p>5. <strong>No multicollinearity</strong>: Predictors are not highly correlated with each other - otherwise coefficients become unstable and hard to interpret.</p>
+
+<p>If these assumptions hold, coefficient estimates and their p-values can be trusted. Always check them by plotting residuals - never assume they hold.</p>
+
 <hr>
 
 <h3>2. Matrix Formulation</h3>

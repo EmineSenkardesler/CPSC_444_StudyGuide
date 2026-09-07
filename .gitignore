@@ -1,2 +1,9 @@
 *.bak-*
 old_versions/
+.DS_Store
+.claude/
+venv/
+__pycache__/
+# scratch outputs produced when testing the code cells
+*.tif
+*.geojson

@@ -6,7 +6,7 @@ Teaching materials for **CPSC 444: Spatial Statistics, Geospatial Analysis & Agr
 
 | What | File to open | Built from | Built by |
 |---|---|---|---|
-| **Weekly guide** (on-the-go) | `weekly/CPSC444_Weekly_Guide.html` | `source/Module_*.md` for the weeks taught so far | `source/generate_week2_html.py` |
+| **Weekly guide** (on-the-go) | `weekly/CPSC444_WeeklyGuide_W3_2026-09-07.html` (name = latest week + build date) | `source/Module_*.md` for the weeks taught so far | `source/generate_week2_html.py` |
 | **Full guide** (reference) | `full_guide/CPSC444_Study_Guide_with_Graphics.html` | all `source/Module_01…09.md` + `Quick_Reference.md` + `Study_Paths.md` | `source/build_full_guide.py` |
 
 - The **full guide** is the complete 8-module reorganisation of last year's course material. It is the reference; it does not change week to week.
@@ -29,7 +29,8 @@ How they connect: Weeks 1–2 are tables of numbers and ordinary regression. "Fi
 CPSC_444_StudyGuide/
 ├── README.md                  ← this file
 ├── weekly/                    OUTPUT + hand-outs for the semester in progress
-│   ├── CPSC444_Weekly_Guide.html      the 4-page weekly guide (compiled; do not edit by hand)
+│   ├── CPSC444_WeeklyGuide_W3_2026-09-07.html   the weekly guide (compiled; do not edit by hand).
+│   │                                  Name = latest week covered + build date; each rebuild replaces it
 │   └── CPSC444_Week2_FirstMaps.ipynb  Colab notebook for the First Maps class (exercises + Think-Pair-Share)
 ├── full_guide/                OUTPUT
 │   └── CPSC444_Study_Guide_with_Graphics.html   the full 8-module reference (compiled; do not edit by hand)
@@ -49,7 +50,7 @@ CPSC_444_StudyGuide/
 ### I want to…
 
 - **Fix a typo or explain something better on a page** → edit the matching `source/Module_*.md`, then rebuild (below). Never edit the `.html` files; they are overwritten on every build.
-- **Add next week's page** → write `source/Module_XX_WeekN_<topic>.md` following the structure of the existing pages (Overview → Learning Objectives → Core Concepts → Course Materials → Key Commands/Formulas → Study Checkpoints → Common Mistakes → Tips → Next Steps), add one tuple to `MODULES` in `source/generate_week2_html.py` (page id, file name, sidebar label), rebuild.
+- **Add next week's page** → write `source/Module_XX_WeekN_<topic>.md` following the structure of the existing pages (Overview → Learning Objectives → Core Concepts → Course Materials → Key Commands/Formulas → Study Checkpoints → Common Mistakes → Tips → Next Steps), add one tuple to `MODULES` in `source/generate_week2_html.py` (page id, file name, sidebar label), bump `LATEST_WEEK` in the same file, rebuild.
 - **Add or replace a figure** → write a small script in `source/figure_scripts/` that saves a base64 PNG into `plots_data.json` under a new key, then add a `PLOT_MARKERS` entry in `generate_week2_html.py` giving the exact heading the figure should appear under. See `figure_scripts/make_mod03_plots.py` for a complete example.
 - **Change the look (colours, sidebar, fonts)** → the CSS lives in the template string inside `source/generate_html_with_plots.py`; it is shared by both guides.
 - **Change a sidebar label or a page heading** → the `MODULES` list and the heading-override dictionary at the top of `source/generate_week2_html.py`.
@@ -59,7 +60,7 @@ CPSC_444_StudyGuide/
 
 ```bash
 cd source
-python generate_week2_html.py     # -> ../weekly/CPSC444_Weekly_Guide.html
+python generate_week2_html.py     # -> ../weekly/CPSC444_WeeklyGuide_<latest week>_<today>.html
 python build_full_guide.py        # -> ../full_guide/CPSC444_Study_Guide_with_Graphics.html
 ```
 

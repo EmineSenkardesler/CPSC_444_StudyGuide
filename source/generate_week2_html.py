@@ -3,7 +3,7 @@
 released week by week. Reuses generate_html_with_plots.py (same style, same figures)
 but only for the modules listed in MODULES below.
 
-To add a week:  1) write source/Module_XX_WeekN_<topic>.md   2) add a tuple to MODULES
+To add a week:  1) write source/Module_XX_WeekN_<topic>.md   2) add a tuple to MODULES and bump LATEST_WEEK
                3) (optional) add figures: a figure_scripts/ script -> plots_data.json,
                   then a PLOT_MARKERS entry keyed by the heading the figure goes under
                4) run:  python generate_week2_html.py   (from the source/ folder)"""
@@ -11,7 +11,18 @@ import os, re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 GEN = os.path.join(HERE, 'generate_html_with_plots.py')
-OUT = os.path.join(os.path.dirname(HERE), 'weekly', 'CPSC444_Weekly_Guide.html')
+# Output name carries the latest week covered and the build date, e.g.
+#   weekly/CPSC444_WeeklyGuide_W3_2026-09-07.html
+# Bump LATEST_WEEK when you add a page. Older dated builds are removed so
+# weekly/ always holds exactly one guide (previous builds live in git history).
+LATEST_WEEK = 'W3'
+import datetime, glob
+WEEKLY_DIR = os.path.join(os.path.dirname(HERE), 'weekly')
+OUT_NAME = f"CPSC444_WeeklyGuide_{LATEST_WEEK}_{datetime.date.today():%Y-%m-%d}.html"
+OUT = os.path.join(WEEKLY_DIR, OUT_NAME)
+for _old in glob.glob(os.path.join(WEEKLY_DIR, 'CPSC444_WeeklyGuide_*.html')) + glob.glob(os.path.join(WEEKLY_DIR, 'CPSC444_Weekly_Guide.html')):
+    if os.path.basename(_old) != OUT_NAME:
+        os.remove(_old)
 
 src = open(GEN).read()
 

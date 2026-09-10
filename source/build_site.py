@@ -137,7 +137,8 @@ def sidebar(active, mode):
     items.append('<li class="nav-sep">More</li>')
     if mode == 'links':
         items.append('<li class="nav-item"><a class="nav-link" href="all_weeks.html">All weeks on one page</a></li>')
-        items.append('<li class="nav-item"><a class="nav-link" href="full_guide.html">Full reference guide<span class="nav-sub">all modules, for the whole course</span></a></li>')
+        if active != 'index':   # home page: weeks only
+            items.append('<li class="nav-item"><a class="nav-link" href="full_guide.html">Full reference guide<span class="nav-sub">all modules, for the whole course</span></a></li>')
     else:   # all_weeks page: weeks only, no full-guide link
         items.append('<li class="nav-item"><a class="nav-link" href="index.html">Back to weekly pages</a></li>')
     return '\n'.join(items)
@@ -199,11 +200,6 @@ cards = ''.join(f'''
     <p>{w['blurb']}</p>
 </div>''' for w in WEEKS)
 cards += '''
-<div class="week-card full">
-    <h3><a href="full_guide.html">Full reference guide</a></h3>
-    <span class="dates">all modules, whole course</span>
-    <p>The complete study guide, organised by module rather than by week. Use it to look ahead or to review.</p>
-</div>
 <div class="week-card">
     <h3><a href="all_weeks.html">All weeks on one page</a></h3>
     <span class="dates">same content as the weekly pages</span>

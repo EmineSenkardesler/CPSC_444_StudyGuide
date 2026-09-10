@@ -123,24 +123,16 @@ def week_body(w):
     return body
 
 def sidebar(active, mode):
-    """mode='links': entries are hrefs to separate files; mode='sections': onclick switching."""
-    items = []
-    if mode == 'links':
-        items.append(f'<li class="nav-item"><a class="nav-link{" active" if active == "index" else ""}" href="index.html">Home<span class="nav-sub">weeks published so far</span></a></li>')
-        items.append('<li class="nav-sep">Weeks</li>')
+    """mode='links': week entries are hrefs to separate files; mode='sections': onclick switching.
+    Every page: Home + the published weeks. Nothing else."""
+    items = [f'<li class="nav-item"><a class="nav-link{" active" if active == "index" else ""}" href="index.html">Home<span class="nav-sub">weeks published so far</span></a></li>',
+             '<li class="nav-sep">Weeks</li>']
     for w in WEEKS:
         act = ' active' if w['slug'] == active else ''
         if mode == 'links':
             items.append(f'<li class="nav-item"><a class="nav-link{act}" href="{w["slug"]}.html">{w["title"]}<span class="nav-sub">{w["dates"]}</span></a></li>')
         else:
             items.append(f'<li class="nav-item"><a class="nav-link{act}" onclick="showSection(\'{w["slug"]}\')">{w["title"]}<span class="nav-sub">{w["dates"]}</span></a></li>')
-    items.append('<li class="nav-sep">More</li>')
-    if mode == 'links':
-        items.append('<li class="nav-item"><a class="nav-link" href="all_weeks.html">All weeks on one page</a></li>')
-        if active != 'index':   # home page: weeks only
-            items.append('<li class="nav-item"><a class="nav-link" href="full_guide.html">Full reference guide<span class="nav-sub">all modules, for the whole course</span></a></li>')
-    else:   # all_weeks page: weeks only, no full-guide link
-        items.append('<li class="nav-item"><a class="nav-link" href="index.html">Back to weekly pages</a></li>')
     return '\n'.join(items)
 
 def shell(title, nav_html, main_html, script=''):
@@ -174,7 +166,7 @@ def shell(title, nav_html, main_html, script=''):
 
 def nav_buttons(i):
     prev = f'<a class="btn btn-secondary btn-link" href="{WEEKS[i-1]["slug"]}.html">← {WEEKS[i-1]["title"]}</a>' if i > 0 else '<a class="btn btn-secondary btn-link" href="index.html">← Home</a>'
-    nxt = f'<a class="btn btn-primary btn-link" href="{WEEKS[i+1]["slug"]}.html">{WEEKS[i+1]["title"]} →</a>' if i < len(WEEKS) - 1 else '<a class="btn btn-primary btn-link" href="full_guide.html">Full reference guide →</a>'
+    nxt = f'<a class="btn btn-primary btn-link" href="{WEEKS[i+1]["slug"]}.html">{WEEKS[i+1]["title"]} →</a>' if i < len(WEEKS) - 1 else ''
     return f'<div class="nav-buttons">{prev}{nxt}</div>'
 
 def plain(s):  # strip html entities for <title>

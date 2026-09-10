@@ -137,9 +137,9 @@ def sidebar(active, mode):
     items.append('<li class="nav-sep">More</li>')
     if mode == 'links':
         items.append('<li class="nav-item"><a class="nav-link" href="all_weeks.html">All weeks on one page</a></li>')
-    else:
+        items.append('<li class="nav-item"><a class="nav-link" href="full_guide.html">Full reference guide<span class="nav-sub">all modules, for the whole course</span></a></li>')
+    else:   # all_weeks page: weeks only, no full-guide link
         items.append('<li class="nav-item"><a class="nav-link" href="index.html">Back to weekly pages</a></li>')
-    items.append('<li class="nav-item"><a class="nav-link" href="full_guide.html">Full reference guide<span class="nav-sub">all modules, for the whole course</span></a></li>')
     return '\n'.join(items)
 
 def shell(title, nav_html, main_html, script=''):

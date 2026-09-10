@@ -2,11 +2,10 @@
 """Build the student site.
 
 Outputs (all self-contained HTML, figures embedded):
-  ../docs/index.html          landing page: the weeks published so far + the full guide
+  ../docs/index.html          landing page: the weeks published so far
   ../docs/week1.html, week2.html, week2_maps.html, week3.html ...   one page per week
   ../docs/all_weeks.html      every week on one page (sidebar switches sections)
   ../weekly/CPSC444_WeeklyGuide_W<latest>_<date>.html   dated copy of all_weeks.html
-  (../docs/full_guide.html is written by build_full_guide.py)
 
 docs/ is served by GitHub Pages from the weekly-guide branch, so:  build + push = published.
 
@@ -124,9 +123,8 @@ def week_body(w):
 
 def sidebar(active, mode):
     """mode='links': week entries are hrefs to separate files; mode='sections': onclick switching.
-    Every page: Home + the published weeks. Nothing else."""
-    items = [f'<li class="nav-item"><a class="nav-link{" active" if active == "index" else ""}" href="index.html">Home<span class="nav-sub">weeks published so far</span></a></li>',
-             '<li class="nav-sep">Weeks</li>']
+    Every page: the published weeks. Nothing else."""
+    items = ['<li class="nav-sep">Weeks</li>']
     for w in WEEKS:
         act = ' active' if w['slug'] == active else ''
         if mode == 'links':
@@ -165,7 +163,7 @@ def shell(title, nav_html, main_html, script=''):
 </html>'''
 
 def nav_buttons(i):
-    prev = f'<a class="btn btn-secondary btn-link" href="{WEEKS[i-1]["slug"]}.html">← {WEEKS[i-1]["title"]}</a>' if i > 0 else '<a class="btn btn-secondary btn-link" href="index.html">← Home</a>'
+    prev = f'<a class="btn btn-secondary btn-link" href="{WEEKS[i-1]["slug"]}.html">← {WEEKS[i-1]["title"]}</a>' if i > 0 else ''
     nxt = f'<a class="btn btn-primary btn-link" href="{WEEKS[i+1]["slug"]}.html">{WEEKS[i+1]["title"]} →</a>' if i < len(WEEKS) - 1 else ''
     return f'<div class="nav-buttons">{prev}{nxt}</div>'
 

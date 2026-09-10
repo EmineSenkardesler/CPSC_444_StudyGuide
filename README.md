@@ -13,7 +13,6 @@ Landing page (bookmark this): **https://eminesenkardesler.github.io/CPSC_444_Stu
 | Week 2 (continued): First Maps | https://eminesenkardesler.github.io/CPSC_444_StudyGuide/week2_maps.html |
 | Week 3: Coordinate Systems & Transformations | https://eminesenkardesler.github.io/CPSC_444_StudyGuide/week3.html |
 | All weeks on one page | https://eminesenkardesler.github.io/CPSC_444_StudyGuide/all_weeks.html |
-| Full reference guide | https://eminesenkardesler.github.io/CPSC_444_StudyGuide/full_guide.html |
 
 Every link is permanent (the file names never change). They are served from the `docs/` folder of the `weekly-guide` branch, which the build scripts refresh, so **build + push = published** (allow a minute or two for GitHub to update). A new week is published by adding it to `WEEKS` in `source/build_site.py` and pushing - it then appears on the landing page and in every page's sidebar.
 
@@ -24,7 +23,7 @@ Every link is permanent (the file names never change). They are served from the 
 | **Weekly pages** (on-the-go) | `docs/index.html` + one `docs/weekN.html` per week (also `docs/all_weeks.html`, and a dated copy in `weekly/`) | `source/Module_*.md` / `source/WeekN_*.md` for the weeks taught so far | `source/build_site.py` |
 | **Full guide** (reference) | `full_guide/CPSC444_Study_Guide_with_Graphics.html` | all `source/Module_01…09.md` + `Quick_Reference.md` + `Study_Paths.md` | `source/build_full_guide.py` |
 
-- The **full guide** is the complete 8-module reorganisation of last year's course material. It is the reference; it does not change week to week.
+- The **full guide** is the complete 8-module reorganisation of last year's course material. It is an internal reference for writing the weekly pages; it is **not** published to students.
 - The **weekly guide** is what students actually get during the semester. It is *not* finished class notes — it is a running document that grows by one page each week, written to match what was covered in that week's module. Pages can be short, simple and example-driven, and they are edited as the course moves. Both guides share the same style, the same generator and the same figure store, so a page written for the weekly guide can later be folded into the full guide.
 
 ## The four pages so far (weekly guide)
@@ -49,8 +48,7 @@ CPSC_444_StudyGuide/
 ├── docs/                      OUTPUT = the published website (GitHub Pages). Written by the build scripts - never edit by hand
 │   ├── index.html             landing page listing the weeks published so far
 │   ├── week1.html, week2.html, week2_maps.html, week3.html   one page per week
-│   ├── all_weeks.html         every week on one page
-│   └── full_guide.html        the full reference guide
+│   └── all_weeks.html         every week on one page
 ├── full_guide/                OUTPUT
 │   └── CPSC444_Study_Guide_with_Graphics.html   the full 8-module reference (compiled; do not edit by hand)
 ├── source/                    EVERYTHING YOU EDIT
@@ -60,7 +58,7 @@ CPSC_444_StudyGuide/
 │   ├── plots_data.json        all figures as base64 PNGs, keyed by name (e.g. mod02b_overlay)
 │   ├── generate_html_with_plots.py   the Markdown→HTML converter + page template (shared)
 │   ├── build_site.py                 builds docs/ + weekly/  (the WEEKS list: pages, titles, dates, figure placement)
-│   ├── build_full_guide.py           builds full_guide/ + docs/full_guide.html
+│   ├── build_full_guide.py           builds full_guide/ (internal reference only - not published to students)
 │   ├── generate_plots.py             regenerates the original full-guide figures
 │   └── figure_scripts/               scripts that made the weekly-page figures (mod02b_*, mod03w3_*)
 └── ta_notes/                  TA-facing lesson scripts (timed outline, talking points, cheat sheets) — not published to students
@@ -80,7 +78,7 @@ CPSC_444_StudyGuide/
 ```bash
 cd source
 python build_site.py              # -> ../docs/index.html, weekN.html, all_weeks.html  +  ../weekly/CPSC444_WeeklyGuide_<latest>_<today>.html
-python build_full_guide.py        # -> ../full_guide/CPSC444_Study_Guide_with_Graphics.html  +  ../docs/full_guide.html
+python build_full_guide.py        # -> ../full_guide/CPSC444_Study_Guide_with_Graphics.html  (not published)
 ```
 
 Building needs only Python 3 (no packages). Regenerating figures or running the notebook code needs `geopandas`, `rasterio`, `scipy`, `matplotlib`.

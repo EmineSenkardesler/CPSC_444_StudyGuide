@@ -34,8 +34,8 @@ src = re.sub(r'MODULES = \[.*?\n\]', """MODULES = [
      'M.01 &middot; Week 2: Statistical Foundations<span class="nav-sub">W2 &middot; 31 Aug - 4 Sep</span>'),
     ('module2b', 'Module_02b_First_Maps.md',
      'M.02 &middot; Week 2 (cont.): First Maps - Vector &amp; Raster<span class="nav-sub">M02 &middot; W2 &middot; 31 Aug - 4 Sep &middot; continuation</span>'),
-    ('module3w3', 'Module_03_Week3_Coordinate_Systems.md',
-     'M.03 &middot; Week 3: Coordinate Systems &amp; Transformations<span class="nav-sub">M03 &middot; W3 &middot; 7 - 11 Sep</span>'),
+    ('week3', 'Week3_Coordinate_Systems.md',
+     'Week 3: Coordinate Systems &amp; Transformations<span class="nav-sub">W3 &middot; 7 - 11 Sep</span>'),
 ]""", src, count=1, flags=re.S)
 
 # Drop the In-Class Activity and Practice Exercises sections from the web page
@@ -54,13 +54,12 @@ src = src.replace(
     "        html_content = md_to_html(content)\n"
     "        for old, new in {'<h1>Module 01: Foundations</h1>': '<h1>Week 1: Foundations</h1>',\n"
     "                         '<h1>Module 02: Statistical Foundations</h1>': '<h1>Week 2: Statistical Foundations</h1>',\n"
-    "                         '<h1>Module 02 (continued): First Maps</h1>': '<h1>Week 2 (continued): First Maps</h1>',\n"
-    "                         '<h1>Module 03: Coordinate Systems & Transformations</h1>': '<h1>Week 3: Coordinate Systems & Transformations</h1>'}.items():\n"
+    "                         '<h1>Module 02 (continued): First Maps</h1>': '<h1>Week 2 (continued): First Maps</h1>'}.items():\n"
     "            html_content = html_content.replace(old, new, 1)\n", 1)
 
 # Figures for the Week 2 continuation (keys added to plots_data.json)
 src = src.replace("PLOT_MARKERS = {\n    'module1': {", """PLOT_MARKERS = {
-    'module3w3': {
+    'week3': {
         '### 2. Two Kinds of CRS': '''
 <div class="plot-container">
     <img src="{mod03w3_degree_length}" alt="Length of one degree of longitude vs latitude" class="module-plot">

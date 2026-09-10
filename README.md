@@ -19,7 +19,7 @@ Teaching materials for **CPSC 444: Spatial Statistics, Geospatial Analysis & Agr
 | Module 01 · Week 1 (24–28 Aug) | Week 1: Foundations | Python basics, plotting, summary statistics, distributions, simple regression | `source/Module_01_Foundations.md` |
 | M.01 · Week 2 (31 Aug–4 Sep) | Week 2: Statistical Foundations | Multiple & logistic regression, model evaluation, the five regression assumptions | `source/Module_02_Statistical_Foundations.md` |
 | M.02 · Week 2 (cont.) | Week 2 (continued): First Maps | Vector vs raster, GeoDataFrames, polygons, first CRS contact, GeoTIFFs, extracting raster values at points and mapping regression residuals | `source/Module_02b_First_Maps.md` |
-| M.03 · Week 3 (7–11 Sep) | Week 3: Coordinate Systems & Transformations | Geographic vs projected CRS, EPSG codes, `.to_crs()` vs `.set_crs()`, what changes when you convert, reprojecting rasters | `source/Module_03_Week3_Coordinate_Systems.md` |
+| Week 3 (7–11 Sep) | Week 3: Coordinate Systems & Transformations | Geographic vs projected CRS, EPSG codes, `.to_crs()` vs `.set_crs()`, what changes when you convert, reprojecting rasters | `source/Week3_Coordinate_Systems.md` |
 
 How they connect: Weeks 1–2 are tables of numbers and ordinary regression. "First Maps" adds longitude/latitude to those same tables and ends by showing that regression residuals cluster in space — the reason spatial statistics exists. Week 3 explains the one thing First Maps had to hand-wave (the CRS) so that distances and areas mean something before sampling and Kriging (Module 03 of the full guide) begin.
 
@@ -36,7 +36,7 @@ CPSC_444_StudyGuide/
 │   └── CPSC444_Study_Guide_with_Graphics.html   the full 8-module reference (compiled; do not edit by hand)
 ├── source/                    EVERYTHING YOU EDIT
 │   ├── Module_01_Foundations.md … Module_09_ANOVA.md   module text (one file = one page)
-│   ├── Module_02b_First_Maps.md, Module_03_Week3_Coordinate_Systems.md   weekly-only pages
+│   ├── Module_02b_First_Maps.md, Week3_Coordinate_Systems.md   weekly-only pages
 │   ├── Quick_Reference.md, Study_Paths.md, README.md    extra pages of the full guide
 │   ├── plots_data.json        all figures as base64 PNGs, keyed by name (e.g. mod02b_overlay)
 │   ├── generate_html_with_plots.py   the Markdown→HTML converter + page template (shared)

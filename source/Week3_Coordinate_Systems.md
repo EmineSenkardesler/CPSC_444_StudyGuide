@@ -1,5 +1,5 @@
-# Module 03: Coordinate Systems & Transformations
-## Where Is "Here"? - Week 3
+# Week 3: Coordinate Systems & Transformations
+## Where Is "Here"?
 
 **Difficulty**: ⭐⭐ Intermediate
 **Time Estimate**: 2-3 hours
@@ -7,7 +7,7 @@
 
 ---
 
-## Module Overview
+## Overview
 
 Last week you hit the trap: `field.area` gave `0.0003` and a warning. This week is the explanation. The Earth is round, your screen is flat, and a **coordinate reference system (CRS)** is the rule that says how the numbers in your data connect to real places on the ground. Pick the wrong one and your distances, areas and overlays go silently wrong. Pick the right one and it's a single line of code.
 
@@ -27,7 +27,7 @@ Last week you hit the trap: `field.area` gave `0.0003` and a warning. This week 
 
 ## Learning Objectives
 
-By the end of this module, you will be able to:
+By the end of this week, you will be able to:
 - [ ] Explain in one sentence why a flat map of a round Earth always distorts something
 - [ ] Tell a geographic CRS (degrees) from a projected CRS (meters) by looking at the coordinates
 - [ ] Recognize EPSG:4326, EPSG:32616 and EPSG:3857 and say what each is for
@@ -328,7 +328,7 @@ UTM 16N x     ≈ 200,000 - 800,000 m     UTM 16N y ≈ 4,000,000 - 4,800,000 m
 
 ## Study Checkpoints
 
-Before moving on, make sure you can answer these questions:
+Before next week, make sure you can answer these questions:
 
 ### Can you explain...?
 
@@ -393,7 +393,7 @@ Before moving on, make sure you can answer these questions:
 - [ ] Convert `pts` to EPSG:32615 (zone 15N) instead of 16N and compare the distance S1-S2. It's close but not identical - why?
 - [ ] Look up your hometown on epsg.io and write down its UTM zone code
 
-### Ready for Next Module?
+### Ready for Next Week?
 
 Check off each item:
 
@@ -404,7 +404,7 @@ Check off each item:
 - [ ] I know when `.set_crs()` is the right tool (and when it silently ruins a map)
 - [ ] I can predict what changes and what doesn't when I convert a layer
 
-**If you checked all items**: You're ready for spatial sampling and interpolation (Kriging) in [Module 03: Geospatial Fundamentals](Module_03_Geospatial_Fundamentals.md).
+**If you checked all items**: You're ready for next week - spatial sampling and interpolation (Kriging).
 
 **If you're unsure about some items**: Redo Section 6 in Colab with the Week 2 field. Watching the three "areas" come out different is the fastest way to make this stick.
 
@@ -450,7 +450,7 @@ Check off each item:
 
 Now that distances mean something:
 
-→ **Continue to [Module 03: Geospatial Fundamentals](Module_03_Geospatial_Fundamentals.md)** for spatial sampling and interpolation
+→ **Next week**: spatial sampling and interpolation
 
 You'll learn:
 - Random, grid and stratified sampling designs

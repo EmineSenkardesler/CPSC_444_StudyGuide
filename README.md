@@ -6,13 +6,15 @@ Teaching materials for **CPSC 444: Spatial Statistics, Geospatial Analysis & Agr
 
 Landing page (bookmark this): **https://eminesenkardesler.github.io/CPSC_444_StudyGuide/**
 
-| Page | Link |
-|---|---|
-| Week 1: Foundations | https://eminesenkardesler.github.io/CPSC_444_StudyGuide/week1.html |
-| Week 2: Statistical Foundations | https://eminesenkardesler.github.io/CPSC_444_StudyGuide/week2.html |
-| Week 2 (continued): First Maps | https://eminesenkardesler.github.io/CPSC_444_StudyGuide/week2_maps.html |
-| Week 3: Coordinate Systems & Transformations | https://eminesenkardesler.github.io/CPSC_444_StudyGuide/week3.html |
-| All weeks on one page | https://eminesenkardesler.github.io/CPSC_444_StudyGuide/all_weeks.html |
+| Week | Online link (share this - no download, always current) | Same file for upload |
+|---|---|---|
+| Week 1: Foundations | https://eminesenkardesler.github.io/CPSC_444_StudyGuide/CPSC444_Week1_Foundations.html | `weekly/CPSC444_Week1_Foundations.html` |
+| Week 2: Statistical Foundations | https://eminesenkardesler.github.io/CPSC_444_StudyGuide/CPSC444_Week2_Statistical_Foundations.html | `weekly/CPSC444_Week2_Statistical_Foundations.html` |
+| Week 2 (continued): First Maps | https://eminesenkardesler.github.io/CPSC_444_StudyGuide/CPSC444_Week2_First_Maps.html | `weekly/CPSC444_Week2_First_Maps.html` |
+| Week 3: Coordinate Systems & Transformations | https://eminesenkardesler.github.io/CPSC_444_StudyGuide/CPSC444_Week3_Coordinate_Systems.html | `weekly/CPSC444_Week3_Coordinate_Systems.html` |
+| **Master: all weeks in one page** | https://eminesenkardesler.github.io/CPSC_444_StudyGuide/all_weeks.html | `weekly/CPSC444_WeeklyGuide_W*_<date>.html` |
+
+The site also has navigable versions with a sidebar that links between weeks: `week1.html`, `week2.html`, `week2_maps.html`, `week3.html` under the same address.
 
 Every link is permanent (the file names never change). They are served from the `docs/` folder of the `weekly-guide` branch, which the build scripts refresh, so **build + push = published** (allow a minute or two for GitHub to update). A new week is published by adding it to `WEEKS` in `source/build_site.py` and pushing - it then appears on the landing page and in every page's sidebar.
 

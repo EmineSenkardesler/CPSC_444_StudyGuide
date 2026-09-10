@@ -4,7 +4,8 @@
 Outputs (all self-contained HTML, figures embedded):
   ../docs/index.html          landing page: the weeks published so far
   ../docs/week1.html, week2.html, week2_maps.html, week3.html ...   one page per week
-  ../docs/all_weeks.html      every week on one page (sidebar switches sections)
+  ../docs/all_weeks.html      every week on one page (sidebar switches sections) = the master, online
+  ../docs/CPSC444_Week1_Foundations.html ...   the standalone week files, online (same content as weekly/)
   ../weekly/CPSC444_Week1_Foundations.html ...          STANDALONE file per week (no links to other
                                                         weeks) - upload these to Canvas one week at a time
   ../weekly/CPSC444_WeeklyGuide_W<latest>_<date>.html   MASTER file: all weeks in one, grows each week
@@ -230,9 +231,10 @@ print("  docs/all_weeks.html")
 for w in WEEKS:
     nav = f'<li class="nav-item"><a class="nav-link active">{w["title"]}<span class="nav-sub">{w["dates"]}</span></a></li>'
     main = f'<section class="content-section active">\n{bodies[w["slug"]]}\n</section>'
-    open(os.path.join(WEEKLY, w['file']), 'w', encoding='utf-8').write(
-        shell(f'{plain(w["title"])} - CPSC 444', nav, main))
-    print(f"  weekly/{w['file']}")
+    standalone = shell(f'{plain(w["title"])} - CPSC 444', nav, main)
+    open(os.path.join(WEEKLY, w['file']), 'w', encoding='utf-8').write(standalone)
+    open(os.path.join(DOCS, w['file']), 'w', encoding='utf-8').write(standalone)      # same file, online
+    print(f"  weekly/{w['file']}  +  docs/{w['file']}")
 
 # dated MASTER copy (all weeks) in weekly/
 latest = 'W' + re.search(r'Week (\d+)', WEEKS[-1]['title']).group(1)

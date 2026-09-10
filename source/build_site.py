@@ -237,7 +237,7 @@ for w in WEEKS:
 # dated MASTER copy (all weeks) in weekly/
 latest = 'W' + re.search(r'Week (\d+)', WEEKS[-1]['title']).group(1)
 out_name = f"CPSC444_WeeklyGuide_{latest}_{datetime.date.today():%Y-%m-%d}.html"
-for old in glob.glob(os.path.join(WEEKLY, 'CPSC444_WeeklyGuide_*.html')):
+for old in glob.glob(os.path.join(WEEKLY, 'CPSC444_WeeklyGuide*.html')):   # any older master copy
     if os.path.basename(old) != out_name:
         os.remove(old)
 open(os.path.join(WEEKLY, out_name), 'w', encoding='utf-8').write(all_weeks)

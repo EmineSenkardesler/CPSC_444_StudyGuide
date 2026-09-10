@@ -2,6 +2,13 @@
 
 Teaching materials for **CPSC 444: Spatial Statistics, Geospatial Analysis & Agricultural Data Science** (University of Illinois). Everything here is written in Markdown and compiled into self-contained HTML pages (figures embedded, no server needed) that can be opened in any browser or posted on Canvas.
 
+## Student links (GitHub Pages)
+
+- **Weekly guide:** https://eminesenkardesler.github.io/CPSC_444_StudyGuide/
+- **Full reference guide:** https://eminesenkardesler.github.io/CPSC_444_StudyGuide/full_guide.html
+
+Both links are permanent. They are served from the `docs/` folder of the `weekly-guide` branch, which the build scripts refresh automatically, so **rebuild + push = published** (allow a minute or two for GitHub to update).
+
 ## Two guides, one source
 
 | What | File to open | Built from | Built by |
@@ -32,6 +39,8 @@ CPSC_444_StudyGuide/
 │   ├── CPSC444_WeeklyGuide_W3_2026-09-07.html   the weekly guide (compiled; do not edit by hand).
 │   │                                  Name = latest week covered + build date; each rebuild replaces it
 │   └── CPSC444_Week2_FirstMaps.ipynb  Colab notebook for the First Maps class (exercises + Think-Pair-Share)
+├── docs/                      OUTPUT for GitHub Pages (fixed names: index.html = weekly guide, full_guide.html)
+│                              written automatically by the build scripts - never edit by hand
 ├── full_guide/                OUTPUT
 │   └── CPSC444_Study_Guide_with_Graphics.html   the full 8-module reference (compiled; do not edit by hand)
 ├── source/                    EVERYTHING YOU EDIT

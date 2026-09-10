@@ -133,3 +133,11 @@ src = src.replace('print(f"📁 File: CPSC444_Study_Guide_with_Graphics.html")',
                   'print(f"📁 File: " + output_file)')
 
 exec(compile(src, GEN, 'exec'), {'__file__': GEN, '__name__': '__main__'})
+
+# Also publish a fixed-name copy for GitHub Pages (docs/index.html) so the
+# student link never changes: https://eminesenkardesler.github.io/CPSC_444_StudyGuide/
+import shutil
+DOCS = os.path.join(os.path.dirname(HERE), 'docs')
+os.makedirs(DOCS, exist_ok=True)
+shutil.copyfile(OUT, os.path.join(DOCS, 'index.html'))
+print("🌐 Pages copy: docs/index.html")

@@ -10,3 +10,10 @@ src = open(GEN).read()
 src = src.replace("output_file = os.path.join(BASE_PATH, 'CPSC444_Study_Guide_with_Graphics.html')", f"output_file = {OUT!r}")
 src = src.replace('print(f"📁 File: CPSC444_Study_Guide_with_Graphics.html")', 'print(f"📁 File: " + output_file)')
 exec(compile(src, GEN, 'exec'), {'__file__': GEN, '__name__': '__main__'})
+
+# Fixed-name copy for GitHub Pages: .../CPSC_444_StudyGuide/full_guide.html
+import shutil
+DOCS = os.path.join(os.path.dirname(HERE), 'docs')
+os.makedirs(DOCS, exist_ok=True)
+shutil.copyfile(OUT, os.path.join(DOCS, 'full_guide.html'))
+print("🌐 Pages copy: docs/full_guide.html")

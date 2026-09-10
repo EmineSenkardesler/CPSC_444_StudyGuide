@@ -20,7 +20,7 @@ Every link is permanent (the file names never change). They are served from the 
 
 | What | File to open | Built from | Built by |
 |---|---|---|---|
-| **Weekly pages** (on-the-go) | `docs/index.html` + one `docs/weekN.html` per week (also `docs/all_weeks.html`, and a dated copy in `weekly/`) | `source/Module_*.md` / `source/WeekN_*.md` for the weeks taught so far | `source/build_site.py` |
+| **Weekly pages** (on-the-go) | website: `docs/index.html` + one `docs/weekN.html` per week. Upload files: `weekly/CPSC444_WeekN_*.html` (one per week) + the master `weekly/CPSC444_WeeklyGuide_W*_<date>.html` | `source/Module_*.md` / `source/WeekN_*.md` for the weeks taught so far | `source/build_site.py` |
 | **Full guide** (reference) | `full_guide/CPSC444_Study_Guide_with_Graphics.html` | all `source/Module_01…09.md` + `Quick_Reference.md` + `Study_Paths.md` | `source/build_full_guide.py` |
 
 - The **full guide** is the complete 8-module reorganisation of last year's course material. It is an internal reference for writing the weekly pages; it is **not** published to students.
@@ -42,13 +42,14 @@ How they connect: Weeks 1–2 are tables of numbers and ordinary regression. "Fi
 ```
 CPSC_444_StudyGuide/
 ├── README.md                  ← this file
-├── weekly/                    OUTPUT + hand-outs for the semester in progress
-│   ├── CPSC444_WeeklyGuide_W3_<date>.html   all weeks in one file, for Canvas upload / archive (compiled; do not edit)
+├── weekly/                    FILES TO UPLOAD (e.g. to Canvas) - all self-contained, figures embedded
+│   ├── CPSC444_Week1_Foundations.html            ┐
+│   ├── CPSC444_Week2_Statistical_Foundations.html│ one standalone file per week: upload the new one
+│   ├── CPSC444_Week2_First_Maps.html             │ each week as that week's course material
+│   ├── CPSC444_Week3_Coordinate_Systems.html     ┘
+│   ├── CPSC444_WeeklyGuide_W3_<date>.html        MASTER file: every week so far in one page; re-upload
+│   │                                             after each build to keep the running version current
 │   └── CPSC444_Week2_FirstMaps.ipynb  Colab notebook for the First Maps class (exercises + Think-Pair-Share)
-├── docs/                      OUTPUT = the published website (GitHub Pages). Written by the build scripts - never edit by hand
-│   ├── index.html             landing page listing the weeks published so far
-│   ├── week1.html, week2.html, week2_maps.html, week3.html   one page per week
-│   └── all_weeks.html         every week on one page
 ├── full_guide/                OUTPUT
 │   └── CPSC444_Study_Guide_with_Graphics.html   the full 8-module reference (compiled; do not edit by hand)
 ├── source/                    EVERYTHING YOU EDIT
@@ -67,7 +68,7 @@ CPSC_444_StudyGuide/
 ### I want to…
 
 - **Fix a typo or explain something better on a page** → edit the matching `source/Module_*.md`, then rebuild (below). Never edit the `.html` files; they are overwritten on every build.
-- **Add next week's page** → write `source/Module_XX_WeekN_<topic>.md` following the structure of the existing pages (Overview → Learning Objectives → Core Concepts → Course Materials → Key Commands/Formulas → Study Checkpoints → Common Mistakes → Tips → Next Steps), append one entry to `WEEKS` in `source/build_site.py` (slug = file name in docs/, markdown file, title, dates, one-line blurb), rebuild, push.
+- **Add next week's page** → write `source/Module_XX_WeekN_<topic>.md` following the structure of the existing pages (Overview → Learning Objectives → Core Concepts → Course Materials → Key Commands/Formulas → Study Checkpoints → Common Mistakes → Tips → Next Steps), append one entry to `WEEKS` in `source/build_site.py` (slug = file name in docs/, `file` = standalone file name in weekly/, markdown file, title, dates, one-line blurb), rebuild, push. Then upload the new `weekly/CPSC444_WeekN_*.html` and the refreshed master file.
 - **Add or replace a figure** → write a small script in `source/figure_scripts/` that saves a base64 PNG into `plots_data.json` under a new key, then add an `EXTRA_MARKERS` entry in `build_site.py` giving the exact heading the figure should appear under. See `figure_scripts/make_mod03_plots.py` for a complete example.
 - **Change the look (colours, sidebar, fonts)** → the CSS lives in the template string inside `source/generate_html_with_plots.py`; it is shared by both guides.
 - **Change a sidebar label, dates or a page heading** → the `WEEKS` list at the top of `source/build_site.py` (`title`, `dates`, `blurb`).
@@ -77,7 +78,7 @@ CPSC_444_StudyGuide/
 
 ```bash
 cd source
-python build_site.py              # -> ../docs/index.html, weekN.html, all_weeks.html  +  ../weekly/CPSC444_WeeklyGuide_<latest>_<today>.html
+python build_site.py              # -> ../docs/ (website)  +  ../weekly/ (one standalone file per week + the dated master file)
 python build_full_guide.py        # -> ../full_guide/CPSC444_Study_Guide_with_Graphics.html  (not published)
 ```
 

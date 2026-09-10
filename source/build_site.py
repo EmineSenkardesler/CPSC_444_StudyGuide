@@ -5,7 +5,9 @@ Outputs (all self-contained HTML, figures embedded):
   ../docs/index.html          landing page: the weeks published so far
   ../docs/week1.html, week2.html, week2_maps.html, week3.html ...   one page per week
   ../docs/all_weeks.html      every week on one page (sidebar switches sections)
-  ../weekly/CPSC444_WeeklyGuide_W<latest>_<date>.html   dated copy of all_weeks.html
+  ../weekly/CPSC444_Week1_Foundations.html ...          STANDALONE file per week (no links to other
+                                                        weeks) - upload these to Canvas one week at a time
+  ../weekly/CPSC444_WeeklyGuide_W<latest>_<date>.html   MASTER file: all weeks in one, grows each week
 
 docs/ is served by GitHub Pages from the weekly-guide branch, so:  build + push = published.
 
@@ -28,6 +30,7 @@ SEMESTER = 'Fall 2026'
 
 # ---------------------------------------------------------------- the weeks
 # slug      -> file name in docs/ (slug.html) - never change a slug once shared
+# file      -> name of the standalone copy in weekly/ (the file you upload to Canvas for that week)
 # md        -> markdown source in source/
 # title     -> page heading + sidebar label     dates -> sidebar subtitle
 # blurb     -> one line on the landing page
@@ -35,22 +38,22 @@ SEMESTER = 'Fall 2026'
 # h1_from   -> the markdown's own H1, replaced by `title` (so shared module files stay untouched)
 # cut       -> (start heading, end heading) blocks to drop from the web version
 WEEKS = [
-    dict(slug='week1', md='Module_01_Foundations.md', base_key='module1',
+    dict(slug='week1', md='Module_01_Foundations.md', base_key='module1', file='CPSC444_Week1_Foundations.html',
          title='Week 1: Foundations', dates='24 - 28 Aug',
          h1_from='Module 01: Foundations',
          blurb='Python basics, plotting, summary statistics, distributions, simple regression.'),
-    dict(slug='week2', md='Module_02_Statistical_Foundations.md', base_key='module2',
+    dict(slug='week2', md='Module_02_Statistical_Foundations.md', base_key='module2', file='CPSC444_Week2_Statistical_Foundations.html',
          title='Week 2: Statistical Foundations', dates='31 Aug - 4 Sep',
          h1_from='Module 02: Statistical Foundations',
          blurb='Multiple and logistic regression, model evaluation, the five regression assumptions.'),
-    dict(slug='week2_maps', md='Module_02b_First_Maps.md', base_key=None,
+    dict(slug='week2_maps', md='Module_02b_First_Maps.md', base_key=None, file='CPSC444_Week2_First_Maps.html',
          title='Week 2 (continued): First Maps', dates='31 Aug - 4 Sep',
          h1_from='Module 02 (continued): First Maps',
          cut=[('## In-Class Activity: Think-Pair-Share', '## Course Materials')],
          replace=[('- [ ] Complete Practice Exercises 1-4 above in your own Colab notebook',
                    '- [ ] Work through the Week 2 First Maps Colab notebook top to bottom')],
          blurb='Vector vs raster, GeoDataFrames, polygons, first contact with CRS, GeoTIFFs, raster values at points, mapping regression residuals.'),
-    dict(slug='week3', md='Week3_Coordinate_Systems.md', base_key=None,
+    dict(slug='week3', md='Week3_Coordinate_Systems.md', base_key=None, file='CPSC444_Week3_Coordinate_Systems.html',
          title='Week 3: Coordinate Systems &amp; Transformations', dates='7 - 11 Sep',
          h1_from='Week 3: Coordinate Systems & Transformations',
          blurb='Geographic vs projected CRS, EPSG codes, .to_crs() vs .set_crs(), what changes when you convert, reprojecting rasters.'),
@@ -223,7 +226,15 @@ all_weeks = shell(SITE_TITLE + ' (all weeks)', sidebar(WEEKS[0]['slug'], 'sectio
 open(os.path.join(DOCS, 'all_weeks.html'), 'w', encoding='utf-8').write(all_weeks)
 print("  docs/all_weeks.html")
 
-# dated copy of the all-weeks page in weekly/
+# standalone file per week in weekly/ (sidebar shows only that week, no cross-links, no prev/next)
+for w in WEEKS:
+    nav = f'<li class="nav-item"><a class="nav-link active">{w["title"]}<span class="nav-sub">{w["dates"]}</span></a></li>'
+    main = f'<section class="content-section active">\n{bodies[w["slug"]]}\n</section>'
+    open(os.path.join(WEEKLY, w['file']), 'w', encoding='utf-8').write(
+        shell(f'{plain(w["title"])} - CPSC 444', nav, main))
+    print(f"  weekly/{w['file']}")
+
+# dated MASTER copy (all weeks) in weekly/
 latest = 'W' + re.search(r'Week (\d+)', WEEKS[-1]['title']).group(1)
 out_name = f"CPSC444_WeeklyGuide_{latest}_{datetime.date.today():%Y-%m-%d}.html"
 for old in glob.glob(os.path.join(WEEKLY, 'CPSC444_WeeklyGuide_*.html')):

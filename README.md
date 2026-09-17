@@ -12,9 +12,10 @@ Landing page (bookmark this): **https://eminesenkardesler.github.io/CPSC_444_Stu
 | Week 2: Statistical Foundations | https://eminesenkardesler.github.io/CPSC_444_StudyGuide/CPSC444_Week2_Statistical_Foundations.html | `weekly/CPSC444_Week2_Statistical_Foundations.html` |
 | Week 2 (continued): First Maps | https://eminesenkardesler.github.io/CPSC_444_StudyGuide/CPSC444_Week2_First_Maps.html | `weekly/CPSC444_Week2_First_Maps.html` |
 | Week 3: Coordinate Systems & Transformations | https://eminesenkardesler.github.io/CPSC_444_StudyGuide/CPSC444_Week3_Coordinate_Systems.html | `weekly/CPSC444_Week3_Coordinate_Systems.html` |
+| Week 4: Spatial Operations | https://eminesenkardesler.github.io/CPSC_444_StudyGuide/CPSC444_Week4_Spatial_Operations.html | `weekly/CPSC444_Week4_Spatial_Operations.html` |
 | **Master: all weeks in one page** | https://eminesenkardesler.github.io/CPSC_444_StudyGuide/all_weeks.html | `weekly/CPSC444_WeeklyGuide_W*_<date>.html` |
 
-The site also has navigable versions with a sidebar that links between weeks: `week1.html`, `week2.html`, `week2_maps.html`, `week3.html` under the same address.
+The site also has navigable versions with a sidebar that links between weeks: `week1.html`, `week2.html`, `week2_maps.html`, `week3.html`, `week4.html` under the same address.
 
 Every link is permanent (the file names never change). They are served from the `docs/` folder of the `weekly-guide` branch, which the build scripts refresh, so **build + push = published** (allow a minute or two for GitHub to update). A new week is published by adding it to `WEEKS` in `source/build_site.py` and pushing - it then appears on the landing page and in every page's sidebar.
 
@@ -28,7 +29,7 @@ Every link is permanent (the file names never change). They are served from the 
 - The **full guide** is the complete 8-module reorganisation of last year's course material. It is an internal reference for writing the weekly pages; it is **not** published to students.
 - The **weekly guide** is what students actually get during the semester. It is *not* finished class notes — it is a running document that grows by one page each week, written to match what was covered in that week's module. Pages can be short, simple and example-driven, and they are edited as the course moves. Both guides share the same style, the same generator and the same figure store, so a page written for the weekly guide can later be folded into the full guide.
 
-## The four pages so far (weekly guide)
+## The pages so far (weekly guide)
 
 | Sidebar entry | Page heading | Covers | Source file |
 |---|---|---|---|
@@ -36,6 +37,7 @@ Every link is permanent (the file names never change). They are served from the 
 | M.01 · Week 2 (31 Aug–4 Sep) | Week 2: Statistical Foundations | Multiple & logistic regression, model evaluation, the five regression assumptions | `source/Module_02_Statistical_Foundations.md` |
 | M.02 · Week 2 (cont.) | Week 2 (continued): First Maps | Vector vs raster, GeoDataFrames, polygons, first CRS contact, GeoTIFFs, extracting raster values at points and mapping regression residuals | `source/Module_02b_First_Maps.md` |
 | Week 3 (7–11 Sep) | Week 3: Coordinate Systems & Transformations | Geographic vs projected CRS, EPSG codes, `.to_crs()` vs `.set_crs()`, what changes when you convert, reprojecting rasters | `source/Week3_Coordinate_Systems.md` |
+| Week 4 (14–18 Sep) | Week 4: Spatial Operations | Buffer, union, dissolve, intersection, difference, clip, spatial joins and per-plot aggregation on a real on-farm trial (DIFM) dataset | `source/Week4_Spatial_Operations.html` (ready-made page body, prepared with its notebook outside this repo) |
 
 How they connect: Weeks 1–2 are tables of numbers and ordinary regression. "First Maps" adds longitude/latitude to those same tables and ends by showing that regression residuals cluster in space — the reason spatial statistics exists. Week 3 explains the one thing First Maps had to hand-wave (the CRS) so that distances and areas mean something before sampling and Kriging (Module 03 of the full guide) begin.
 

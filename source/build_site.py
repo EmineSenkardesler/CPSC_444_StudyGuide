@@ -32,7 +32,8 @@ SEMESTER = 'Fall 2026'
 # ---------------------------------------------------------------- the weeks
 # slug      -> file name in docs/ (slug.html) - never change a slug once shared
 # file      -> name of the standalone copy in weekly/ (the file you upload to Canvas for that week)
-# md        -> markdown source in source/
+# md        -> markdown source in source/   (OR  html -> a ready-made page body in source/, used as is:
+#              figures already embedded, no markdown conversion - for pages prepared outside this repo)
 # title     -> page heading + sidebar label     dates -> sidebar subtitle
 # blurb     -> one line on the landing page
 # base_key  -> key of the original generator's PLOT_MARKERS to reuse its figures (or None)
@@ -58,6 +59,9 @@ WEEKS = [
          title='Week 3: Coordinate Systems &amp; Transformations', dates='7 - 11 Sep',
          h1_from='Week 3: Coordinate Systems & Transformations',
          blurb='Geographic vs projected CRS, EPSG codes, .to_crs() vs .set_crs(), what changes when you convert, reprojecting rasters.'),
+    dict(slug='week4', html='Week4_Spatial_Operations.html', base_key=None, file='CPSC444_Week4_Spatial_Operations.html',
+         title='Week 4: Spatial Operations', dates='14 - 18 Sep',
+         blurb='Buffer, union, dissolve, intersection, difference, clip and spatial joins, on a real on-farm trial dataset.'),
 ]
 
 # Figures for the weekly-only pages (keys live in plots_data.json)
@@ -104,10 +108,16 @@ CSS += '''
         .week-card .dates { color: #777; font-size: .9em; }
         .week-card p { margin: 8px 0 0; }
         .week-card.full { border-color: #764ba2; background: #f6f2fb; }
+        .md-table { border-collapse: collapse; margin: 20px 0; width: 100%; }
+        .md-table th, .md-table td { border: 1px solid #ddd; padding: 10px 14px; text-align: left; }
+        .md-table th { background: #667eea; color: white; }
+        .md-table tr:nth-child(even) { background: #f7f7fb; }
 '''
 
 # ------------------------------------------------------------ page pieces
 def week_body(w):
+    if w.get('html'):
+        return open(os.path.join(HERE, w['html']), encoding='utf-8').read()
     text = open(os.path.join(HERE, w['md']), encoding='utf-8').read()
     for start, end in w.get('cut', []):
         text = re.sub(re.escape(start) + r'.*?(?=' + re.escape(end) + ')', '', text, flags=re.S)
